@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"path": "1. Captcha"
+		},
+		{
+			"path": "2. Checksum"
+		},
+		{
+			"path": "3. Spiral"
+		},
+		{
+			"path": "4. Passphrase"
+		},
+		{
+			"path": "5. Maze"
+		},
+		{
+			"path": "6. Memory"
+		},
+		{
+			"path": "7. Circus"
+		}
+	],
+	"settings": {}
+}
