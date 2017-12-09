@@ -23,6 +23,9 @@
 		},
 		{
 			"path": "8. Registers"
+		},
+		{
+			"path": "9. Streams"
 		}
 	],
 	"settings": {}
