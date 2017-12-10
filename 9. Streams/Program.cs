@@ -6,7 +6,8 @@ namespace _9._Streams
 {
     class Program
     {
-        static Command ProcessCharacter(string content, int index) {
+        static Command ProcessCharacter(string content, int index)
+        {
             switch (content[index])
             {
                 case '{': return Command.OPEN_STREAM;
