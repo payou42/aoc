@@ -59,7 +59,6 @@ namespace _11._Hex
             int z = Math.Min(X, Y);
             if (z >= 0)
             {
-                Console.WriteLine("z is {0}", z);
                 return (X + Y - z);                
             }
             z = Math.Min(-X, -Y);
