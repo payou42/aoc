@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-namespace _11._Hex
+namespace _12._Plumber
 {
     class Program
     {
@@ -51,6 +51,7 @@ namespace _11._Hex
 
             // Build the group of id 0
             HashSet<int> group = new HashSet<int>();
+            BuildGroup(group, 0);
             Console.WriteLine("Group 0 has {0} programs", group.Count);
 
             // Count the number of group
