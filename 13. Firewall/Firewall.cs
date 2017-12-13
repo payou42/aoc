@@ -31,9 +31,9 @@ namespace _13._Firewall
                 }
             }
 
-            if (caught && severity == 0)
+            if (!caught)
             {
-                severity++;
+                severity = -1;
             }
             return severity;
         }
