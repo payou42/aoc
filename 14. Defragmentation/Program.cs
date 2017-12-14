@@ -6,29 +6,6 @@ namespace _14._Defragmentation
 {
     class Program
     {
-        static int CountBits(byte[] input)
-        {
-            int bits = 0;
-            for (int i = 0; i < input.Length; ++i)
-            {
-                for (int j=0; j < 8; ++j)
-                {
-                    bool test = ((input[i] >> (7-j)) & 1) == 1;                    
-                    if (test)
-                    {
-                        Console.Write("#");
-                        bits++;
-                    }
-                    else
-                    {
-                        Console.Write(".");
-                    }
-                }
-            }
-            Console.WriteLine("");
-            return bits;
-        }
-
         static bool IsUsed(byte[] hash, int index)
         {
             byte b = hash[index / 8];
@@ -59,20 +36,49 @@ namespace _14._Defragmentation
             }
         }
 
+        static ConsoleColor[] colors = new ConsoleColor[10]
+        {
+            ConsoleColor.Blue,
+            ConsoleColor.DarkRed,
+            ConsoleColor.DarkYellow,
+            ConsoleColor.Cyan,
+            ConsoleColor.Yellow,
+            ConsoleColor.Red,
+            ConsoleColor.Green,
+            ConsoleColor.White,
+            ConsoleColor.DarkBlue,
+            ConsoleColor.Magenta
+        };
+
+        static void DrawMap(int[,] grid)
+        {
+            for (int i = 0; i < 128; ++i)
+            {
+                for (int j = 0; j < 128; ++j)
+                {                   
+                    if (grid[i, j] >= 0)
+                    {
+                        Console.ForegroundColor = colors[grid[i, j] % colors.Length];
+                        Console.Write("#");
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.Write(".");
+                    }
+                }
+                Console.WriteLine("");
+            }
+            Console.WriteLine("");
+        }
+
         static void Main(string[] args)
         {
             // Create the hasher
             KnotHash hasher = new KnotHash();
 
-            // Process the input
-            string key = Input.RAW;
-            int bits = 0;
-            for (int i = 0; i < 128; ++i)
-            {
-                string row = key + "-" + i.ToString();
-                bits += CountBits(hasher.Compute(row));
-            }            
-            Console.WriteLine("Count bits: {0}", bits);
+            // Prepare the input
+            string key = Input.RAW;            
 
             // Build the map of used cells
             int[,] grid = new int[128, 128];
@@ -86,6 +92,19 @@ namespace _14._Defragmentation
                 }
             }
 
+            // Count bits
+            int bits = 0;
+            for (int i = 0; i < 128; ++i)
+            {
+                for (int j = 0; j < 128; j++)
+                {
+                    if (grid[i,j] >= 0)
+                    {
+                        bits++;
+                    }
+                }
+            }  
+
             // Build groups
             int groupId = 1;
             for (int i = 0; i < 128; i++)
@@ -98,6 +117,14 @@ namespace _14._Defragmentation
                     }
                 }
             }
+
+            // Draw the map
+            ConsoleColor original = Console.ForegroundColor;
+            DrawMap(grid);
+            Console.ForegroundColor = original;
+
+            // Results
+            Console.WriteLine("Bits count  : {0}", bits);            
             Console.WriteLine("Groups count: {0}", groupId - 1);
         }
     }
