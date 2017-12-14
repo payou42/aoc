@@ -38,6 +38,9 @@
 		},
 		{
 			"path": "13. Firewall"
+		},
+		{
+			"path": "14. Defragmentation"
 		}
 	],
 	"settings": {}
