@@ -19,7 +19,7 @@ namespace _16._Promenade
                 _programs[i] = (char)('a' + i);
             }
 
-            // Instead of moving a lot of stuff in the array, let's keep a "start" offest
+            // Instead of moving a lot of stuff in the array, let's keep a "start" offset
             _start = 0;
         }
 

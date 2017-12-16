@@ -41,30 +41,30 @@ namespace _16._Promenade
         {
             // Create the dance
             DANCE = new Dance(Input.SIZE);
-            string before = DANCE.ToString();
 
             // Build an history of positions
             Dictionary<string, int> positions = new Dictionary<string, int>();
             positions[DANCE.ToString()] = 0;
 
-            // Look for a cycle
+            // Repeat dance until exhaustion
             int counter = 0;
             int target = Input.TARGET;
             while (counter < target)
             {
+                // Dance ~
                 counter++;
                 ProcessInput(Input.RAW);
+
+                // Look for a cycle
                 string hash = DANCE.ToString();
                 if (positions.ContainsKey(hash))
                 {
                     // Found a cycle, skip forward
                     int from = counter;
                     int length = counter - positions[hash];
-                    while (target - counter > length)
-                    {
-                        counter += length;
-                    }
 
+                    // Skip the cycle as many times as possible
+                    counter = target - ((target - counter) % length);
                     Console.WriteLine("Skipped {0} moves because of a cycle of length {1}", counter - from, length);
                 }
             }
