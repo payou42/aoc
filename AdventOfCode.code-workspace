@@ -47,6 +47,9 @@
 		},
 		{
 			"path": "16. Promenade"
+		},
+		{
+			"path": "17. Spinlock"
 		}
 	],
 	"settings": {}
