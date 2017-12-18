@@ -50,6 +50,9 @@
 		},
 		{
 			"path": "17. Spinlock"
+		},
+		{
+			"path": "18. Duet"
 		}
 	],
 	"settings": {}
