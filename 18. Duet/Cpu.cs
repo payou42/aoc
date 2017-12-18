@@ -31,7 +31,8 @@ namespace _18._Duet
         {
             _inbox = new Queue<Int64>();
             _outbox = new Queue<Int64>();
-            _registers = new Registers(id);
+            _registers = new Registers();
+            _registers["p"] = id;
         }
 
         private Int64 GetValue(string v)

@@ -16,10 +16,9 @@ namespace _18._Duet
             }
         }
 
-        public Registers(Int64 id) 
+        public Registers() 
         {
-            _registers = new Dictionary<string, Int64>();
-            _registers["p"] = id;
+            _registers = new Dictionary<string, Int64>();            
         }
 
         public Int64 this[string r]
