@@ -14,9 +14,13 @@ namespace Aoc
         private Dictionary<int, List<int>> _links;
 
         public Day201712()
-        {            
+        {
             Codename = "2017-12";
             Name = "Digital Plumber";
+        }
+
+        public void Init()
+        {
             BuildLinks();
         }
 

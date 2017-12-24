@@ -22,9 +22,13 @@ namespace Aoc
         private int _infections;
 
         public Day201722()
-        {            
+        {
             Codename = "2017-22";
-            Name = "Sporifica Virus";            
+            Name = "Sporifica Virus";
+        }
+
+        public void Init()
+        {
         }
 
         public string Run(Part part)

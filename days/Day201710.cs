@@ -12,9 +12,13 @@ namespace Aoc
         public string Name { get; private set; }
 
         public Day201710()
-        {            
+        {
             Codename = "2017-10";
             Name = "Knot Hash";
+        }
+
+        public void Init()
+        {
         }
 
         public string Run(Part part)

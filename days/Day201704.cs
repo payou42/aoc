@@ -14,11 +14,16 @@ namespace Aoc
         private string[][] _input;
 
         public Day201704()
-        {            
+        {
             Codename = "2017-04";
             Name = "High-Entropy Passphrases";
+        }
+
+        public void Init()
+        {
             _input = Input.GetStringMatrix(this);
         }
+        
         public string Run(Part part)
         {
             return CountValid(part).ToString();

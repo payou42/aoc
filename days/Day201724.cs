@@ -18,9 +18,13 @@ namespace Aoc
         private int _length;
 
         public Day201724()
-        {            
+        {
             Codename = "2017-24";
             Name = "Electromagnetic Moat";
+        }
+
+        public void Init()
+        {
             string[] input = Input.GetStringVector(this);
             _components = new Tuple<int, int>[input.Length];
             for (int i = 0; i < input.Length; ++i)
@@ -29,6 +33,7 @@ namespace Aoc
                 _components[i] = new Tuple<int, int>(Int32.Parse(c[0]), Int32.Parse(c[1]));
             }
         }
+
         public string Run(Part part)
         {
             // Prepare data

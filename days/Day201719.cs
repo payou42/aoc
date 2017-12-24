@@ -14,9 +14,13 @@ namespace Aoc
         private Tubes _tubes;
 
         public Day201719()
-        {            
+        {
             Codename = "2017-19";
             Name = "A Series of Tubes";
+        }
+
+        public void Init()
+        {
             _tubes = new Tubes(Input.GetStringVector(this));
             _tubes.Walk();
         }

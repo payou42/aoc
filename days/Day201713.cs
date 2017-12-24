@@ -14,9 +14,13 @@ namespace Aoc
         private Firewall _firewall;
 
         public Day201713()
-        {            
+        {
             Codename = "2017-13";
             Name = "Packet Scanners";
+        }
+
+        public void Init()
+        {
             BuildFirewall();
         }
 

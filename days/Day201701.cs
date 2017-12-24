@@ -14,11 +14,16 @@ namespace Aoc
         private string _captcha = null;
 
         public Day201701()
-        {            
+        {
             Codename = "2017-01";
             Name = "Inverse Captcha";
+        }
+
+        public void Init()
+        {
             _captcha = Input.GetString(this);
         }
+
         public string Run(Part part)
         {
             int result = 0;

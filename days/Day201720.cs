@@ -17,9 +17,13 @@ namespace Aoc
 
 
         public Day201720()
-        {            
+        {
             Codename = "2017-20";
             Name = "Particle Swarm";
+        }
+
+        public void Init()
+        {
         }
 
         public string Run(Part part)

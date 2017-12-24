@@ -14,9 +14,13 @@ namespace Aoc
         private Generator[] _generators;
 
         public Day201715()
-        {            
+        {
             Codename = "2017-15";
-            Name = "Dueling Generators";            
+            Name = "Dueling Generators";
+        }
+
+        public void Init()
+        {
         }
 
         public string Run(Part part)

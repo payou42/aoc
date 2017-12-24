@@ -14,11 +14,15 @@ namespace Aoc
         private int[] _input;
 
         public Day201705()
-        {            
+        {
             Codename = "2017-05";
             Name = "A Maze of Twisty Trampolines, All Alike";
-            _input = null;
         }
+
+        public void Init()
+        {
+        }
+
         public string Run(Part part)
         {
             _input = Input.GetIntVector(this);

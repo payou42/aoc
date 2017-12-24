@@ -16,10 +16,15 @@ namespace Aoc
         private Dictionary<string, int> _history;
 
         public Day201706()
-        {            
+        {
             Codename = "2017-06";
-            Name = "Memory Reallocation";            
+            Name = "Memory Reallocation";
         }
+
+        public void Init()
+        {            
+        }
+
         public string Run(Part part)
         {
             // Prepare data

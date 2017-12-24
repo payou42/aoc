@@ -14,12 +14,17 @@ namespace Aoc
         private Tree _root;
 
         public Day201707()
-        {            
+        {
             Codename = "2017-07";
             Name = "Recursive Circus";
+        }
+
+        public void Init()
+        {
             _root = BuildTree();
             _root.EvaluateWeight();
         }
+
         public string Run(Part part)
         {
             if (part == Part.Part1)

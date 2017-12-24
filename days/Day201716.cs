@@ -12,9 +12,13 @@ namespace Aoc
         public string Name { get; private set; }
 
         public Day201716()
-        {            
+        {
             Codename = "2017-16";
             Name = "Permutation Promenade";
+        }
+
+        public void Init()
+        {
         }
 
         public string Run(Part part)

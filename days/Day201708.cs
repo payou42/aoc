@@ -18,9 +18,13 @@ namespace Aoc
         private Int64 _highest;
 
         public Day201708()
-        {            
+        {
             Codename = "2017-08";
             Name = "I Heard You Like Registers";
+        }
+
+        public void Init()
+        {
             _instructions = Input.GetStringVector(this);
             _cpu = new Cpu(-1);
             _cpu.OnExecute += this.Execute;

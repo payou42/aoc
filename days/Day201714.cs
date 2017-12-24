@@ -16,9 +16,13 @@ namespace Aoc
         private int _groupId;        
 
         public Day201714()
-        {            
+        {
             Codename = "2017-14";
             Name = "Disk Defragmentation";
+        }
+
+        public void Init()
+        { 
             BuildMap();
         }
 

@@ -14,11 +14,16 @@ namespace Aoc
         private Int32[][] _content = null;
 
         public Day201702()
-        {            
+        {
             Codename = "2017-02";
             Name = "Corruption Checksum";
+        }
+
+        public void Init()
+        {
             _content = Input.GetIntMatrix(this);
         }
+
         public string Run(Part part)
         {
             return EvaluateChecksum(part).ToString();

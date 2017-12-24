@@ -16,9 +16,13 @@ namespace Aoc
         private int _mulCount;
 
         public Day201723()
-        {            
+        {
             Codename = "2017-23";
             Name = "Digital Plumber";
+        }
+
+        public void Init()
+        {
             _instructions = Input.GetStringVector(this);
         }
 

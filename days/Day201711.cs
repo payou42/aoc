@@ -16,9 +16,13 @@ namespace Aoc
         private Int64 _distance_final;
 
         public Day201711()
-        {            
+        {
             Codename = "2017-11";
             Name = "Hex Ed";
+        }
+
+        public void Init()
+        {
             _distance_alltime = 0;
             _distance_final = 0;
             RunGrid();

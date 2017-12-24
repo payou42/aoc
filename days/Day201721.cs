@@ -14,9 +14,12 @@ namespace Aoc
         private RulesSet _rules;
 
         public Day201721()
-        {            
+        {
             Codename = "2017-21";
             Name = "Fractal Art";
+        }
+        public void Init()
+        {
             _rules = new RulesSet(Input.GetStringVector(this));
         }
 

@@ -20,12 +20,18 @@ namespace Aoc
         private int y;
 
         public Day201703()
-        {            
+        {
             Codename = "2017-03";
             Name = "Spiral Memory";
+            
+        }
+
+        public void Init()
+        {
             _input = Input.GetInt(this);
             _board = new Board<Int32>();
         }
+
         public string Run(Part part)
         {
             if (part == Part.Part1)

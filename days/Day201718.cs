@@ -16,9 +16,13 @@ namespace Aoc
         Part _part;
 
         public Day201718()
-        {            
+        {
             Codename = "2017-18";
             Name = "Duet";
+        }
+
+        public void Init()
+        {
             _instructions = Input.GetStringVector(this);
         }
 

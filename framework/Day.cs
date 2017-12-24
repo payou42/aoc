@@ -10,6 +10,8 @@ namespace Aoc
 
         string Name { get; }
 
+        void Init();
+        
         string Run(Part part);
     }
 }

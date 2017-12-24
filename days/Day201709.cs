@@ -16,11 +16,15 @@ namespace Aoc
         private int _garbage;
         
         public Day201709()
-        {            
+        {
             Codename = "2017-09";
             Name = "Stream Processing";
+        }
+
+        public void Init()
+        {
             _garbage = 0;
-            _root = BuildTree();            
+            _root = BuildTree(); 
         }
 
         public string Run(Part part)

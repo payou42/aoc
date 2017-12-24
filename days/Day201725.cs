@@ -12,9 +12,13 @@ namespace Aoc
         public string Name { get; private set; }
 
         public Day201725()
-        {            
+        {
             Codename = "2017-25";
             Name = "Digital Plumber";
+        }
+
+        public void Init()
+        {
         }
 
         public string Run(Part part)
