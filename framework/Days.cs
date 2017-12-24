@@ -67,7 +67,7 @@ namespace Aoc
             string p2 = performance.Elapsed.ToString();
             
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("+" + "".PadLeft(width / 2 - 1, '-').PadRight(width - 2, '-') + "+");
+            Console.WriteLine("+" + "".PadRight(width - 2, '-') + "+");
             Console.Write("|");
 
             Console.ForegroundColor = ConsoleColor.Blue;
@@ -82,7 +82,7 @@ namespace Aoc
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("|");
-            Console.WriteLine("+" + "".PadLeft(width / 2 - 1, '-').PadRight(width - 2, '-') + "+");
+            Console.WriteLine("+" + "".PadRight(width - 2, '-') + "+");
 
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write("Part 1: ");
