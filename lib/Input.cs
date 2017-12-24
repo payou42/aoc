@@ -1,0 +1,110 @@
+using System;
+using System.Text;
+using System.IO;
+using System.Collections.Generic;
+
+namespace Aoc
+{
+    public class Input
+    {
+        public static string GetString(Day day)
+        {
+            try
+            {   // Open the text file using a stream reader.
+                using (StreamReader sr = new StreamReader("./inputs/" + day.Codename + ".txt"))
+                {
+                    // Read the stream to a string, and write the string to the console.
+                    return sr.ReadToEnd();
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public static string[] GetStringVector(Day day, string separator = "\r\n")
+        {
+            string raw = GetString(day);
+            if (raw == null)
+            {
+                return null;
+            }            
+            
+            return raw.Split(separator);
+        }
+
+        public static string[][] GetStringMatrix(Day day)
+        {
+            string raw = GetString(day);
+            if (raw == null)
+            {
+                return null;
+            }
+            
+            String[] lines = raw.Split("\r\n");
+            string[][] matrix = new string[lines.Length][];
+            for (int i = 0; i < lines.Length; ++i)
+            {                
+                String[] cells = lines[i].Split(" ");
+                matrix[i] = new string[cells.Length];
+                for (int j = 0; j < cells.Length; ++j)
+                {
+                    matrix[i][j] = cells[j];
+                }
+            }
+
+            return matrix;
+        }
+
+        public static Int32 GetInt(Day day)
+        {
+            string raw = GetString(day);
+            if (raw == null)
+            {
+                return 0;
+            }            
+            
+            return Int32.Parse(raw);
+        }
+        public static Int32[] GetIntVector(Day day, string separator = "\r\n")
+        {
+            string raw = GetString(day);
+            if (raw == null)
+            {
+                return null;
+            }            
+            
+            String[] lines = raw.Split(separator);
+            Int32[] vector = new Int32[lines.Length];
+            for (int i = 0; i < lines.Length; ++i)
+            {
+                vector[i] = Int32.Parse(lines[i]);
+            }
+            return vector;
+        }
+
+        public static Int32[][] GetIntMatrix(Day day)
+        {
+            string raw = GetString(day);
+            if (raw == null)
+            {
+                return null;
+            }
+            
+            String[] lines = raw.Split("\r\n");
+            Int32[][] matrix = new Int32[lines.Length][];
+            for (int i = 0; i < lines.Length; ++i)
+            {                
+                String[] cells = lines[i].Split("\t");
+                matrix[i] = new Int32[cells.Length];
+                for (int j = 0; j < cells.Length; ++j)
+                {
+                    matrix[i][j] = Int32.Parse(cells[j]);
+                }
+            }
+
+            return matrix;
+        }
+    }
+}
