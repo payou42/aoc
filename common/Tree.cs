@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Aoc
 {
-    class Tree
+    public class Tree
     {
         public string Name { get; set; }
 

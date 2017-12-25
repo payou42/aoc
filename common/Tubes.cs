@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Aoc
 {
-    class Tubes
+    public class Tubes
     {
         private string[] _network = null;
 

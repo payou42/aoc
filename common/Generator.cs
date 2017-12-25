@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Aoc
 {
-    class Generator
+    public class Generator
     {
         public int Value { get; private set; }
 

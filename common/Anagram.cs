@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Aoc
 {
-    class Anagram
+    public class Anagram
     {
         public static bool Check(string a, string b)
         {

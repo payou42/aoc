@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Aoc
 {
-    class Fractal    
+    public class Fractal    
     {
         private string[] _fractal;
 
