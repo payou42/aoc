@@ -77,7 +77,7 @@ namespace Aoc
             string part1 = day.Run(Part.Part1);
             performance.Stop();
             string p1 = performance.Elapsed.ToString();
-            
+
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write("Part 1: ");
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -95,12 +95,32 @@ namespace Aoc
             Console.WriteLine(part2);
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("Time taken for init   = {0}", p0);
-            Console.WriteLine("Time taken for part 1 = {0}", p1);
-            Console.WriteLine("Time taken for part 2 = {0}", p2);
+            Console.Write("Time taken for init   = ");
+            WriteElapsedTime(p0);
+            Console.WriteLine("");
+            Console.Write("Time taken for part 1 = ");
+            WriteElapsedTime(p1);
+            Console.WriteLine("");
+            Console.Write("Time taken for part 2 = ");
+            WriteElapsedTime(p2);
+            Console.WriteLine("");
             Console.WriteLine("");
 
             Console.ForegroundColor = savedColor;
+        }
+
+        private static void WriteElapsedTime(string elapsed)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            for (int i = 0; i < elapsed.Length; ++i)
+            {
+                if ((elapsed[i] != '0') && (elapsed[i] != ':') && (elapsed[i] != '.'))
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                }
+                Console.Write(elapsed[i]);
+            }
+            Console.ForegroundColor = ConsoleColor.DarkGray;
         }
     }
 }
