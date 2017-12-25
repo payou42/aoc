@@ -26,10 +26,8 @@ namespace Aoc
                 string[] hash = items[0].Split("/");
                 string result = String.Join("", items[1].Split("/"));
 
-                // Console.WriteLine("Generating rules for hash: {0}", String.Join("", hash));
                 AddAll(String.Join("", hash), result, hash.Length);
             }
-            Console.WriteLine("");
         }
         
         private void Add(string hash, string result)

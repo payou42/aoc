@@ -6,7 +6,7 @@ namespace Aoc
     {
         static void Main(string[] args)
         {
-            string current = "2017-25";
+            string current = "all";
             if (args.Length > 0)
             {
                 current = args[0];

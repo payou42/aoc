@@ -46,26 +46,8 @@ namespace Aoc
         {
             int width = 80;
             Day day = _registry[codename];
-            ConsoleColor savedColor = Console.ForegroundColor;
-
-            Stopwatch performance = new Stopwatch();
-            performance.Start();
-            day.Init();
-            performance.Stop();
-            string p0 = performance.Elapsed.ToString();
-            
-            performance.Reset();
-            performance.Start();
-            string part1 = day.Run(Part.Part1);
-            performance.Stop();
-            string p1 = performance.Elapsed.ToString();
-
-            performance.Reset();
-            performance.Start();
-            string part2 = day.Run(Part.Part2);
-            performance.Stop();
-            string p2 = performance.Elapsed.ToString();
-            
+            ConsoleColor savedColor = Console.ForegroundColor;            
+           
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("+" + "".PadRight(width - 2, '-') + "+");
             Console.Write("|");
@@ -84,10 +66,28 @@ namespace Aoc
             Console.WriteLine("|");
             Console.WriteLine("+" + "".PadRight(width - 2, '-') + "+");
 
+            Stopwatch performance = new Stopwatch();
+            performance.Start();
+            day.Init();
+            performance.Stop();
+            string p0 = performance.Elapsed.ToString();
+
+            performance.Reset();
+            performance.Start();
+            string part1 = day.Run(Part.Part1);
+            performance.Stop();
+            string p1 = performance.Elapsed.ToString();
+            
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write("Part 1: ");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(part1);
+
+            performance.Reset();
+            performance.Start();
+            string part2 = day.Run(Part.Part2);
+            performance.Stop();
+            string p2 = performance.Elapsed.ToString();
 
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write("Part 2: ");

@@ -46,7 +46,7 @@ namespace Aoc
 
             if (part == Part.Part2)
             {
-                return "Victory!"
+                return "Victory!";
             }
 
             return "";
