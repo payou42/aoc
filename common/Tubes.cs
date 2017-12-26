@@ -99,33 +99,7 @@ namespace Aoc.Common
         private void Move()
         {
             _steps++;
-            switch (_direction)
-            {
-                case Direction.Left:
-                {
-                    _position.X--;
-                    break;
-                }
-
-                case Direction.Right:
-                {
-                    _position.X++;
-                    break;
-                }
-
-                case Direction.Up:
-                {
-                    _position.Y--;
-                    break;
-                }
-
-                case Direction.Down:
-                {
-                    _position.Y++;
-                    break;
-                }
-            }
-
+            _position = Board<Int64>.MoveForward(_position, _direction, 1, true);
             char c = _network[_position.Y][_position.X];
             if ((c >= 'A') && (c <= 'Z'))
             {

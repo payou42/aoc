@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Collections.Generic;
 
 namespace Aoc.Common
@@ -36,6 +37,11 @@ namespace Aoc.Common
             }
         }
 
+        public static Int64 GetDistance(Point position)
+        {
+            return (Int64)Math.Abs(position.X) + (Int64)Math.Abs(position.Y);
+        }
+
         public static Direction Turn(Direction current, Direction where)
         {
             int increment = 0;
@@ -47,6 +53,96 @@ namespace Aoc.Common
             }
             return (Direction)(((int)current + (int)Direction.Count + increment) % (int)Direction.Count);
         }
-        
+
+        public static Point MoveForward(Point position, Direction direction, int amount = 1, bool inverseY = false)
+        {
+            Point p = position;
+            switch (direction)
+            {
+                case Direction.Up:
+                {
+                    if (inverseY)
+                    {
+                        p.Y -= amount;
+                    }
+                    else
+                    {
+                        p.Y += amount;
+                    }
+                    break;
+                }
+
+                case Direction.Right:
+                {
+                    p.X += amount;
+                    break;
+                }
+
+                case Direction.Down:
+                {
+                    if (inverseY)
+                    {
+                        p.Y += amount;
+                    }
+                    else
+                    {
+                        p.Y -= amount;
+                    }
+                    break;
+                }
+
+                case Direction.Left:
+                {
+                    p.X -= amount;
+                    break;
+                }
+            }
+            return p;
+        }
+        public static Point MoveBackward(Point position, Direction direction, int amount = 1, bool inverseY = false)
+        {
+            Point p = position;
+            switch (direction)
+            {
+                case Direction.Up:
+                {
+                    if (inverseY)
+                    {
+                        p.Y += amount;
+                    }
+                    else
+                    {
+                        p.Y -= amount;
+                    }
+                    break;
+                }
+
+                case Direction.Right:
+                {
+                    p.X -= amount;
+                    break;
+                }
+
+                case Direction.Down:
+                {
+                    if (inverseY)
+                    {
+                        p.Y -= amount;
+                    }
+                    else
+                    {
+                        p.Y += amount;
+                    }
+                    break;
+                }
+
+                case Direction.Left:
+                {
+                    p.X += amount;
+                    break;
+                }
+            }
+            return p;
+        }
     }
 }
