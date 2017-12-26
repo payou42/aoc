@@ -48,10 +48,8 @@ namespace Aoc
 
         static void Generate(string year, string day)
         {
-            // Get the title
-            Console.WriteLine(Generator.GetTitle(year, day));
-            string pday = day.PadLeft(2, '0');
-
+            // Generate the code and input
+            Generator.Generate(year, day);
         }
     }
 }
