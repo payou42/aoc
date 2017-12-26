@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Aoc
 {
-    public class Day201701 : Day
+    public class Day201701 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -21,10 +21,10 @@ namespace Aoc
 
         public void Init()
         {
-            _captcha = Input.GetString(this);
+            _captcha = Aoc.Framework.Input.GetString(this);
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
             int result = 0;
             for (int i = 0; i < _captcha.Length; ++i)
@@ -39,9 +39,9 @@ namespace Aoc
             return result.ToString();
         }
 
-        private Char Next(int index, Part part)
+        private Char Next(int index, Aoc.Framework.Part part)
         {
-            if (part == Part.Part1)
+            if (part == Aoc.Framework.Part.Part1)
             {
                 return _captcha[(index + 1) % _captcha.Length];
             }
@@ -49,7 +49,7 @@ namespace Aoc
             return _captcha[(index + (_captcha.Length / 2)) % _captcha.Length];
         }
 
-        private Boolean Match(int index, Part part)
+        private Boolean Match(int index, Aoc.Framework.Part part)
         {
             return _captcha[index] == Next(index, part);
         }

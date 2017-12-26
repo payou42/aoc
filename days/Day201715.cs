@@ -2,10 +2,11 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201715 : Day
+    public class Day201715 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -23,9 +24,9 @@ namespace Aoc
         {
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
-            if (part == Part.Part1)
+            if (part == Aoc.Framework.Part.Part1)
             {
                 CreateGenerators(part);
                 int match = 0;
@@ -41,7 +42,7 @@ namespace Aoc
                 return match.ToString();
             }
 
-            if (part == Part.Part2)
+            if (part == Aoc.Framework.Part.Part2)
             {
                 CreateGenerators(part);
                 int match = 0;
@@ -60,9 +61,9 @@ namespace Aoc
             return "";
         }
 
-        private void CreateGenerators(Part part)
+        private void CreateGenerators(Aoc.Framework.Part part)
         {
-            string[] lines = Input.GetStringVector(this);
+            string[] lines = Aoc.Framework.Input.GetStringVector(this);
             int[] factors = new int[2] { 16807, 48271 };
             int[] modulo = new int[2] { 2147483647, 2147483647 };
             int[] checks = new int[2] { 4, 8 };
@@ -74,7 +75,7 @@ namespace Aoc
                     Int32.Parse(lines[i].Split(" ")[4]),
                     factors[i],
                     modulo[i],
-                    (part == Part.Part1) ? 0 : checks[i]
+                    (part == Aoc.Framework.Part.Part1) ? 0 : checks[i]
                 );
             }
         }

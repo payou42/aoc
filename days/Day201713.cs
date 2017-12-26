@@ -2,10 +2,11 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201713 : Day
+    public class Day201713 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -24,14 +25,14 @@ namespace Aoc
             BuildFirewall();
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
-            if (part == Part.Part1)
+            if (part == Aoc.Framework.Part.Part1)
             {
                 return _firewall.Scan(0).ToString();
             }
 
-            if (part == Part.Part2)
+            if (part == Aoc.Framework.Part.Part2)
             {
                 int delay = -1;
                 while (_firewall.Scan(++delay) >= 0) {}
@@ -44,7 +45,7 @@ namespace Aoc
         private void BuildFirewall()
         {
             _firewall = new Firewall();
-            foreach (string line in Input.GetStringVector(this))
+            foreach (string line in Aoc.Framework.Input.GetStringVector(this))
             {
                 string[] items = line.Split(": ");
                 int depth = Int32.Parse(items[0]);

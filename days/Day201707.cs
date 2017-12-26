@@ -2,10 +2,11 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201707 : Day
+    public class Day201707 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -25,15 +26,15 @@ namespace Aoc
             _root.EvaluateWeight();
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
-            if (part == Part.Part1)
+            if (part == Aoc.Framework.Part.Part1)
             {
                 // Evaluate weights
                 return _root.Name;
             }
 
-            if (part == Part.Part2)
+            if (part == Aoc.Framework.Part.Part2)
             {
                 Tuple<bool, string, int> balance = CheckBalanced(_root);
                 return balance.Item3.ToString();
@@ -46,7 +47,7 @@ namespace Aoc
         {
             // Create data
             Dictionary<String, Tree> elements = new Dictionary<String, Tree>();
-            String[] lines = Input.GetStringVector(this);
+            String[] lines = Aoc.Framework.Input.GetStringVector(this);
 
             // First build the list of elements
             for (int i = 0; i < lines.Length; ++i)

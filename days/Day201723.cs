@@ -2,10 +2,11 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201723 : Day
+    public class Day201723 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -23,12 +24,12 @@ namespace Aoc
 
         public void Init()
         {
-            _instructions = Input.GetStringVector(this);
+            _instructions = Aoc.Framework.Input.GetStringVector(this);
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
-            if (part == Part.Part1)
+            if (part == Aoc.Framework.Part.Part1)
             {
                 _mulCount = 0;
                 Cpu a = new Cpu(-1);
@@ -42,7 +43,7 @@ namespace Aoc
                 return _mulCount.ToString();
             }
 
-            if (part == Part.Part2)
+            if (part == Aoc.Framework.Part.Part2)
             {
                 int key = Int32.Parse(_instructions[0].Split(" ")[2]);
                 int result = 0;

@@ -2,10 +2,11 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201709 : Day
+    public class Day201709 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -27,14 +28,14 @@ namespace Aoc
             _root = BuildTree(); 
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
-            if (part == Part.Part1)
+            if (part == Aoc.Framework.Part.Part1)
             {
                 return _root.TotalWeight.ToString();
             }
 
-            if (part == Part.Part2)
+            if (part == Aoc.Framework.Part.Part2)
             {
                 return _garbage.ToString();
             }
@@ -44,7 +45,7 @@ namespace Aoc
 
         private Tree BuildTree()
         {
-            string content = Input.GetString(this);
+            string content = Aoc.Framework.Input.GetString(this);
             Tree current = new Tree("root", 0);
             Tree root = current;
             int index = 0;

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Aoc
 {
-    public class Day201702 : Day
+    public class Day201702 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -21,10 +21,10 @@ namespace Aoc
 
         public void Init()
         {
-            _content = Input.GetIntMatrix(this);
+            _content = Aoc.Framework.Input.GetIntMatrix(this);
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
             return EvaluateChecksum(part).ToString();
         }
@@ -56,12 +56,12 @@ namespace Aoc
             return 0;
         }
 
-        private int EvaluateChecksum(Part part)
+        private int EvaluateChecksum(Aoc.Framework.Part part)
         {
             int checksum = 0;
             for (int i = 0; i < _content.Length; ++i)
             {
-                checksum += (part == Part.Part1) ? EvaluateRowChecksum(i) : EvaluateRowEven(i);
+                checksum += (part == Aoc.Framework.Part.Part1) ? EvaluateRowChecksum(i) : EvaluateRowEven(i);
             }
             return checksum;
         }

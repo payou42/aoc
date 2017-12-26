@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Collections.Generic;
 
-namespace Aoc
+namespace Aoc.Framework
 {
     public class Days
     {
@@ -26,7 +26,7 @@ namespace Aoc
             Assembly current = Assembly.GetExecutingAssembly();
             foreach (Type type in current.GetTypes())
             {
-                Type[] interfaces = type.FindInterfaces((typeObj, criteriaObj) => typeObj.ToString() == (string)criteriaObj, "Aoc.Day");
+                Type[] interfaces = type.FindInterfaces((typeObj, criteriaObj) => typeObj.ToString() == (string)criteriaObj, "Aoc.Framework.Day");
                 if (interfaces.Length > 0)
                 {
                     Register(type);

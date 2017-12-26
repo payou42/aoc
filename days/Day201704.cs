@@ -2,10 +2,11 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201704 : Day
+    public class Day201704 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -21,24 +22,24 @@ namespace Aoc
 
         public void Init()
         {
-            _input = Input.GetStringMatrix(this);
+            _input = Aoc.Framework.Input.GetStringMatrix(this);
         }
         
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
             return CountValid(part).ToString();
         }
 
-        private bool CheckWords(string a, string b, Part part)
+        private bool CheckWords(string a, string b, Aoc.Framework.Part part)
         {
-            if (part == Part.Part1)
+            if (part == Aoc.Framework.Part.Part1)
             {
                 return a == b;
             }
             return Anagram.Check(a, b);
         }
 
-        private bool ValidateRow(int index, Part part)
+        private bool ValidateRow(int index, Aoc.Framework.Part part)
         {
             for (int i = 0; i < _input[index].Length - 1; ++i)
             {
@@ -53,7 +54,7 @@ namespace Aoc
             return true;
         }
 
-        private int CountValid(Part part)
+        private int CountValid(Aoc.Framework.Part part)
         {
             int valid = 0;
             for (int i = 0; i < _input.Length; ++i)

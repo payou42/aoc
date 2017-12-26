@@ -2,10 +2,11 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201720 : Day
+    public class Day201720 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -26,16 +27,16 @@ namespace Aoc
         {
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
 
-            if (part == Part.Part1)
+            if (part == Aoc.Framework.Part.Part1)
             {
                 BuildParticles(part);
                 return _closest.ToString();
             }
 
-            if (part == Part.Part2)
+            if (part == Aoc.Framework.Part.Part2)
             {
                 BuildParticles(part);
                 return _particles.Count.ToString();
@@ -44,12 +45,12 @@ namespace Aoc
             return "";
         }
 
-        private void BuildParticles(Part part)
+        private void BuildParticles(Aoc.Framework.Part part)
         {
             // Create the poarticles swarm
             _particles = new List<Particle>();
             _closest = -1;
-            string[] input = Input.GetStringVector(this);
+            string[] input = Aoc.Framework.Input.GetStringVector(this);
             int loopsWithoutChange = 0;
             foreach (string item in input)
             {
@@ -85,7 +86,7 @@ namespace Aoc
                     p.Move();
                 }
 
-                if (part == Part.Part2)
+                if (part == Aoc.Framework.Part.Part2)
                 {
                     // Check collision
                     HashSet<Particle> collided = new HashSet<Particle>();

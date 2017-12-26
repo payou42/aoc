@@ -2,10 +2,11 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201714 : Day
+    public class Day201714 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -26,14 +27,14 @@ namespace Aoc
             BuildMap();
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
-            if (part == Part.Part1)
+            if (part == Aoc.Framework.Part.Part1)
             {
                 return _bits.ToString();
             }
 
-            if (part == Part.Part2)
+            if (part == Aoc.Framework.Part.Part2)
             {
                 return (_groupId - 1).ToString();
             }
@@ -47,7 +48,7 @@ namespace Aoc
             KnotHash hasher = new KnotHash();
 
             // Prepare the input
-            string key = Input.GetString(this);            
+            string key = Aoc.Framework.Input.GetString(this);            
 
             // Build the map of used cells
             int[,] grid = new int[128, 128];

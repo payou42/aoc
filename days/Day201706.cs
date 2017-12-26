@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Aoc
 {
-    public class Day201706 : Day
+    public class Day201706 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -25,10 +25,10 @@ namespace Aoc
         {            
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
             // Prepare data
-            _banks = Input.GetIntVector(this, "\t");
+            _banks = Aoc.Framework.Input.GetIntVector(this, "\t");
             _history = new Dictionary<string, int>();
             PushHistory(0);
 
@@ -46,7 +46,7 @@ namespace Aoc
             }
             
             // Finished !
-            return (part == Part.Part1) ? steps.ToString() : (steps - _history[GenerateHash()]).ToString();
+            return (part == Aoc.Framework.Part.Part1) ? steps.ToString() : (steps - _history[GenerateHash()]).ToString();
         }
 
         private string GenerateHash()

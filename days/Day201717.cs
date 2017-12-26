@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Aoc
 {
-    public class Day201717 : Day
+    public class Day201717 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -21,10 +21,10 @@ namespace Aoc
         {
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
-            int step = Input.GetInt(this);
-            if (part == Part.Part1)
+            int step = Aoc.Framework.Input.GetInt(this);
+            if (part == Aoc.Framework.Part.Part1)
             {
                 List<int> data = new List<int>();
                 data.Add(0);
@@ -37,7 +37,7 @@ namespace Aoc
                 return (data[(cursor + 1) % data.Count()]).ToString();
             }
 
-            if (part == Part.Part2)
+            if (part == Aoc.Framework.Part.Part2)
             {
                 int cursor    = 0;
                 int zeroIndex = 0;

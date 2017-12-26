@@ -2,10 +2,11 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201721 : Day
+    public class Day201721 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -20,12 +21,12 @@ namespace Aoc
         }
         public void Init()
         {
-            _rules = new RulesSet(Input.GetStringVector(this));
+            _rules = new RulesSet(Aoc.Framework.Input.GetStringVector(this));
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
-            if (part == Part.Part1)
+            if (part == Aoc.Framework.Part.Part1)
             {
                 Fractal fractal = new Fractal();
                 for (int i = 0; i < 5; ++i)
@@ -35,7 +36,7 @@ namespace Aoc
                 return fractal.CountPixels().ToString();
             }
 
-            if (part == Part.Part2)
+            if (part == Aoc.Framework.Part.Part2)
             {
                 Fractal fractal = new Fractal();
                 for (int i = 0; i < 18; ++i)

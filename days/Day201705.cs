@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Aoc
 {
-    public class Day201705 : Day
+    public class Day201705 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -23,15 +23,15 @@ namespace Aoc
         {
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
-            _input = Input.GetIntVector(this);
+            _input = Aoc.Framework.Input.GetIntVector(this);
             Int32 steps = 0;
             Int32 current = 0;
             while ((current >= 0) && (current < _input.Length))
             {
                 Int32 jump = _input[current];
-                if (part == Part.Part1)
+                if (part == Aoc.Framework.Part.Part1)
                 {
                     _input[current]++;
                 }

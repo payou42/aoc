@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 
-namespace Aoc
+namespace Aoc.Framework
 {
     public interface Day
     {

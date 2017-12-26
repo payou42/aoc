@@ -2,10 +2,11 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201718 : Day
+    public class Day201718 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -13,7 +14,7 @@ namespace Aoc
 
         private string[] _instructions;
 
-        Part _part;
+        Aoc.Framework.Part _part;
 
         public Day201718()
         {
@@ -23,13 +24,13 @@ namespace Aoc
 
         public void Init()
         {
-            _instructions = Input.GetStringVector(this);
+            _instructions = Aoc.Framework.Input.GetStringVector(this);
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
             _part = part;
-            if (part == Part.Part1)
+            if (part == Aoc.Framework.Part.Part1)
             {
                 Cpu a = new Cpu(-1);
                 a.OnExecute += Execute;
@@ -42,7 +43,7 @@ namespace Aoc
                 return a.Registers["freq"].ToString();
             }
 
-            if (part == Part.Part2)
+            if (part == Aoc.Framework.Part.Part2)
             {
                 Cpu a = new Cpu(0);
                 Cpu b = new Cpu(1);
@@ -80,7 +81,7 @@ namespace Aoc
             {
                 case "snd":
                 {
-                    if (_part == Part.Part1)
+                    if (_part == Aoc.Framework.Part.Part1)
                     {
                         cpu.Registers["freq"] = cpu.Resolve(instruction[1]);
                     }
@@ -129,7 +130,7 @@ namespace Aoc
 
                 case "rcv":
                 {
-                    if (_part == Part.Part1)
+                    if (_part == Aoc.Framework.Part.Part1)
                     {
                         state = CpuState.Exited;
                     }

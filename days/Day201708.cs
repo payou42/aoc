@@ -2,10 +2,11 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201708 : Day
+    public class Day201708 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -25,7 +26,7 @@ namespace Aoc
 
         public void Init()
         {
-            _instructions = Input.GetStringVector(this);
+            _instructions = Aoc.Framework.Input.GetStringVector(this);
             _cpu = new Cpu(-1);
             _cpu.OnExecute += this.Execute;
             _highest = Int64.MinValue;
@@ -36,14 +37,14 @@ namespace Aoc
             }
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
-            if (part == Part.Part1)
+            if (part == Aoc.Framework.Part.Part1)
             {
                 return _cpu.Registers.GetLargest().ToString();
             }
 
-            if (part == Part.Part2)
+            if (part == Aoc.Framework.Part.Part2)
             {
                 return _highest.ToString();
             }

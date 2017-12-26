@@ -2,10 +2,11 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201722 : Day
+    public class Day201722 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -31,14 +32,14 @@ namespace Aoc
         {
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
-            BuildBoard(Input.GetStringVector(this));
+            BuildBoard(Aoc.Framework.Input.GetStringVector(this));
             _x = 0;
             _y = 0;
             _direction = Direction.Up;
             _infections = 0;
-            int steps = (part == Part.Part1) ? 10000 : 10000000;            
+            int steps = (part == Aoc.Framework.Part.Part1) ? 10000 : 10000000;            
             for (int i = 0; i < steps; ++i)
             {
                 Burst(part);
@@ -59,7 +60,7 @@ namespace Aoc
             }
         }
 
-        private void Burst(Part part)
+        private void Burst(Aoc.Framework.Part part)
         {
             Turn();
             Infect(part);
@@ -84,10 +85,10 @@ namespace Aoc
             return Direction.Up;
         }
 
-        private void Infect(Part part)
+        private void Infect(Aoc.Framework.Part part)
         {
             // Part 1
-            if (part == Part.Part1)
+            if (part == Aoc.Framework.Part.Part1)
             {
                 _infections += (_board[_x, _y] == Cell.Clean) ? 1 : 0;
                 _board[_x, _y] = (Cell)(((int)_board[_x, _y] + 2) % ((int)Cell.Count) );
@@ -95,7 +96,7 @@ namespace Aoc
             }
 
             // Part 2
-            if (part == Part.Part2)
+            if (part == Aoc.Framework.Part.Part2)
             {
                 _infections += (_board[_x, _y] == Cell.Weakened) ? 1 : 0;
                 _board[_x, _y] = (Cell)(((int)_board[_x, _y] + 1) % ((int)Cell.Count) );

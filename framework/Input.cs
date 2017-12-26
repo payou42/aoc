@@ -3,7 +3,7 @@ using System.Text;
 using System.IO;
 using System.Collections.Generic;
 
-namespace Aoc
+namespace Aoc.Framework
 {
     public class Input
     {

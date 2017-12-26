@@ -1,4 +1,5 @@
 ﻿using System;
+using Aoc.Framework;
 
 namespace Aoc
 {
@@ -6,22 +7,51 @@ namespace Aoc
     {
         static void Main(string[] args)
         {
-            string current = "all";
+            // Get the command line
+            string[] command = new string[2] { "execute", "all" };
             if (args.Length > 0)
             {
-                current = args[0];
+                command = args;
             }
 
+            // Register all days
             Days.RegisterAll();
 
-            if (current == "all")
+            // Execute command
+            switch (command[0])
+            {
+                case "execute":
+                {
+                    Execute(command[1]);
+                    return;
+                }
+
+                case "generate":
+                {
+                    Generate(command[1], command[2]);
+                    return;
+                }
+            }
+        }
+
+        static void Execute(string what)
+        {
+            if (what == "all")
             {
                 Days.RunAll();
             }
             else
             {
-                Days.RunSingle(current);
-            }            
+                Days.RunSingle(what);
+            }
+        }
+
+        static void Generate(string year, string day)
+        {
+            // Get the title
+            Console.WriteLine(Generator.GetTitle(year, day));
+            string pday = day.PadLeft(2, '0');
+
         }
     }
 }

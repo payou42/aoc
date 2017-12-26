@@ -2,10 +2,11 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201710 : Day
+    public class Day201710 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -21,20 +22,20 @@ namespace Aoc
         {
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
-            if (part == Part.Part1)
+            if (part == Aoc.Framework.Part.Part1)
             {
-                byte[] input = Input.GetIntVector(this, ",").Select(i => (byte)i).ToArray();
+                byte[] input = Aoc.Framework.Input.GetIntVector(this, ",").Select(i => (byte)i).ToArray();
                 KnotHash hash = new KnotHash(256, 1);
                 hash.Compute(input, false);
                 return hash.GetSimpleHash().ToString();
             }
 
-            if (part == Part.Part2)
+            if (part == Aoc.Framework.Part.Part2)
             {
                 KnotHash hash = new KnotHash(256, 64);
-                hash.Compute(Input.GetString(this), true);
+                hash.Compute(Aoc.Framework.Input.GetString(this), true);
                 return hash.GetDenseHash();
             }
 

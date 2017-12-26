@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Aoc
 {
-    public class Day201712 : Day
+    public class Day201712 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -24,16 +24,16 @@ namespace Aoc
             BuildLinks();
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
-            if (part == Part.Part1)
+            if (part == Aoc.Framework.Part.Part1)
             {
                 HashSet<int> group = new HashSet<int>();
                 BuildGroup(group, 0);
                 return group.Count.ToString();
             }
 
-            if (part == Part.Part2)
+            if (part == Aoc.Framework.Part.Part2)
             {
                 int groupCount = 0;
                 HashSet<int> all = new HashSet<int>();
@@ -54,7 +54,7 @@ namespace Aoc
         private void BuildLinks()
         {
             _links = new Dictionary<int, List<int>>();
-            foreach (string line in Input.GetStringVector(this))
+            foreach (string line in Aoc.Framework.Input.GetStringVector(this))
             {
                 string[] items = line.Split(" <-> ");
                 int id = Int32.Parse(items[0]);

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Aoc
 {
-    public class Day201724 : Day
+    public class Day201724 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -25,7 +25,7 @@ namespace Aoc
 
         public void Init()
         {
-            string[] input = Input.GetStringVector(this);
+            string[] input = Aoc.Framework.Input.GetStringVector(this);
             _components = new Tuple<int, int>[input.Length];
             for (int i = 0; i < input.Length; ++i)
             {
@@ -34,7 +34,7 @@ namespace Aoc
             }
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
             // Prepare data
             bool[] used = new bool[_components.Length];
@@ -103,16 +103,16 @@ namespace Aoc
             return _max.ToString();
         }
 
-        private void Evaluate(Part part, int[] chain, int len)
+        private void Evaluate(Aoc.Framework.Part part, int[] chain, int len)
         {
             int strength = GetStrength(chain);
 
-            if (part == Part.Part1)
+            if (part == Aoc.Framework.Part.Part1)
             {
                 _max = Math.Max(strength, _max);
             }
 
-            if (part == Part.Part2)
+            if (part == Aoc.Framework.Part.Part2)
             {
                 // Check length first
                 if (len > _length)

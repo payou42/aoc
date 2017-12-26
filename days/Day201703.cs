@@ -2,10 +2,11 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201703 : Day
+    public class Day201703 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -28,19 +29,19 @@ namespace Aoc
 
         public void Init()
         {
-            _input = Input.GetInt(this);
+            _input = Aoc.Framework.Input.GetInt(this);
             _board = new Board<Int32>();
         }
 
-        public string Run(Part part)
+        public string Run(Aoc.Framework.Part part)
         {
-            if (part == Part.Part1)
+            if (part == Aoc.Framework.Part.Part1)
             {
                 int layer = GetLayer(_input);
                 return (layer + GetMoveCountFromCenter(layer, GetOffsetInLayer(_input, layer))).ToString();
             }
 
-            if (part == Part.Part2)
+            if (part == Aoc.Framework.Part.Part2)
             {
                 x = 0;
                 y = 0;
@@ -91,7 +92,7 @@ namespace Aoc
             
         }
 
-        private void MoveNext(int index, Part part)
+        private void MoveNext(int index, Aoc.Framework.Part part)
         {
             // Initialisation
             if (index == 0)
@@ -131,7 +132,7 @@ namespace Aoc
             }
 
             // Add the new cell in the dictionary
-            _board[x, y] = (part == Part.Part1) ? index + 1 : SumAdjacent();
+            _board[x, y] = (part == Aoc.Framework.Part.Part1) ? index + 1 : SumAdjacent();
         }
 
         private int SumAdjacent()
