@@ -3,10 +3,16 @@ using System.Text;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Aoc.Common
+namespace Aoc.Common.Strings
 {
     public class Anagram
     {
+        /// <summary>
+        /// Check if 2 strings are anagrams (a different sequence of the same letters)
+        /// </summary>
+        /// <param name="a">The first string</param>
+        /// <param name="b">The second string</param>
+        /// <returns>true if a and b are anagrams</returns>
         public static bool Check(string a, string b)
         {
             for (int i = 'a'; i <= 'z'; ++i)

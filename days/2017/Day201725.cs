@@ -2,7 +2,8 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
-using Aoc.Common;
+using Aoc.Common.Simulators;
+using Aoc.Common.Grid;
 
 namespace Aoc
 {

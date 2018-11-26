@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
-using Aoc.Common;
+using Aoc.Common.Simulators;
 
 namespace Aoc
 {
@@ -36,7 +36,7 @@ namespace Aoc
                 a.OnExecute += Execute;
 
                 // Run the program
-                while (a.State == CpuState.Running)
+                while (a.State == Cpu.CpuState.Running)
                 {
                     a.Execute(_instructions);
                 }
@@ -66,7 +66,7 @@ namespace Aoc
                         a.Inbox.Enqueue(v);
                         sendsCount++;
                     }
-                    deadlock = (a.Execute(_instructions) == CpuState.Waiting) && (b.Execute(_instructions) == CpuState.Waiting);
+                    deadlock = (a.Execute(_instructions) == Cpu.CpuState.Waiting) && (b.Execute(_instructions) == Cpu.CpuState.Waiting);
                 }
                 return sendsCount.ToString();
             }
@@ -74,9 +74,9 @@ namespace Aoc
             return "";
         }
 
-        private CpuState Execute(Cpu cpu, string[] instruction)
+        private Cpu.CpuState Execute(Cpu cpu, string[] instruction)
         {
-            CpuState state = CpuState.Running;
+            Cpu.CpuState state = Cpu.CpuState.Running;
             switch (instruction[0])
             {
                 case "snd":
@@ -132,7 +132,7 @@ namespace Aoc
                 {
                     if (_part == Aoc.Framework.Part.Part1)
                     {
-                        state = CpuState.Exited;
+                        state = Cpu.CpuState.Exited;
                     }
                     else
                     {
@@ -145,7 +145,7 @@ namespace Aoc
                         else
                         {
                             // Stay on this instruction until we have something in the rcv queue
-                            state = CpuState.Waiting;
+                            state = Cpu.CpuState.Waiting;
                         }
                     }
                     break;

@@ -1,9 +1,10 @@
 using System;
-using System.Text;
-using System.Collections.Generic;
 
-namespace Aoc.Common
+namespace Aoc.Common.Grid
 {
+    /// <summary>
+    /// Directions in a square board
+    /// </summary>
     public enum Direction
     {
         Up = 0,
