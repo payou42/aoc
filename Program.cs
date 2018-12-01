@@ -8,7 +8,7 @@ namespace Aoc
         static void Main(string[] args)
         {
             // Get the command line
-            string[] command = new string[2] { "execute", "2016-06" };
+            string[] command = new string[3] { "execute", "2018", "2" };
             if (args.Length > 0)
             {
                 command = args;
@@ -22,7 +22,7 @@ namespace Aoc
             {
                 case "execute":
                 {
-                    Execute(command[1]);
+                    Execute(command[1] + "-" + command[2].PadLeft(2, '0'));
                     return;
                 }
 
