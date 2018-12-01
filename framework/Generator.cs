@@ -15,6 +15,7 @@ namespace Aoc.Framework
         {
             // Read the web page
             string url = String.Format("https://adventofcode.com/{0}/day/{1}", year, day);
+            Console.WriteLine(url);
             WebClient client = new WebClient ();
             client.Headers.Add ("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
             Stream data = client.OpenRead (url);
@@ -35,6 +36,7 @@ namespace Aoc.Framework
             {
                 // Read the web page
                 string url = String.Format("https://adventofcode.com/{0}/day/{1}/input", year, day);
+                Console.WriteLine(url);
                 WebClient client = new WebClient ();
                 client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3298.3 Safari/537.36");
                 client.Headers.Add("accept-encoding", "gzip, deflate, br");
