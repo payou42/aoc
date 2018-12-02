@@ -3,8 +3,11 @@ using System.Text;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Aoc.Common
+namespace Aoc.Common.Simulators
 {
+    /// <summary>
+    /// A dictionary-based registers system
+    /// </summary>
     public class Registers
     {
         private Dictionary<string, Int64> _registers;
@@ -22,6 +25,10 @@ namespace Aoc.Common
             _registers = new Dictionary<string, Int64>();            
         }
 
+        /// <summary>
+        /// Get or set the content of a register
+        /// </summary>
+        /// <value>The content of the register, 0 by default</value>
         public Int64 this[string r]
         {
             get
@@ -39,6 +46,10 @@ namespace Aoc.Common
             }
         }
 
+        /// <summary>
+        /// Get the maximum value from all registers
+        /// </summary>
+        /// <returns>The maximum</returns>
         public Int64 GetLargest()
         {
             return _registers.Values.Max();

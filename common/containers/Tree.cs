@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 
-namespace Aoc.Common
+namespace Aoc.Common.Containers
 {
     public class Tree
     {

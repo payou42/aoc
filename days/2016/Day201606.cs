@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
-using Aoc.Common;
+using Aoc.Common.Simulators;
 
 namespace Aoc
 {
@@ -22,7 +22,7 @@ namespace Aoc
 
         public void Init()
         {
-            _messages = Aoc.Framework.Input.GetStringVector(this, "\n");
+            _messages = Aoc.Framework.Input.GetStringVector(this, "\r\n");
         }
 
         public string Run(Aoc.Framework.Part part)

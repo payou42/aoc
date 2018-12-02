@@ -2,14 +2,16 @@ using System;
 using System.Text;
 using System.Drawing;
 using System.Collections.Generic;
+using Aoc.Common.Grid;
 
-namespace Aoc.Common
+namespace Aoc.Common.Simulators
 {
+    /// <summary>
+    /// An object representing a Turing machine
+    /// </summary>
     public class TuringMachine
     {
         private Tape _tape;
-
-        private Int64 _cursor;
 
         private string _state;
 
@@ -18,7 +20,6 @@ namespace Aoc.Common
         public TuringMachine(string initialState)
         {
             _tape = new Tape();
-            _cursor = 0;
             _state = initialState;
             _rules = new Dictionary<string, Tuple<Int64, Direction, string>>();
         }
@@ -30,9 +31,9 @@ namespace Aoc.Common
         
         public void Step()
         {
-            Tuple<Int64, Direction, string> rule = _rules[_state + "_" + _tape[_cursor].ToString()];
-            _tape[_cursor] = rule.Item1;
-            _cursor += (rule.Item2 == Direction.Right) ? 1 : -1;
+            Tuple<Int64, Direction, string> rule = _rules[_state + "_" + _tape[0].ToString()];
+            _tape[0] = rule.Item1;
+            _tape.Cursor += (rule.Item2 == Direction.Right) ? 1 : -1;
             _state = rule.Item3;
         }
 

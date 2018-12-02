@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
-using Aoc.Common;
+using Aoc.Common.Simulators;
 
 namespace Aoc
 {
@@ -30,8 +30,8 @@ namespace Aoc
             _cpu = new Cpu(-1);
             _cpu.OnExecute += this.Execute;
             _highest = Int64.MinValue;
-            CpuState state = CpuState.Running;
-            while (state == CpuState.Running)
+            Cpu.CpuState state = Cpu.CpuState.Running;
+            while (state == Cpu.CpuState.Running)
             {
                 state = _cpu.Execute(_instructions);
             }
@@ -85,7 +85,7 @@ namespace Aoc
             }
         }
 
-        private CpuState Execute(Cpu cpu, string[] instruction)
+        private Cpu.CpuState Execute(Cpu cpu, string[] instruction)
         {
             if (CheckCondition(instruction[4], instruction[5], Int64.Parse(instruction[6])))
             {
@@ -94,7 +94,7 @@ namespace Aoc
             }
             _cpu.Counters[instruction[1]]++;
             _cpu.Registers["ip"]++;
-            return CpuState.Running;
+            return Cpu.CpuState.Running;
         }
     }        
 }

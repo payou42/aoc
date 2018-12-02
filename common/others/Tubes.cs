@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using System.Drawing;
 using System.Collections.Generic;
+using Aoc.Common.Grid;
 
 namespace Aoc.Common
 {

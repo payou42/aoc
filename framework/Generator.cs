@@ -138,7 +138,7 @@ namespace Aoc.Framework
             }
         }
 
-        private static void StoreClass(string className, string codeName, string realName)
+        private static void StoreClass(string classPath, string className, string codeName, string realName)
         {
             string template = GetTemplate();
             template = template.Replace("{{class}}", className);
@@ -147,7 +147,7 @@ namespace Aoc.Framework
 
             try
             {   // Open the text file using a stream writer.
-                using (StreamWriter sw = new StreamWriter("./days/" + className + ".cs"))
+                using (StreamWriter sw = new StreamWriter($"./days/{classPath}/{className}.cs"))
                 {
                     // Write the content of the input in the file.
                     sw.Write(template);
@@ -172,7 +172,7 @@ namespace Aoc.Framework
             StoreInput(codeName, input);
 
             // Store the new class
-            StoreClass(className, codeName, realName);
+            StoreClass(year.ToString(), className, codeName, realName);
         }
     }
 }
