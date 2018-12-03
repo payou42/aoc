@@ -22,7 +22,7 @@ namespace Aoc
             {
                 case "execute":
                 {
-                    Execute(command[1] + "-" + command[2].PadLeft(2, '0'));
+                    Execute(command[1], command.Length > 2 ? command[2] : null);
                     return;
                 }
 
@@ -34,15 +34,15 @@ namespace Aoc
             }
         }
 
-        static void Execute(string what)
+        static void Execute(string year, string day)
         {
-            if (what == "all")
+            if (year == "all")
             {
                 Days.RunAll();
             }
             else
             {
-                Days.RunSingle(what);
+                Days.RunSingle(year + "-" + day.PadLeft(2, '0'));
             }
         }
 

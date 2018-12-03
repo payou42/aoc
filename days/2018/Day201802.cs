@@ -24,7 +24,7 @@ namespace Aoc
 
         public void Init()
         {
-            _ids = Aoc.Framework.Input.GetStringVector(this, "\n");            
+            _ids = Aoc.Framework.Input.GetStringVector(this);            
         }
 
         protected (bool, bool) HasDuplicatesOrTriplicates(string id)

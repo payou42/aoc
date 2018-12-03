@@ -27,7 +27,7 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part1)
             {
                 // Read the data
-                string[] input = Aoc.Framework.Input.GetStringVector(this, "\n").Where(s => s != "").ToArray();
+                string[] input = Aoc.Framework.Input.GetStringVector(this).Where(s => s != "").ToArray();
                 int[][] triangles = new int[input.Length][];
                 for (int i = 0; i < input.Length; ++i)
                 {
@@ -42,7 +42,7 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part2)
             {
                 // Read the data
-                string[] input = Aoc.Framework.Input.GetStringVector(this, "\n").Where(s => s != "").ToArray();
+                string[] input = Aoc.Framework.Input.GetStringVector(this).Where(s => s != "").ToArray();
                 int[][] content = new int[input.Length][];
                 int[][] triangles = new int[input.Length][];
                 for (int i = 0; i < input.Length; ++i)

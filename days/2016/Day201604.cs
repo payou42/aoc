@@ -22,7 +22,7 @@ namespace Aoc
 
         public void Init()
         {
-            _rooms = Aoc.Framework.Input.GetStringVector(this, "\n").Where(s => s != "").Select(s => ParseRoom(s)).ToArray();
+            _rooms = Aoc.Framework.Input.GetStringVector(this).Where(s => s != "").Select(s => ParseRoom(s)).ToArray();
         }
 
         public string Run(Aoc.Framework.Part part)

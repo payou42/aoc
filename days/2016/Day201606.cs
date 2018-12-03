@@ -22,7 +22,7 @@ namespace Aoc
 
         public void Init()
         {
-            _messages = Aoc.Framework.Input.GetStringVector(this, "\r\n");
+            _messages = Aoc.Framework.Input.GetStringVector(this);
         }
 
         public string Run(Aoc.Framework.Part part)

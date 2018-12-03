@@ -31,7 +31,7 @@ namespace Aoc
             _width = 50;
             _height = 6;
             _screen = new bool[_width, _height];
-            _input = Aoc.Framework.Input.GetStringVector(this, "\n");
+            _input = Aoc.Framework.Input.GetStringVector(this);
             foreach (string s in _input)
             {
                 string[] command = s.Split(" ");

@@ -30,7 +30,7 @@ namespace Aoc
 
         public void Init()
         {
-            _input = Aoc.Framework.Input.GetStringVector(this, "\n");
+            _input = Aoc.Framework.Input.GetStringVector(this);
             _slices = _input.Select(s => ParseRectangle(s)).ToArray();
             _board = new Board<bool>();
             _intersects = new bool[_slices.Length];
