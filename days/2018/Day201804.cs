@@ -66,12 +66,15 @@ namespace Aoc
                 string[] timestamp = items[0].Substring(1).Split('-', ' ', ':');
                 int? guard = null;
                 bool awake = false;
+                int day = int.Parse(timestamp[2]) + (timestamp[3] == "23" ? 1 : 0);
+                int minute = timestamp[3] == "23" ? 0 : int.Parse(timestamp[4]);
 
                 string[] content = items[1].Trim().Split(" ");
                 if (content[0] == "Guard")
                 {
                     awake = true;
                     guard = int.Parse(content[1].Substring(1));
+                    minute = 0;
                 }
                 if (content[0] == "wakes")
                 {
@@ -82,8 +85,8 @@ namespace Aoc
                 {
                     Year = int.Parse(timestamp[0]),
                     Month = int.Parse(timestamp[1]),
-                    Day = int.Parse(timestamp[2]),
-                    Minute = timestamp[3] == "23" ? 0 : int.Parse(timestamp[4]),
+                    Day = day,
+                    Minute = minute,
                     Guard = guard,
                     Awake = awake
                 };
@@ -92,8 +95,7 @@ namespace Aoc
             // Sort them
             Array.Sort(_events);
 
-            // Resolve the guards id
-            
+            // Resolve the guards id            
             int? currentGuard = null;
             for (int i = 0; i < _events.Length; ++i)
             {
@@ -113,13 +115,170 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part1)
             {
                 // Find the most sleepy guard
-                var test = _events.GroupBy(e => e.Guard);
-                return "a";
+                int? bestGuard = null;
+                int bestSleepTime = -1;
+
+                foreach (var guardEvents in _events.GroupBy(e => e.Guard))
+                {
+                    int guardId = guardEvents.First().Guard.Value;
+                    int guardSleepTime = 0;
+                    foreach (var dayEvents in guardEvents.GroupBy(ge => ge.Day))
+                    {
+                        // Last time the guard fell asleep
+                        int? startTime = null;
+
+                        // Count the time the guard was asleep
+                        foreach (var e in dayEvents)
+                        {
+                            if (e.Awake)
+                            {
+                                if (startTime.HasValue)
+                                {
+                                    guardSleepTime += e.Minute - startTime.Value;
+                                }
+                                startTime = null;
+                            }
+                            else
+                            {
+                                startTime = e.Minute;
+                            }
+                        }
+
+                        // Guard was asleep at the end of its turn
+                        if (startTime.HasValue)
+                        {
+                            guardSleepTime += 60 - startTime.Value;
+                        }                        
+                    }
+
+                    if (guardSleepTime > bestSleepTime)
+                    {
+                        bestSleepTime = guardSleepTime;
+                        bestGuard = guardId;
+                    }
+                }
+
+                // Count the days asleep per minutes
+                int[] counter = new int[60];
+                var bestGuardEvents = _events.Where(e => e.Guard == bestGuard);
+                foreach (var bestDayEvents in bestGuardEvents.GroupBy(ge => ge.Day))
+                {
+                    // Last time the guard fell asleep
+                    int? startTime = null;
+
+                    // Count the time the guard was asleep
+                    foreach (var e in bestDayEvents)
+                    {
+                        if (e.Awake)
+                        {
+                            if (startTime.HasValue)
+                            {
+                                for (int i = startTime.Value; i < e.Minute; ++i)
+                                {
+                                    counter[i]++;
+                                }
+                            }
+                            startTime = null;
+                        }
+                        else
+                        {
+                            startTime = e.Minute;
+                        }
+                    }
+
+                    // Guard was asleep at the end of its turn
+                    if (startTime.HasValue)
+                    {
+                        for (int i = startTime.Value; i < 60; ++i)
+                        {
+                            counter[i]++;
+                        }
+                    }                        
+                }
+
+                // Find the best minute
+                int bestMinute = 0;
+                for (int i = 0; i < 60; ++i)
+                {
+                    if (counter[i] > counter[bestMinute])
+                    {
+                        bestMinute = i;
+                    }
+                }
+                    
+                return (bestGuard * bestMinute).ToString();
             }
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                return "part2";
+                (int, int)[] minuteStats = new (int, int)[60];
+                for (int i = 0; i < 60; ++i)
+                {
+                    minuteStats[i] = (0, 0);
+                }
+
+                foreach (var guardEvents in _events.GroupBy(e => e.Guard))
+                {
+                    int guardId = guardEvents.First().Guard.Value;
+
+                    // Count the days asleep per minutes
+                    int[] counter = new int[60];
+                    foreach (var dayEvents in guardEvents.GroupBy(ge => ge.Day))
+                    {
+                        // Last time the guard fell asleep
+                        int? startTime = null;
+
+                        // Count the time the guard was asleep
+                        foreach (var e in dayEvents)
+                        {
+                            if (e.Awake)
+                            {
+                                if (startTime.HasValue)
+                                {
+                                    for (int i = startTime.Value; i < e.Minute; ++i)
+                                    {
+                                        counter[i]++;
+                                    }
+                                }
+                                startTime = null;
+                            }
+                            else
+                            {
+                                startTime = e.Minute;
+                            }
+                        }
+
+                        // Guard was asleep at the end of its turn
+                        if (startTime.HasValue)
+                        {
+                            for (int i = startTime.Value; i < 60; ++i)
+                            {
+                                counter[i]++;
+                            }
+                        }                        
+                    }
+
+                    // Update minuteStats
+                    for (int i = 0; i < 60; ++i)
+                    {
+                        if (minuteStats[i].Item1 < counter[i])
+                        {
+                            minuteStats[i] = (counter[i], guardId);
+                        }
+                    }
+                }
+
+                // Get the stats
+                int bestMinute = 0;
+                for (int i = 0; i < 60; ++i)
+                {
+                    if (minuteStats[i].Item1 > minuteStats[bestMinute].Item1)
+                    {
+                        bestMinute = i;
+                    }
+                }
+
+                return (bestMinute * minuteStats[bestMinute].Item2).ToString();
             }
 
             return "";
