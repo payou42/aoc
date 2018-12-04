@@ -23,7 +23,7 @@ namespace Aoc
 
         public void Init()
         {
-            _instructions = Aoc.Framework.Input.GetStringVector(this, "\n");            
+            _instructions = Aoc.Framework.Input.GetStringVector(this);            
         }
 
         public string Run(Aoc.Framework.Part part)

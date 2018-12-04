@@ -22,7 +22,7 @@ namespace Aoc
 
         public void Init()
         {
-            _ips = Aoc.Framework.Input.GetStringVector(this, "\n");
+            _ips = Aoc.Framework.Input.GetStringVector(this);
         }
 
         public string Run(Aoc.Framework.Part part)

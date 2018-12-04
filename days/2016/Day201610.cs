@@ -31,7 +31,7 @@ namespace Aoc
 
         public void Init()
         {            
-            _input = Aoc.Framework.Input.GetStringVector(this, "\n");
+            _input = Aoc.Framework.Input.GetStringVector(this);
             _bots = new Dictionary<string, Bot>();
             _rules = new Dictionary<string, (string, string)>();            
             ParseRules();

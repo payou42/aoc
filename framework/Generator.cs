@@ -123,12 +123,13 @@ namespace Aoc.Framework
 
         private static void StoreInput(string codeName, string input)
         {
+            string formatted = input.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n");
             try
             {   // Open the text file using a stream writer.
                 using (StreamWriter sw = new StreamWriter("./inputs/" + codeName + ".txt"))
                 {
                     // Write the content of the input in the file.
-                    sw.Write(input);
+                    sw.Write(formatted);
                     sw.Close();
                 }
             }
