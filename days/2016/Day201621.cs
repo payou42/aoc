@@ -3,6 +3,7 @@ using System.Text;
 using System.Linq;
 using System.Collections.Generic;
 using Aoc.Common;
+using Aoc.Common.Strings;
 
 namespace Aoc
 {
@@ -29,18 +30,28 @@ namespace Aoc
         {
             if (part == Aoc.Framework.Part.Part1)
             {
-                return "part1";
+                string password = "abcdefgh";
+                foreach (string s in _instructions)
+                {
+                    password = Scramble(s, password);
+                }
+                return password;
             }
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                return "part2";
+                string password = "fbgdceah";
+                for (int i = _instructions.Length - 1; i >= 0; --i)
+                {
+                    password = Unscramble(_instructions[i], password);
+                }
+                return password;
             }
 
             return "";
         }
 
-        private void ProcessSingle(string instruction, ref int index, char[] password)
+        private string Scramble(string instruction, string password)
         {
             string[] items = instruction.Split(" ");
             switch (items[0])
@@ -49,27 +60,11 @@ namespace Aoc
                 {
                     if (items[1] == "position")
                     {
-                        int x = int.Parse(items[2]);
-                        int y = int.Parse(items[5]);
-                        char tmp = password[(x + index) % password.Length];
-                        password[(x + index) % password.Length] = password[(y + index) % password.Length];
-                        password[(y + index) % password.Length] = tmp;
+                        return Scrambling.ReplacePosition(password, int.Parse(items[2]), int.Parse(items[5]));
                     }
-                    else if (items[1] == "letter")
+                    if (items[1] == "letter")
                     {
-                        char x = items[2][0];
-                        char y = items[5][0];
-                        for (int i = 0; i < password.Length; ++i)
-                        {
-                            if (password[i] == x)
-                            {
-                                password[i] = y;
-                            }
-                            else if (password[i] == y)
-                            {
-                                password[i] = x;
-                            }
-                        }
+                        return Scrambling.ReplaceLetter(password, items[2][0], items[5][0]);
                     }
                     break;
                 }
@@ -78,28 +73,86 @@ namespace Aoc
                 {
                     if (items[1] == "left")
                     {
-                        index = (index + password.Length - int.Parse(items[2])) % password.Length;
+                        return Scrambling.RotateLeft(password, int.Parse(items[2]));
                     }
                     else if (items[1] == "right")
                     {
-                        index = (index + int.Parse(items[2])) % password.Length;
+                        return Scrambling.RotateRight(password, int.Parse(items[2]));
+                    }
+                    else if (items[1] == "based")
+                    {
+                        return Scrambling.RotateLetter(password, items[6][0]);
+                    }
+                    break;
+                }
+
+                case "reverse":
+                {
+                    return Scrambling.ReversePart(password, int.Parse(items[2]), int.Parse(items[4]));
+                }
+
+                case "move":
+                {
+                    return Scrambling.MovePart(password, int.Parse(items[2]), int.Parse(items[5]));
+                }
+            }
+            return password;
+        }
+
+        private string Unscramble(string instruction, string password)
+        {
+            string[] items = instruction.Split(" ");
+            switch (items[0])
+            {
+                case "swap":
+                {
+                    if (items[1] == "position")
+                    {
+                        return Scrambling.ReplacePosition(password, int.Parse(items[2]), int.Parse(items[5]));
+                    }
+                    if (items[1] == "letter")
+                    {
+                        return Scrambling.ReplaceLetter(password, items[2][0], items[5][0]);
+                    }
+                    break;
+                }
+
+                case "rotate":
+                {
+                    if (items[1] == "right")
+                    {
+                        return Scrambling.RotateLeft(password, int.Parse(items[2]));
+                    }
+                    else if (items[1] == "left")
+                    {
+                        return Scrambling.RotateRight(password, int.Parse(items[2]));
                     }
                     else if (items[1] == "based")
                     {
                         char c = items[6][0];
                         for (int i = 0; i < password.Length; ++i)
                         {
-                            if (password[i] == c)
+                            var result = Scrambling.RotateRight(password, i);
+                            if (password == Scrambling.RotateLetter(result, c))
                             {
-                                int offset = (i - index + password.Length) % password.Length;
-                                index = i + 1 + (offset >= 4 ? 1 : 0);
-                                break;
+                                return result;
                             }
-                        }
+                        }                        
                     }
                     break;
                 }
+
+                case "reverse":
+                {
+                    return Scrambling.ReversePart(password, int.Parse(items[2]), int.Parse(items[4]));
+                }
+
+                case "move":
+                {
+                    return Scrambling.MovePart(password, int.Parse(items[5]), int.Parse(items[2]));
+                }
             }
-        }
+            return password;
+        }        
     }   
 }
