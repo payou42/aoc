@@ -47,6 +47,19 @@ namespace Aoc.Common.Grid
             }
         }
 
+        public List<Cell> Values
+        {
+            get
+            {
+                List<Cell> result = new List<Cell>();
+                foreach (var dict in _board.Values)
+                {
+                    result.AddRange(dict.Values);
+                }
+                return result;
+            }
+        }
+
         /// <summary>
         /// Get the distance L1 of a position in the board from the center
         /// </summary>
