@@ -45,7 +45,7 @@ namespace Aoc
             {
                 Direction direction = Direction.Up;
                 Point position;
-                Registers history = new Registers();
+                Registers<Int64> history = new Registers<Int64>();
                 history[position.X.ToString() + "_" + position.Y.ToString()]++;
                 foreach (string s in _input)
                 {

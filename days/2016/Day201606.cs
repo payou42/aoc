@@ -30,7 +30,7 @@ namespace Aoc
             string decoded = "";
             for (int j = 0; j < _messages[0].Length; ++j)
             {
-                Registers counter = new Registers();
+                Registers<Int64> counter = new Registers<Int64>();
                 foreach (string s in _messages)
                 {
                     counter[s[j].ToString()]++;

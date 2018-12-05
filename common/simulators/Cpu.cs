@@ -29,10 +29,10 @@ namespace Aoc.Common.Simulators
         public Queue<Int64> Outbox  { get; private set; }
 
         // Internal registers
-        public Registers Registers  { get; private set; }
+        public Registers<Int64> Registers  { get; private set; }
 
         // Internal counters
-        public Registers Counters { get; private set; }
+        public Registers<Int64> Counters { get; private set; }
 
         // Current state
         public CpuState State { get; private set; }        
@@ -41,8 +41,8 @@ namespace Aoc.Common.Simulators
         {
             Inbox = new Queue<Int64>();
             Outbox = new Queue<Int64>();
-            Registers = new Registers();
-            Counters = new Registers();
+            Registers = new Registers<Int64>();
+            Counters = new Registers<Int64>();
             State = CpuState.Running;
             
             if (id >= 0)

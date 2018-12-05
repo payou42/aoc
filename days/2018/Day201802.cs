@@ -29,7 +29,7 @@ namespace Aoc
 
         protected (bool, bool) HasDuplicatesOrTriplicates(string id)
         {
-            Registers counter = new Registers();
+            Registers<Int64> counter = new Registers<Int64>();
             foreach (char c in id)
             {
                 counter[c.ToString()]++;
