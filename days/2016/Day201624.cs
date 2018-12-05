@@ -78,30 +78,30 @@ namespace Aoc
                 // Now we just need to find the shortest path between all targets
                 string minPath = "";
                 int minLength = Int32.MaxValue;
-
-                string currentPath = "".PadLeft(max, '0');
-                while (true)
+                Queue<(string, string)> pathes = new Queue<(string, string)>();
+                pathes.Enqueue(("0", string.Join("", _targets.Keys.Select(k => k.ToString()).Skip(1))));
+                while (pathes.TryDequeue(out var path))
                 {
-                    // Check the current path
-                    if (IsPathValid(currentPath))
+                    if (path.Item2.Length == 0)
                     {
-                        // Get path length
-                        int l = GetPathLength(currentPath);
+                        // Check this path
+                        int l = GetPathLength(path.Item1);
                         if (l < minLength)
                         {
                             minLength = l;
-                            minPath = currentPath;
+                            minPath = path.Item1;
                         }
                     }
-
-                    // Generate next path
-                    if (!GenerateNextPath(ref currentPath))
+                    else
                     {
-                        break;
+                        for (int i = 0; i < path.Item2.Length; ++i)
+                        {
+                            pathes.Enqueue((path.Item1 + path.Item2[i], path.Item2.Remove(i, 1)));
+                        }
                     }
                 }
 
-                return "pouet";
+                return $"{minLength} - {minPath}";
             }
 
             if (part == Aoc.Framework.Part.Part2)
@@ -112,32 +112,14 @@ namespace Aoc
             return "";
         }
 
-        private bool IsPathValid(string path)
-        {
-            for (int i = 0; i < _targets.Keys.Count(); ++i) 
-            {
-                if (!path.Contains(i.ToString()))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
         private int GetPathLength(string path)
         {
             int l = 0;
             for (int i = 1; i < path.Length; ++i)
             {
-                l += _distances[path[i - 1], path[i]];
+                l += _distances[int.Parse(path[i - 1].ToString()), int.Parse(path[i].ToString())];
             }
             return l;
-        }
-
-        private bool GenerateNextPath(string ref path)
-        {
-            // todo
-            return false;
         }
 
         private void ParseContent()
