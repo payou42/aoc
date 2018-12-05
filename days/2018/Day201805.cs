@@ -47,7 +47,7 @@ namespace Aoc
             return "";
         }
 
-        private long GetPolymerLength(string polymer)
+        private long GetPolymerLengthOld(string polymer)
         {
             bool changed = true;
             string current = polymer;
@@ -75,6 +75,27 @@ namespace Aoc
             }
 
             return current.Length;
+        }
+
+        private long GetPolymerLength(string polymer)
+        {
+            int diff = 'a' - 'A';
+            Stack<char> stack = new Stack<char>();
+            foreach (char c in polymer)
+            {
+                if (stack.TryPeek(out var p))
+                {
+                    int v = Math.Abs(p - c);
+                    if (v == diff)
+                    {
+                        stack.Pop();
+                        continue;
+                    }
+                }
+                stack.Push(c);
+            }
+
+            return stack.Count;
         }
     }
 }
