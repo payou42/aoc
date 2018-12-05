@@ -88,7 +88,7 @@ namespace Aoc.Framework
             return vector;
         }
 
-        public static Int32[][] GetIntMatrix(Day day)
+        public static Int32[][] GetIntMatrix(Day day, string row = "\t", string column = "\r\n")
         {
             string raw = GetString(day);
             if (raw == null)
@@ -96,11 +96,11 @@ namespace Aoc.Framework
                 return null;
             }
             
-            String[] lines = raw.Split("\r\n");
+            String[] lines = raw.Split(column);
             Int32[][] matrix = new Int32[lines.Length][];
             for (int i = 0; i < lines.Length; ++i)
             {                
-                String[] cells = lines[i].Split("\t");
+                String[] cells = lines[i].Split(row);
                 matrix[i] = new Int32[cells.Length];
                 for (int j = 0; j < cells.Length; ++j)
                 {
