@@ -38,15 +38,52 @@ namespace Aoc.Common.Strings
         }
 
         /// <summary>
-        /// Has
+        /// Continuous
         /// </summary>
-        /// <param name="s">The string to check</param>
+        /// <param name="a">The string to check</param>
         /// <param name="c">The repeated character</param>
         /// <param name="n">The number of repetition wanted</param>
         /// <returns>true is the string has the wanted repetition</returns>
-        public static bool Has(string a, char c, int n)
+        public static bool Continuous(string a, char c, int n)
         {
             return a.Contains("".PadLeft(n, c));
+        }
+
+        /// <summary>
+        /// Group
+        /// </summary>
+        /// <param name="a">The string to check</param>
+        /// <param name="n">The length of the group</param>
+        /// <returns>true is the string has the wanted group</returns>
+        public static bool Group(string a, int n)
+        {
+            for (int i = 0; i < a.Length - n; ++i)
+            {
+                string group = a.Substring(i, n);
+                if (a.Substring(i + n).Contains(group))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Spaced
+        /// </summary>
+        /// <param name="a">The string to check</param>
+        /// <param name="n">The length of the space</param>
+        /// <returns>true is the string has the wanted repetition</returns>
+        public static bool Spaced(string a, int n)
+        {
+            for (int i = 0; i < a.Length - n - 1; ++i)
+            {
+                if (a[i] == a[i + 1 + n])
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

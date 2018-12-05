@@ -48,7 +48,7 @@ namespace Aoc
                     // Check if we have quintuples
                     foreach (var kvp in candidates)
                     {
-                        if (kvp.Value.Any() && Repetition.Has(hash, kvp.Key, 5))
+                        if (kvp.Value.Any() && Repetition.Continuous(hash, kvp.Key, 5))
                         {
                             // Validate those keys
                             keys.AddRange(kvp.Value);
@@ -101,7 +101,7 @@ namespace Aoc
                     // Check if we have quintuples
                     foreach (var kvp in candidates)
                     {
-                        if (kvp.Value.Any() && Repetition.Has(hash, kvp.Key, 5))
+                        if (kvp.Value.Any() && Repetition.Continuous(hash, kvp.Key, 5))
                         {
                             // Validate those keys
                             keys.AddRange(kvp.Value);
