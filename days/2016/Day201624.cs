@@ -32,92 +32,107 @@ namespace Aoc
         {
             _input = Aoc.Framework.Input.GetStringVector(this);
             ParseContent();
+            BuildDistances();
         }
 
         public string Run(Aoc.Framework.Part part)
         {
             if (part == Aoc.Framework.Part.Part1)
             {
-                // Build distances between each targets
-                _distances = new Board<int>();
-                int max = _targets.Keys.Count();
-                foreach (var kvp in _targets)
-                {
-                    // Build the distance map
-                    Board<int> distanceBoard = new Board<int>();                    
-
-                    // Prepare the distance queue
-                    Queue<(Point, int)> queue = new Queue<(Point, int)>();
-                    queue.Enqueue((kvp.Value, 1));
-
-                    // Process the queue
-                    while (queue.TryDequeue(out var item))
-                    {
-                        // Check if location is valid
-                        if ((!_board[item.Item1.X, item.Item1.Y]) || (distanceBoard[item.Item1.X, item.Item1.Y] > 0))
-                        {
-                            continue;
-                        }
-
-                        // Mark location
-                        distanceBoard[item.Item1.X, item.Item1.Y] = item.Item2;
-
-                        // Enqueue neighbour
-                        queue.Enqueue((new Point(item.Item1.X, item.Item1.Y + 1), item.Item2 + 1));
-                        queue.Enqueue((new Point(item.Item1.X, item.Item1.Y - 1), item.Item2 + 1));
-                        queue.Enqueue((new Point(item.Item1.X + 1, item.Item1.Y), item.Item2 + 1));
-                        queue.Enqueue((new Point(item.Item1.X - 1, item.Item1.Y), item.Item2 + 1));
-                    }
-
-                    for (int i = 0; i < max; ++i)
-                    {
-                        _distances[kvp.Key, i] = distanceBoard[_targets[i].X, _targets[i].Y] - 1;
-                    }                    
-                }
-
-                // Now we just need to find the shortest path between all targets
-                string minPath = "";
-                int minLength = Int32.MaxValue;
-                Queue<(string, string)> pathes = new Queue<(string, string)>();
-                pathes.Enqueue(("0", string.Join("", _targets.Keys.Select(k => k.ToString()).Skip(1))));
-                while (pathes.TryDequeue(out var path))
-                {
-                    if (path.Item2.Length == 0)
-                    {
-                        // Check this path
-                        int l = GetPathLength(path.Item1);
-                        if (l < minLength)
-                        {
-                            minLength = l;
-                            minPath = path.Item1;
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < path.Item2.Length; ++i)
-                        {
-                            pathes.Enqueue((path.Item1 + path.Item2[i], path.Item2.Remove(i, 1)));
-                        }
-                    }
-                }
-
-                return $"{minLength} - {minPath}";
+                var shortestPath = FindShortestPath(false);
+                return $"{shortestPath.Item1}";
             }
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                return "part2";
+                var shortestPath = FindShortestPath(true);
+                return $"{shortestPath.Item1}";
             }
 
             return "";
         }
 
-        private int GetPathLength(string path)
+        private (long, string) FindShortestPath(bool loop)
+        {
+            // Now we just need to find the shortest path between all targets
+            string minPath = "";
+            long minLength = long.MaxValue;
+            Queue<(string, string)> pathes = new Queue<(string, string)>();
+            pathes.Enqueue(("0", string.Join("", _targets.Keys.Select(k => k.ToString()).Skip(1))));
+            while (pathes.TryDequeue(out var path))
+            {
+                if (path.Item2.Length == 0)
+                {
+                    // Check this path
+                    int l = GetPathLength(path.Item1, loop);
+                    if (l < minLength)
+                    {
+                        minLength = l;
+                        minPath = path.Item1;
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < path.Item2.Length; ++i)
+                    {
+                        pathes.Enqueue((path.Item1 + path.Item2[i], path.Item2.Remove(i, 1)));
+                    }
+                }
+            }
+
+            return (minLength, minPath);
+        }
+
+        private void BuildDistances()
+        {
+            // Build distances between each targets
+            _distances = new Board<int>();
+            int max = _targets.Keys.Count();
+            foreach (var kvp in _targets)
+            {
+                // Build the distance map
+                Board<int> distanceBoard = new Board<int>();
+
+                // Prepare the distance queue
+                Queue<(Point, int)> queue = new Queue<(Point, int)>();
+                queue.Enqueue((kvp.Value, 1));
+
+                // Process the queue
+                while (queue.TryDequeue(out var item))
+                {
+                    // Check if location is valid
+                    if ((!_board[item.Item1.X, item.Item1.Y]) || (distanceBoard[item.Item1.X, item.Item1.Y] > 0))
+                    {
+                        continue;
+                    }
+
+                    // Mark location
+                    distanceBoard[item.Item1.X, item.Item1.Y] = item.Item2;
+
+                    // Enqueue neighbour
+                    queue.Enqueue((new Point(item.Item1.X, item.Item1.Y + 1), item.Item2 + 1));
+                    queue.Enqueue((new Point(item.Item1.X, item.Item1.Y - 1), item.Item2 + 1));
+                    queue.Enqueue((new Point(item.Item1.X + 1, item.Item1.Y), item.Item2 + 1));
+                    queue.Enqueue((new Point(item.Item1.X - 1, item.Item1.Y), item.Item2 + 1));
+                }
+
+                for (int i = 0; i < max; ++i)
+                {
+                    _distances[kvp.Key, i] = distanceBoard[_targets[i].X, _targets[i].Y] - 1;
+                }
+            }
+        }
+
+        private int GetPathLength(string path, bool loop)
         {
             int l = 0;
             for (int i = 1; i < path.Length; ++i)
             {
                 l += _distances[int.Parse(path[i - 1].ToString()), int.Parse(path[i].ToString())];
+            }
+            if (loop)
+            {
+                l += _distances[int.Parse(path[path.Length - 1].ToString()), int.Parse(path[0].ToString())];
             }
             return l;
         }
