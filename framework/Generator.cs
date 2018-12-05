@@ -92,7 +92,8 @@ namespace Aoc.Framework
         private static string GetCookie()
         {
             try
-            {   // Open the text file using a stream reader.
+            {
+                // Open the text file using a stream reader.
                 using (StreamReader sr = new StreamReader("./cookie.txt"))
                 {
                     // Read the stream to a string, and write the string to the console.
@@ -108,7 +109,8 @@ namespace Aoc.Framework
         private static string GetTemplate()
         {
             try
-            {   // Open the text file using a stream reader.
+            {
+                // Open the text file using a stream reader.
                 using (StreamReader sr = new StreamReader("./framework/template.txt"))
                 {
                     // Read the stream to a string, and write the string to the console.
@@ -121,12 +123,13 @@ namespace Aoc.Framework
             }
         }
 
-        private static void StoreInput(string codeName, string input)
+        private static void StoreInput(string path, string codeName, string input)
         {
             string formatted = input.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n");
             try
-            {   // Open the text file using a stream writer.
-                using (StreamWriter sw = new StreamWriter("./inputs/" + codeName + ".txt"))
+            {
+                // Open the text file using a stream writer.
+                using (StreamWriter sw = new StreamWriter($"./inputs/{path}/{codeName}.txt"))
                 {
                     // Write the content of the input in the file.
                     sw.Write(formatted);
@@ -147,7 +150,8 @@ namespace Aoc.Framework
             template = template.Replace("{{name}}", realName);
 
             try
-            {   // Open the text file using a stream writer.
+            {
+                // Open the text file using a stream writer.
                 using (StreamWriter sw = new StreamWriter($"./days/{classPath}/{className}.cs"))
                 {
                     // Write the content of the input in the file.
@@ -170,7 +174,7 @@ namespace Aoc.Framework
             string input     = FetchInput(year, day);
 
             // Store the content in a txt file
-            StoreInput(codeName, input);
+            StoreInput(year.ToString(), codeName, input);
 
             // Store the new class
             StoreClass(year.ToString(), className, codeName, realName);

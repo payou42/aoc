@@ -5,9 +5,10 @@ using System.Collections.Generic;
 using Aoc.Common;
 using Aoc.Common.Simulators;
 
+
 namespace Aoc
 {
-    public class Day201612 : Aoc.Framework.Day
+    public class Day201625 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -15,10 +16,10 @@ namespace Aoc
 
         private string[] _instructions;
 
-        public Day201612()
+        public Day201625()
         {
-            Codename = "2016-12";
-            Name = "Leonardo's Monorail";
+            Codename = "2016-25";
+            Name = "Clock Signal";
         }
 
         public void Init()
@@ -30,30 +31,52 @@ namespace Aoc
         {
             if (part == Aoc.Framework.Part.Part1)
             {
-                Cpu cpu = new Cpu(-1);
-                cpu.OnExecute += OnExecute;
-                Cpu.CpuState state = Cpu.CpuState.Running;
-                while (state == Cpu.CpuState.Running)
+                long seed = 0;
+                long loops = 50000;
+                while (!IsClockSignal(seed, loops))
                 {
-                    state = cpu.Execute(_instructions);
+                    seed++;
                 }
-                return cpu.Registers["a"].ToString();
+                return seed.ToString();
             }
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                Cpu cpu = new Cpu(-1);
-                cpu.OnExecute += OnExecute;
-                Cpu.CpuState state = Cpu.CpuState.Running;
-                cpu.Registers["c"] = 1;
-                while (state == Cpu.CpuState.Running)
-                {
-                    state = cpu.Execute(_instructions);
-                }
-                return cpu.Registers["a"].ToString();
+                return "Victory!";
             }
 
             return "";
+        }
+
+        private bool IsClockSignal(long seed, long testLength)
+        {
+            // Run CPU
+            Cpu cpu = new Cpu(0);
+            cpu.OnExecute += OnExecute;
+            Cpu.CpuState state = Cpu.CpuState.Running;
+            cpu.Registers["a"] = seed;
+            while ((state == Cpu.CpuState.Running) && testLength >= 0)
+            {
+                state = cpu.Execute(_instructions);
+                testLength--;
+            }
+
+            // Test output
+            if (cpu.Outbox.Count == 0)
+            {
+                return false;
+            }
+            
+            long expected = 0;
+            while (cpu.Outbox.TryDequeue(out var tick))
+            {
+                if (tick != expected)
+                {
+                    return false;
+                }
+                expected = 1 - expected;
+            }
+            return true;
         }
 
         private Cpu.CpuState OnExecute(Cpu cpu, string[] instruction)
@@ -84,6 +107,12 @@ namespace Aoc
                     {
                         cpu.Registers["ip"] += (cpu.Resolve(instruction[2]) - 1);
                     }
+                    break;
+                }
+
+                case "out":
+                {
+                    cpu.Outbox.Enqueue(cpu.Resolve(instruction[1]));
                     break;
                 }
             }

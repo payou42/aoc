@@ -10,8 +10,12 @@ namespace Aoc.Framework
         public static string GetString(Day day)
         {
             try
-            {   // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader("./inputs/" + day.Codename + ".txt"))
+            {
+                // Get the path elements
+                string[] items = day.Codename.Split("-");
+
+                // Open the text file using a stream reader.
+                using (StreamReader sr = new StreamReader($"./inputs/{items[0]}/{day.Codename}.txt"))
                 {
                     // Read the stream to a string, and write the string to the console.
                     return sr.ReadToEnd();
