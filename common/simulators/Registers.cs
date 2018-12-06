@@ -8,11 +8,11 @@ namespace Aoc.Common.Simulators
     /// <summary>
     /// A dictionary-based registers system
     /// </summary>
-    public class Registers
+    public class Registers<T>
     {
-        private Dictionary<string, Int64> _registers;
+        private Dictionary<string, T> _registers;
 
-        public Dictionary<string, Int64> Storage
+        public Dictionary<string, T> Storage
         {
             get
             {
@@ -22,20 +22,20 @@ namespace Aoc.Common.Simulators
 
         public Registers() 
         {
-            _registers = new Dictionary<string, Int64>();            
+            _registers = new Dictionary<string, T>();            
         }
 
         /// <summary>
         /// Get or set the content of a register
         /// </summary>
         /// <value>The content of the register, 0 by default</value>
-        public Int64 this[string r]
+        public T this[string r]
         {
             get
             {
                 if (!_registers.ContainsKey(r))
                 {
-                    _registers[r] = 0;
+                    _registers[r] = default(T);
                 }
                 return _registers[r];
             }
@@ -50,7 +50,7 @@ namespace Aoc.Common.Simulators
         /// Get the maximum value from all registers
         /// </summary>
         /// <returns>The maximum</returns>
-        public Int64 GetLargest()
+        public T GetLargest()
         {
             return _registers.Values.Max();
         }
