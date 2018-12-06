@@ -10,15 +10,7 @@ namespace Aoc.Common.Logic
     {
         protected Registers<UInt16> _registers;
 
-        protected List<Gate> _gates;
-
-        public List<Gate> Gates
-        {
-            get
-            {
-                return _gates;
-            }
-        }
+        public List<Gate> Gates { get; set; }
 
         public Registers<UInt16> Registers
         {
@@ -31,34 +23,34 @@ namespace Aoc.Common.Logic
         public Circuit()
         {
             _registers = new Registers<UInt16>();
-            _gates = new List<Gate>();
+            Gates = new List<Gate>();
         }
 
-        public void Add(Gate gate)
-        {
-            _gates.Add(gate);
-        }
-
-        public void Run()
+        public void Tick()
         {
             List<string> valid = new List<string>();
-            List<Gate> toActivate = _gates.Select(g => g).ToList();
+            List<Gate> toActivate = Gates.Select(g => g).ToList();
             
             while (toActivate.Count > 0)
             {
                 List<Gate> activable = toActivate.Where(g => IsActivable(g, valid)).ToList();
                 foreach (Gate gate in activable)
                 {
-                    gate.Activate(_registers);
+                    gate.Tick(_registers);
                     valid.Add(gate.Output);
                     toActivate.Remove(gate);
                 }
             }
         }
 
+        public void Reset()
+        {
+            _registers = new Registers<UInt16>();
+        }
+
         private bool IsActivable(Gate g, List<string> valid)
         {
-            foreach (string s in g.GetInputs())
+            foreach (string s in g.GetDependencies())
             {
                 if (!valid.Contains(s))
                 {

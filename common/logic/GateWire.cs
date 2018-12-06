@@ -7,16 +7,9 @@ namespace Aoc.Common.Logic
 {
     public class GateWire : Gate
     {
-        public string A { get; set; }
-
-        public override void Activate(Registers<UInt16> r)
+        public override void Tick(Registers<UInt16> r)
         {
-            r[Output] = r[A];
-        }
-
-        public override string[] GetInputs()
-        {
-            return new string[] { A };
+            r[Output] = GetInput(0, r);
         }
     }
 }
