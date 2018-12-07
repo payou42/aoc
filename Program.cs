@@ -8,7 +8,7 @@ namespace Aoc
         static void Main(string[] args)
         {
             // Get the command line
-            string[] command = new string[3] { "execute", "2015", "14" };
+            string[] command = new string[3] { "execute", "2015", "15" };
             if (args.Length > 0)
             {
                 command = args;
