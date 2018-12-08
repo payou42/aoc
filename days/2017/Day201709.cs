@@ -48,7 +48,7 @@ namespace Aoc
             string content = Aoc.Framework.Input.GetString(this);
             WeightTree tree = new WeightTree(new WeightTree.Header { Name = "root", LocalWeight = 0 });
             
-            Tree<WeightTree.Header>.Node current = _tree.Root;
+            Tree<WeightTree.Header>.Node current = tree.Root;
             int index = 0;
             bool garbage = false;
             
