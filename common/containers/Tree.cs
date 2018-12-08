@@ -1,48 +1,63 @@
 using System;
-using System.Text;
 using System.Collections.Generic;
 
 namespace Aoc.Common.Containers
 {
-    public class Tree
+
+    public class Tree<T>
     {
-        public string Name { get; set; }
+        public delegate void Visitor(T nodeData);
 
-        public Int32 LocalWeight { get; set; }
-
-        public Int32 TotalWeight { get; set; }
-
-        public List<Tree> Children { get; }
-
-        public Tree Parent { get; }
-
-        public bool IsRoot { get; set; }
-
-        public Tree(string name, int weight, Tree parent = null)
+        public class Node
         {
-            Name = name;
-            LocalWeight = weight;
-            Children = new List<Tree>();
-            IsRoot = true;
-            Parent = parent;
-        }
+            public Node Parent { get; set; }
 
-        public Tree AddChild(string name, int weight)
-        {
-            Tree child = new Tree(name, weight, this);
-            Children.Add(child);
-            return child;
-        }
-        
-        public Int32 EvaluateWeight()
-        {
-            Int32 subWeights = 0;
-            foreach (Tree element in Children)
+            public T Data { get; set; }
+
+            public List<Node> Children { get; private set; }
+
+            public bool IsRoot
             {
-                subWeights += element.EvaluateWeight();                
+                get
+                {
+                    return Parent == null;
+                }
             }
-            TotalWeight = subWeights + LocalWeight;
-            return TotalWeight;
-        }        
+
+            public Node(Node parent, T data)
+            {
+                Parent = parent;
+                Data = data;
+                Children = new List<Node>();
+            }
+
+            public Node AddChild(T data)
+            {
+                Node node = new Node(this, data);
+                Children.Add(node);
+                return node;
+            }
+
+            public void Traverse(Visitor visitor)
+            {
+                visitor(Data);
+                foreach (Node child in Children)
+                {
+                    child.Traverse(visitor);
+                }
+            }
+        }
+
+        public Node Root { get; }
+
+        public Tree(T data)
+        {
+            Root = new Node(null, data);
+        }
+
+        public Tree(Node root)
+        {
+            Root = root;
+        }
     }
 }
