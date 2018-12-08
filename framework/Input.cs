@@ -38,7 +38,7 @@ namespace Aoc.Framework
             return raw.Split(separator);
         }
 
-        public static string[][] GetStringMatrix(Day day)
+        public static string[][] GetStringMatrix(Day day, string row = "\t", string column = "\r\n")
         {
             string raw = GetString(day);
             if (raw == null)
@@ -46,11 +46,11 @@ namespace Aoc.Framework
                 return null;
             }
             
-            String[] lines = raw.Split("\r\n");
+            String[] lines = raw.Split(column);
             string[][] matrix = new string[lines.Length][];
             for (int i = 0; i < lines.Length; ++i)
             {                
-                String[] cells = lines[i].Split(" ");
+                String[] cells = lines[i].Split(row);
                 matrix[i] = new string[cells.Length];
                 for (int j = 0; j < cells.Length; ++j)
                 {

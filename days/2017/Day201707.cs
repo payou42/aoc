@@ -12,7 +12,7 @@ namespace Aoc
 
         public string Name { get; private set; }
 
-        private Tree _root;
+        private WeightTree _tree;
 
         public Day201707()
         {
@@ -22,8 +22,8 @@ namespace Aoc
 
         public void Init()
         {
-            _root = BuildTree();
-            _root.EvaluateWeight();
+            _tree = BuildTree();
+            _tree.EvaluateWeight(_tree.Root);
         }
 
         public string Run(Aoc.Framework.Part part)
@@ -31,22 +31,22 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part1)
             {
                 // Evaluate weights
-                return _root.Name;
+                return _tree.Root.Data.Name;
             }
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                Tuple<bool, string, int> balance = CheckBalanced(_root);
+                Tuple<bool, string, int> balance = CheckBalanced(_tree.Root);
                 return balance.Item3.ToString();
             }
 
             return "";
         }
 
-        private Tree BuildTree()
+        private WeightTree BuildTree()
         {
             // Create data
-            Dictionary<String, Tree> elements = new Dictionary<String, Tree>();
+            Dictionary<String, Tree<WeightTree.Header>.Node> elements = new Dictionary<String, Tree<WeightTree.Header>.Node>();
             String[] lines = Aoc.Framework.Input.GetStringVector(this);
 
             // First build the list of elements
@@ -55,7 +55,7 @@ namespace Aoc
                 String[] items = lines[i].Split(" ");
                 String name = items[0];
                 Int32 weight = Int32.Parse(items[1].Substring(1, items[1].Length - 2));
-                elements[name] = new Tree(name, weight);
+                elements[name] = new Tree<WeightTree.Header>.Node(null, new WeightTree.Header { Name = name, LocalWeight = weight });
             }
 
             // Then build dependencies
@@ -64,7 +64,7 @@ namespace Aoc
                 String[] items = lines[i].Split(" ");                
                 if (items.Length > 3)
                 {
-                    Tree parent = elements[items[0]];
+                    var parent = elements[items[0]];
                     for (int j = 3; j < items.Length; ++j)
                     {
                         String childName = items[j];
@@ -72,28 +72,18 @@ namespace Aoc
                         {
                             childName = childName.Substring(0, childName.Length - 1);
                         }
-                        Tree child = elements[childName];
-                        child.IsRoot = false;
+                        var child = elements[childName];
                         parent.Children.Add(child);
+                        child.Parent = parent;
                     }
                 }
             }
 
             // Find the root
-            Tree root = null;
-            foreach(KeyValuePair<String, Tree> element in elements)
-            {
-                if (element.Value.IsRoot)
-                {
-                    root = element.Value;
-                    break;
-                }
-            }
-
-            return root;
+            return new WeightTree(elements.Values.Where(n => n.IsRoot).First());
         }
 
-        private Tuple<bool, string, int> CheckBalanced(Tree tree)
+        private Tuple<bool, string, int> CheckBalanced(Tree<WeightTree.Header>.Node tree)
         {
             // Check number of children
             if (tree.Children.Count == 0)
@@ -102,11 +92,11 @@ namespace Aoc
             }
 
             // Check local balance
-            Int32 w = tree.Children[0].TotalWeight;
+            Int32 w = tree.Children[0].Data.TotalWeight;
             bool balanced = true;
-            foreach (Tree child in tree.Children)
+            foreach (var child in tree.Children)
             {
-                if (child.TotalWeight != w)
+                if (child.Data.TotalWeight != w)
                 {
                     balanced = false;
                 }
@@ -117,7 +107,7 @@ namespace Aoc
             }
 
             // Check children balance
-            foreach (Tree child in tree.Children)
+            foreach (var child in tree.Children)
             {
                 Tuple<bool, string, int> result = CheckBalanced(child);
                 if (!result.Item1)
@@ -128,15 +118,15 @@ namespace Aoc
 
             // Local balance is wrong but children are ok
             Dictionary<int, int> weights = new Dictionary<int, int>();
-            foreach (Tree child in tree.Children)
+            foreach (var child in tree.Children)
             {
-                if (weights.ContainsKey(child.TotalWeight))
+                if (weights.ContainsKey(child.Data.TotalWeight))
                 {
-                    weights[child.TotalWeight] += 1;
+                    weights[child.Data.TotalWeight] += 1;
                 }
                 else 
                 {
-                    weights[child.TotalWeight] = 1;
+                    weights[child.Data.TotalWeight] = 1;
                 }
             }
 
@@ -156,11 +146,11 @@ namespace Aoc
             }
 
             // Fix the tree !
-            foreach (Tree child in tree.Children)
+            foreach (var child in tree.Children)
             {
-                if (child.TotalWeight == wrongWeight)
+                if (child.Data.TotalWeight == wrongWeight)
                 {
-                    return new Tuple<bool, string, int>(false, child.Name, child.LocalWeight - wrongWeight + goodWeight);
+                    return new Tuple<bool, string, int>(false, child.Data.Name, child.Data.LocalWeight - wrongWeight + goodWeight);
                 }
             }
             return new Tuple<bool, string, int>(true, "", 0);

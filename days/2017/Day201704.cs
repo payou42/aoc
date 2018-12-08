@@ -22,7 +22,7 @@ namespace Aoc
 
         public void Init()
         {
-            _input = Aoc.Framework.Input.GetStringMatrix(this);
+            _input = Aoc.Framework.Input.GetStringMatrix(this, " ");
         }
         
         public string Run(Aoc.Framework.Part part)
