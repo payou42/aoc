@@ -26,22 +26,22 @@ namespace Aoc
         {
             _store = new List<Item>
             {
-                new Item(GearType.Weapon, "Dagger", 8, 4, 0),
-                new Item(GearType.Weapon, "Shortsword", 10, 5, 0),
-                new Item(GearType.Weapon, "Warhammer", 25, 6, 0),
-                new Item(GearType.Weapon, "Longsword", 40, 7, 0),
-                new Item(GearType.Weapon, "Greataxe", 74, 8, 0),
-                new Item(GearType.Armor, "Leather", 13, 0, 1),
-                new Item(GearType.Armor, "Chainmail", 31, 0, 2),
-                new Item(GearType.Armor, "Splintmail", 53, 0, 3),
-                new Item(GearType.Armor, "Bandedmail", 75, 0, 4),
-                new Item(GearType.Armor, "Platemail", 102, 0, 5),
-                new Item(GearType.Ring, "Damage +1", 25, 1, 0),
-                new Item(GearType.Ring, "Damage +2", 50, 2, 0),
-                new Item(GearType.Ring, "Damage +3", 100, 3, 0),
-                new Item(GearType.Ring, "Defense +1", 20, 0, 1),
-                new Item(GearType.Ring, "Defense +2", 40, 0, 2),
-                new Item(GearType.Ring, "Defense +3", 80, 0, 3)
+                new Item(Item.GearType.Weapon, "Dagger", 8, 4, 0),
+                new Item(Item.GearType.Weapon, "Warhammer", 25, 6, 0),
+                new Item(Item.GearType.Weapon, "Shortsword", 10, 5, 0),
+                new Item(Item.GearType.Weapon, "Longsword", 40, 7, 0),
+                new Item(Item.GearType.Weapon, "Greataxe", 74, 8, 0),
+                new Item(Item.GearType.Armor, "Leather", 13, 0, 1),
+                new Item(Item.GearType.Armor, "Chainmail", 31, 0, 2),
+                new Item(Item.GearType.Armor, "Splintmail", 53, 0, 3),
+                new Item(Item.GearType.Armor, "Bandedmail", 75, 0, 4),
+                new Item(Item.GearType.Armor, "Platemail", 102, 0, 5),
+                new Item(Item.GearType.Ring, "Damage +1", 25, 1, 0),
+                new Item(Item.GearType.Ring, "Damage +2", 50, 2, 0),
+                new Item(Item.GearType.Ring, "Damage +3", 100, 3, 0),
+                new Item(Item.GearType.Ring, "Defense +1", 20, 0, 1),
+                new Item(Item.GearType.Ring, "Defense +2", 40, 0, 2),
+                new Item(Item.GearType.Ring, "Defense +3", 80, 0, 3)
             };
         }
 
@@ -76,15 +76,15 @@ namespace Aoc
             boss.Armor = 2;
 
             // Pick one weapon
-            var weapons = _store.Where(item => item.Type == GearType.Weapon);
+            var weapons = _store.Where(item => item.Type == Item.GearType.Weapon);
             foreach (var weapon in weapons)
             {
                 // Pick one or no armor
-                var armors = _store.Where(item => item.Type == GearType.Armor).Append(null);
+                var armors = _store.Where(item => item.Type == Item.GearType.Armor).Append(null);
                 foreach (var armor in armors)
                 {
                     // Pick zero, one or 2 rings
-                    var rings = _store.Where(item => item.Type == GearType.Ring).Append(null);
+                    var rings = _store.Where(item => item.Type == Item.GearType.Ring).Append(null);
                     foreach (var ring1 in rings)
                     {
                         foreach (var ring2 in rings)
