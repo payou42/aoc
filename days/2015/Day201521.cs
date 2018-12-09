@@ -3,6 +3,7 @@ using System.Text;
 using System.Linq;
 using System.Collections.Generic;
 using Aoc.Common;
+using Aoc.Common.Rpg;
 
 namespace Aoc
 {
@@ -11,46 +12,6 @@ namespace Aoc
         public string Codename { get; private set; }
 
         public string Name { get; private set; }
-
-        public enum GearType
-        {
-            Weapon = 0,
-
-            Armor = 1,
-
-            Ring = 2
-        }
-
-        public class Item
-        {
-            public string Name { get; set; }
-
-            public GearType Type { get; set; }
-
-            public int Cost { get; set; }
-
-            public int Damage { get; set; }
-
-            public int Armor { get; set; }
-
-            public Item(GearType type, string name, int cost, int damage, int armor)
-            {
-                Type = type;
-                Name = name;
-                Cost = cost;
-                Damage = damage;
-                Armor = armor;
-            }
-        }
-
-        public class Character
-        {
-            public int Damage { get; set; }
-
-            public int Armor { get; set; }
-
-            public int Health { get; set; }
-        }
 
         private List<Item> _store;
 
