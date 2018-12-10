@@ -60,6 +60,22 @@ namespace Aoc.Common.Grid
             }
         }
 
+        public List<(Point, Cell)> Cells
+        {
+            get
+            {
+                List<(Point, Cell)> result = new List<(Point, Cell)>();
+                foreach (var xs in _board)
+                {
+                    foreach (var ys in xs.Value)
+                    {
+                        result.Add((new Point(xs.Key, ys.Key), ys.Value));
+                    }                    
+                }
+                return result;
+            }
+        }
+
         /// <summary>
         /// Get the distance L1 of a position in the board from the center
         /// </summary>
