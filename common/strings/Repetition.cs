@@ -85,5 +85,18 @@ namespace Aoc.Common.Strings
             }
             return false;
         }
+
+        public static int Count(string a, string s)
+        {
+            int count = 0;
+            for (int i = 0; i <= a.Length - s.Length; ++i)
+            {
+                if (a.Substring(i, s.Length) == s)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
     }
 }
