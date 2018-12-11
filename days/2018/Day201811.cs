@@ -46,7 +46,7 @@ namespace Aoc
                 Board<int> power = new Board<int>();                
                 int bestSize = 0;
                 // Find the best power cell
-                for (int size = 1; size <= 300; ++size)
+                for (int size = 1; size <= 30; ++size)
                 {
                     IncrementPowerGrid(power, size);                    
                     var result = power.Cells.OrderByDescending(cell => cell.Item2).First();
@@ -98,29 +98,28 @@ namespace Aoc
 
         private void IncrementPowerGrid(Board<int> power, int size)
         {
-            for (int x = 1; x + size - 1 <= 300; ++x)
+            for (int x = 1; x <= 300; ++x)
             {
                 for (int y = 1; y <= 300; ++y)
                 {                    
                     int increment = 0;
                     
                     int xx = x + size - 1;
-                    for (int j = y; j < y + size; ++j)
+                    if (xx <= 300)
                     {
-                        increment += _cells[xx, j];
+                        for (int j = y; j < y + size; ++j)
+                        {
+                            increment += _cells[xx, j];
+                        }
                     }
-                }
-            }
 
-            for (int x = 1; x <= 300; ++x)
-            {
-                for (int y = 1; y + size - 1 <= 300; ++y)
-                {
-                    int increment = 0;
                     int yy = y + size - 1;
-                    for (int i = x; i < x + size - 1; ++i)
+                    if (yy <= 300)
                     {
-                        increment += _cells[i, yy];
+                        for (int i = x; i < x + size - 1; ++i)
+                        {
+                            increment += _cells[i, yy];
+                        }
                     }
                     power[x, y] += increment;
                 }
