@@ -30,113 +30,69 @@ namespace Aoc
         {
             if (part == Aoc.Framework.Part.Part1)
             {
-                Queue<Combat> queue = new Queue<Combat>();
-                queue.Enqueue(new Combat
-                {
-                    Me = new Character { Health = 50, Armor = 0, Damage = 0, Mana = 500, Effects = new List<Effect>() },
-                    Boss = new Character { Health = 71, Armor = 0, Damage = 10, Mana = 0, Effects = new List<Effect>() },
-                    TotalMana = 0,
-                    History = new List<string>()
-                });
-
-                int minimumMana = int.MaxValue;
-                List<string> minimumHistory = null;
-
-                while (queue.TryDequeue(out var combat))
-                {                    
-                    foreach (Spell spell in _spells)
-                    {
-                        Combat.Issue issue = combat.Round(spell, false, out var next);
-                        switch (issue)
-                        {
-                            case Combat.Issue.PlayerWin:
-                            {
-                                if (next.TotalMana < minimumMana)
-                                {
-                                    minimumMana = next.TotalMana;
-                                    minimumHistory = next.History;
-                                }
-                                continue;
-                            }
-
-                            case Combat.Issue.Invalid:
-                            case Combat.Issue.BossWin:
-                            {
-                                continue;
-                            }
-
-
-                            case Combat.Issue.InProgress:
-                            {
-                                if (next.TotalMana < minimumMana)
-                                {
-                                    queue.Enqueue(next);
-                                }
-                                break;
-                            }
-                        }
-                    }                    
-                }
-
-                // Expected 1824
-                return minimumMana.ToString();
+                return Run(false).ToString();
             }
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                Queue<Combat> queue = new Queue<Combat>();
-                queue.Enqueue(new Combat
-                {
-                    Me = new Character { Health = 50, Armor = 0, Damage = 0, Mana = 500, Effects = new List<Effect>() },
-                    Boss = new Character { Health = 71, Armor = 0, Damage = 10, Mana = 0, Effects = new List<Effect>() },
-                    TotalMana = 0,
-                    History = new List<string>()
-                });
-
-                int minimumMana = int.MaxValue;
-                List<string> minimumHistory = null;
-
-                while (queue.TryDequeue(out var combat))
-                {                    
-                    foreach (Spell spell in _spells)
-                    {
-                        Combat.Issue issue = combat.Round(spell, true, out var next);
-                        switch (issue)
-                        {
-                            case Combat.Issue.PlayerWin:
-                            {
-                                if (next.TotalMana < minimumMana)
-                                {
-                                    minimumMana = next.TotalMana;
-                                    minimumHistory = next.History;
-                                }
-                                continue;
-                            }
-
-                            case Combat.Issue.Invalid:
-                            case Combat.Issue.BossWin:
-                            {
-                                continue;
-                            }
-
-
-                            case Combat.Issue.InProgress:
-                            {
-                                if (next.TotalMana < minimumMana)
-                                {
-                                    queue.Enqueue(next);
-                                }
-                                break;
-                            }
-                        }
-                    }                    
-                }
-
-                // Expected 1937
-                return minimumMana.ToString();
+                return Run(true).ToString();
             }
 
             return "";
+        }
+
+        private int Run(bool hard)
+        {
+            Queue<Combat> queue = new Queue<Combat>();
+            queue.Enqueue(new Combat
+            {
+                Me = new Character { Health = 50, Armor = 0, Damage = 0, Mana = 500, Effects = new List<Effect>() },
+                Boss = new Character { Health = 71, Armor = 0, Damage = 10, Mana = 0, Effects = new List<Effect>() },
+                TotalMana = 0,
+                History = new List<string>()
+            });
+
+            int minimumMana = int.MaxValue;
+            List<string> minimumHistory = null;
+
+            while (queue.TryDequeue(out var combat))
+            {
+                foreach (Spell spell in _spells)
+                {
+                    Combat.Issue issue = combat.Round(spell, hard, out var next);
+                    switch (issue)
+                    {
+                        case Combat.Issue.PlayerWin:
+                        {
+                            if (next.TotalMana < minimumMana)
+                            {
+                                minimumMana = next.TotalMana;
+                                minimumHistory = next.History;
+                            }
+                            continue;
+                        }
+
+                        case Combat.Issue.Invalid:
+                        case Combat.Issue.BossWin:
+                        {
+                            continue;
+                        }
+
+
+                        case Combat.Issue.InProgress:
+                        {
+                            if (next.TotalMana < minimumMana)
+                            {
+                                queue.Enqueue(next);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Expected 1824 & 1937 in hard
+            return minimumMana;
         }
     }   
 }
