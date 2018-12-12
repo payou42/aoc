@@ -51,18 +51,21 @@ namespace Aoc
                 // First iterate 1000 times
                 string current = _initial;
                 long first = 0;
-                for (int i = 0; i < 1000; ++i)
+                for (int i = 0; i < 999; ++i)
                 {
                     current = Grow(current);
                     first -= 2;
                 }
 
-                // Then measure the difference on a 100 iterations cycle
+                // Then measure the difference on the next iteration
+                long countAfter999 = Count(current, first);
+                current = Grow(current);
+                first -= 2;
                 long countAfter1000 = Count(current, first);
 
                 // Then extrapolate that
                 long total = 50000000000;
-                return (countAfter1000 + 86 * (total - 1000)).ToString();
+                return (countAfter1000 + (countAfter1000 - countAfter999) * (total - 1000)).ToString();
             }
 
             return "";
