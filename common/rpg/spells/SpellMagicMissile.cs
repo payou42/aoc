@@ -1,7 +1,7 @@
 using System;
 using Aoc.Common.Rpg;
 
-namespace Aoc.Common.Rpg
+namespace Aoc.Common.Rpg.Spells
 {  
     public class SpellMagicMissile : Spell
     {

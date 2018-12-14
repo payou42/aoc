@@ -1,8 +1,9 @@
 using System;
 using System.Linq;
 using Aoc.Common.Rpg;
+using Aoc.Common.Rpg.Effects;
 
-namespace Aoc.Common.Rpg
+namespace Aoc.Common.Rpg.Spells
 {  
     public class SpellShield : Spell
     {

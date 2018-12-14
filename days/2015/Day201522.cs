@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Aoc.Common;
 using Aoc.Common.Rpg;
+using Aoc.Common.Rpg.Spells;
 
 namespace Aoc
 {
