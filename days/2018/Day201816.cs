@@ -39,6 +39,21 @@ namespace Aoc
                 }
             }
 
+            public override bool Equals(Object other)
+            {
+                if ((other == null) || other.GetType() != typeof(Registers))
+                {
+                    return false;
+                }
+
+                return Equals((Registers)other);
+            }
+
+            public override int GetHashCode()
+            {
+                return base.GetHashCode();
+            }
+
             public bool Equals(Registers other)
             {
                 if (other == null)
