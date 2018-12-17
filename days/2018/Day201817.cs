@@ -3,6 +3,7 @@ using System.Text;
 using System.Linq;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using Aoc.Common;
 using Aoc.Common.Grid;
 
@@ -16,11 +17,17 @@ namespace Aoc
 
         private Board<bool> _clay;
 
+        private int _top;
+
         private int _depth;
 
         private int _left;
 
         private int _right;
+
+        private int _flowing;
+
+        private int _stagning;        
 
         public Day201817()
         {
@@ -57,42 +64,51 @@ namespace Aoc
                     }
                 }
             }
+            _top = _clay.Cells.Min(cell => cell.Item1.Y);
             _depth = _clay.Cells.Max(cell => cell.Item1.Y);
             _left = _clay.Cells.Min(cell => cell.Item1.X) - 1;
             _right = _clay.Cells.Max(cell => cell.Item1.X) + 1;
+            Go();
         }
 
         public string Run(Aoc.Framework.Part part)
         {
             if (part == Aoc.Framework.Part.Part1)
             {
-                Board<bool> flowing = new Board<bool>();
-                Board<bool> stagning = new Board<bool>();
-                flowing[500, 0] = true;
-                long waterCount = 0;
-                while (true)
-                {
-                    // Check if water is still moving
-                    var current = flowing.Cells.OrderByDescending(cell => cell.Item1.Y).ToList();
-                    if (current.Count + stagning.Values.Count == waterCount)
-                    {
-                        Dump(flowing, stagning, _clay);
-                        break;
-                    }
-
-                    // Let it flow
-                    waterCount = current.Count + stagning.Values.Count;
-                    flowing = Flow(current, flowing, stagning);
-                }
-                return (waterCount - 1).ToString();
+                return (_flowing + _stagning).ToString();
             }
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                return "part2";
+                return _stagning.ToString();
             }
 
             return "";
+        }
+
+        private void Go()
+        {
+            Board<bool> flowing = new Board<bool>();
+            Board<bool> stagning = new Board<bool>();
+            flowing[500, 0] = true;
+            long waterCount = 0;
+            while (true)
+            {
+                // Check if water is still moving
+                var current = flowing.Cells.OrderByDescending(cell => cell.Item1.Y).ToList();
+                if (current.Count + stagning.Values.Count == waterCount)
+                {
+                    // Dump(flowing, stagning, _clay);
+                    break;
+                }
+
+                // Let it flow
+                waterCount = current.Count + stagning.Values.Count;
+                flowing = Flow(current, flowing, stagning);
+            }
+
+            _flowing = flowing.Cells.Count(c => c.Item2 && c.Item1.Y >= _top);
+            _stagning = stagning.Cells.Count(c => c.Item2 && c.Item1.Y >= _top);
         }
 
         private Board<bool> Flow(List<(Point, bool)> current, Board<bool> flowing, Board<bool> stagning)
@@ -199,9 +215,10 @@ namespace Aoc
                     {
                         Console.Write(".");
                     }
+                    Console.WriteLine($"{x},{y}");
                 }
                 Console.WriteLine("");
             }
         }
-    }   
+    }
 }
