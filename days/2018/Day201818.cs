@@ -90,7 +90,7 @@ namespace Aoc
                     index++;
                 }
 
-                // Iterate on the missing ones
+                // Iterate a few more times
                 while (index < 1000000000)
                 {
                     current = Tick(current);
