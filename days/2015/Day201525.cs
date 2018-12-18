@@ -20,18 +20,28 @@ namespace Aoc
 
         public void Init()
         {
+            // Enter the code at row 2978, column 3083
         }
 
         public string Run(Aoc.Framework.Part part)
         {
             if (part == Aoc.Framework.Part.Part1)
             {
-                return "part1";
+                long r = 2978;
+                long c = 3083;
+                long diag = r + c - 1;
+                long index = (diag * (diag + 1) / 2) - r + 1;
+                long current = 20151125;
+                for (long i = 1; i < index; ++i)
+                {
+                    current = (current * 252533) % 33554393;
+                }
+                return current.ToString();
             }
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                return "part2";
+                return "Victory!";
             }
 
             return "";

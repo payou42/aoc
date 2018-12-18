@@ -76,6 +76,20 @@ namespace Aoc.Common.Grid
             }
         }
 
+        public void Remove(int x, int y)
+        {
+            if (_board.ContainsKey(x))
+            {
+                if (_board[x].Remove(y))
+                {
+                    if (_board[x].Count == 0)
+                    {
+                        _board.Remove(x);
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Get the distance L1 of a position in the board from the center
         /// </summary>
