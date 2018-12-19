@@ -168,7 +168,7 @@ namespace Aoc
                 new Command("gtrr", (r, a, b) => (r[a] > r[b]) ? 1 : 0),
                 new Command("eqir", (r, a, b) => (a == r[b]) ? 1 : 0),
                 new Command("eqri", (r, a, b) => (r[a] == b) ? 1 : 0),
-                new Command("geqr", (r, a, b) => (r[a] == r[b]) ? 1 : 0)
+                new Command("eqrr", (r, a, b) => (r[a] == r[b]) ? 1 : 0)
             };
 
             _samples = new List<Sample>();
