@@ -242,7 +242,6 @@ namespace Aoc
 
                     // Copy back the register in the ip
                     cpu.Ip = cpu.Registers[_register] + 1;
-
                 }
             }
 
