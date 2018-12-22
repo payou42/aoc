@@ -39,6 +39,7 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part1)
             {
                 Board<Cell> map = BuildMap();
+                // Dump(map);
                 Board<int>  pathes = BuildPathes(map);
                 return (pathes.Cells.Max(cell => cell.Item2) - 1).ToString();
             }
@@ -235,6 +236,7 @@ namespace Aoc
 
         private void Dump(Board<Cell> map)
         {
+            char[] walls = new char[] { '═', '═', '═', '═', '║', '╝', '╚', '╩', '║', '╗', '╔', '╦', '║', '╣', '╠', '╬'};
             int xmin = map.Cells.Min(cell => cell.Item1.X) - 1;
             int xmax = map.Cells.Max(cell => cell.Item1.X) + 1;
             int ymin = map.Cells.Min(cell => cell.Item1.Y) - 1;
@@ -244,7 +246,23 @@ namespace Aoc
             {
                 for (int x = xmin; x <= xmax; ++x)
                 {
-                    Console.Write(map[x, y] == Cell.Room ? "." : map[x, y] == Cell.Door ? "+" : "#");
+                    char c = '#';
+                    switch (map[x, y])
+                    {
+                        case Cell.Room: c = ' '; break;                        
+                        case Cell.Door: c = map[x - 1, y] == Cell.Room ? '│' : '─'; break;
+                        case Cell.Wall:
+                        {
+                            int wallType = (x > xmin && map[x - 1, y] == Cell.Wall ? 1 : 0) 
+                                         + (x < xmax && map[x + 1, y] == Cell.Wall ? 2 : 0) 
+                                         + (y > ymin && map[x, y - 1] == Cell.Wall ? 4 : 0) 
+                                         + (y < ymax && map[x, y + 1] == Cell.Wall ? 8 : 0);
+                            c = walls[wallType];
+                            break;
+                        }
+                    }
+
+                    Console.Write(c);
                 }
                 System.Console.WriteLine("");
             }
