@@ -86,7 +86,7 @@ namespace Aoc
         public void Init()
         {            
             _depth = 11820;
-            _width = 100;
+            _width = 50;
             _height = 1000;
             _target = new Point(7,782);
         }
@@ -122,29 +122,12 @@ namespace Aoc
                         {                      
                             distances[x, y, t] = int.MaxValue;
                         }
-
-                        CellType cellType = map[x, y].Type(_depth);
-                        if (cellType == CellType.Rocky)
-                        {
-                            queue.Enqueue((x, y, (int)Tools.ClimbingGear), int.MaxValue);
-                            queue.Enqueue((x, y, (int)Tools.Torch), int.MaxValue);
-                        }
-                        if (cellType == CellType.Wet)
-                        {
-                            queue.Enqueue((x, y, (int)Tools.Neither), int.MaxValue);
-                            queue.Enqueue((x, y, (int)Tools.ClimbingGear), int.MaxValue);
-                        }
-                        if (cellType == CellType.Narrow)
-                        {
-                            queue.Enqueue((x, y, (int)Tools.Neither), int.MaxValue);
-                            queue.Enqueue((x, y, (int)Tools.Torch), int.MaxValue);
-                        }
                     }
                 }
 
                 // Initial distance : torch
                 distances[0, 0, (int)Tools.Torch] = 0;
-                queue.Update((0, 0, 2), 0);
+                queue.Enqueue((0, 0, 2), 0);
 
                 // Process the queue
                 while (queue.TryDequeueMin(out var from))
@@ -183,7 +166,7 @@ namespace Aoc
                     distances[x + xoffset, y + yoffset, z] = 1 + d;
 
                     // Update priority queue
-                    queue.Update((x + xoffset, y + yoffset, z), 1 + d);
+                    queue.AddOrUpdate((x + xoffset, y + yoffset, z), 1 + d);
                 }
             }
         }
@@ -206,7 +189,7 @@ namespace Aoc
                     distances[x, y, tool] = 7 + d;
 
                     // Update priority queue
-                    queue.Update((x, y, tool), 7 + d);
+                    queue.AddOrUpdate((x, y, tool), 7 + d);
                 }
             }
         }
