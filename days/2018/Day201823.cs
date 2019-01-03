@@ -28,8 +28,74 @@ namespace Aoc
 
             public (int, int, int) ClosestToOrigin()
             {
-                // TODO
-                return (0, 0, 0);
+                int x = 0;
+                if (X1 > 0)
+                {
+                    x = X1;
+                }
+                if (X2 < 0)
+                {
+                    x = X2;
+                }
+
+                int y = 0;
+                if (Y1 > 0)
+                {
+                    y = Y1;
+                }
+                if (Y2 < 0)
+                {
+                    y = Y2;
+                }
+
+                int z = 0;
+                if (Z1 > 0)
+                {
+                    z = Z1;
+                }
+                if (Z2 < 0)
+                {
+                    z = Z2;
+                }
+
+                return (x, y, z);
+            }
+
+            public int DistanceToOrigin()
+            {
+                var (x, y, z) = ClosestToOrigin();
+                return Math.Abs(x) + Math.Abs(y) + Math.Abs(z);
+            }
+
+            public Box()
+            {                
+            }
+
+            public Box(int bound)
+            {
+                X1 = -bound;
+                X2 =  bound;
+                Y1 = -bound;
+                Y2 =  bound;
+                Z1 = -bound;
+                Z2 =  bound;
+            }
+
+            public Box[] Split()
+            {
+                Box[] boxes = new Box[8]
+                {
+                    new Box { X1 = X1, Y1 = Y1, Z1 = Z1, X2 = (X1 + X2) / 2, Y2 = (Y1 + Y2) / 2, Z2 = (Z1 + Z2) / 2 },
+                    new Box { X1 = 1 + (X1 + X2) / 2, Y1 = Y1, Z1 = Z1, X2 = X2, Y2 = (Y1 + Y2) / 2, Z2 = (Z1 + Z2) / 2 },
+                    new Box { X1 = X1, Y1 = 1 + (Y1 + Y2) / 2, Z1 = Z1, X2 = (X1 + X2) / 2, Y2 = Y2, Z2 = (Z1 + Z2) / 2 },
+                    new Box { X1 = 1 + (X1 + X2) / 2, Y1 = 1 + (Y1 + Y2) / 2, Z1 = Z1, X2 = X2, Y2 = Y2, Z2 = (Z1 + Z2) / 2 },
+                    new Box { X1 = X1, Y1 = Y1, Z1 = 1 + (Z1 + Z2) / 2, X2 = (X1 + X2) / 2, Y2 = (Y1 + Y2) / 2, Z2 = Z2 },
+                    new Box { X1 = 1 + (X1 + X2) / 2, Y1 = Y1, Z1 = 1 + (Z1 + Z2) / 2, X2 = X2, Y2 = (Y1 + Y2) / 2, Z2 = Z2 },
+                    new Box { X1 = X1, Y1 = 1 + (Y1 + Y2) / 2, Z1 = 1 + (Z1 + Z2) / 2, X2 = (X1 + X2) / 2, Y2 = Y2, Z2 = Z2 },
+                    new Box { X1 = 1 + (X1 + X2) / 2, Y1 = 1 + (Y1 + Y2) / 2, Z1 = 1 + (Z1 + Z2) / 2, X2 = X2, Y2 = Y2, Z2 = Z2 }
+                };
+
+                return boxes;
             }
         }
 
@@ -118,42 +184,32 @@ namespace Aoc
                     boxSize *= 2;
                 }
 
-                // Set up heap to work on things first by number of bots in range of box,
-                // then by size of box, then by distance to origin
-                // The idea is that we first work on a box with the most bots in range.
-                // In the event of a tie, work on the larger box.
-                // In the event of a tie, work on the one with a min corner closest
-                // to the origin.
+                // Use a priority queue to process cubes in order
+                // Priority is given by :
+                // 1. Number of bots in range
+                // 2. Distance to the origin
+                // Hence the priority weight given by ((long)nbBot << 32) + (long)dst)
                 PriorityQueue<Box> queue = new PriorityQueue<Box>();
+                queue.Enqueue(new Box(boxSize), 0);
 
                 while (queue.TryDequeueMax(out var box))
                 {
-                    if (box.X2 - box.X1 == 1)
+                    // If it's the minimal size
+                    if (box.X2 == box.X1)
                     {
                         // This is the closest
-                        var (x, y, z) = box.ClosestToOrigin();
-                        return $"{x},{y},{z}";
+                        return box.DistanceToOrigin().ToString();
+                    }
+
+                    // Split the box in 8 boxes
+                    Box[] split = box.Split();
+                    foreach (Box b in split)
+                    {
+                        int nbBot = _nanobots.Count(n => n.IntersectWithBox(b));
+                        int dst = box.DistanceToOrigin();
+                        queue.Enqueue(b, ((long)nbBot << 32) + (long)dst);
                     }
                 }
-
-                /*
-                workheap = [(-len(bots), -2*boxsize, 3*boxsize, initial_box)]
-                while workheap:
-                    (negreach, negsz, dist_to_orig, box) = heapq.heappop(workheap)
-                    if negsz == -1:
-                        print("Found closest at %s dist %s (%s bots in range)" %
-                            (str(box[0]), dist_to_orig, -negreach))
-                        break
-                    newsz = negsz // -2
-                    for octant in [(0, 0, 0), (0, 0, 1), (0, 1, 0), (0, 1, 1),
-                                (1, 0, 0), (1, 0, 1), (1, 1, 0), (1, 1, 1)]:
-                        newbox0 = tuple(box[0][i] + newsz * octant[i] for i in (0, 1, 2))
-                        newbox1 = tuple(newbox0[i] + newsz for i in (0, 1, 2))
-                        newbox = (newbox0, newbox1)
-                        newreach = intersect_count(newbox)
-                        heapq.heappush(workheap,
-                                    (-newreach, -newsz, d3(newbox0, (0, 0, 0)), newbox))
-                */
             }
 
             return "";
