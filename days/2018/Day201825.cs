@@ -59,39 +59,21 @@ namespace Aoc
 
         public class Constellation
         {
-            private List<Star> _stars;
-
-            public List<Star> Stars
-            {
-                get
-                {
-                    return _stars;
-                }
-            }
+            public List<Star> Stars { get; private set; }
 
             public Constellation()
             {
-                _stars = new List<Star>();
+                Stars = new List<Star>();
             }
 
             public int Distance(Star star)
             {
-                if (_stars.Count == 0)
+                if (Stars.Count == 0)
                 {
                     return int.MaxValue;
                 }
 
-                return _stars.Min(s => Star.Distance(star, s));
-            }
-
-            public static int Distance(Constellation a, Constellation b)
-            {
-                if (b.Stars.Count == 0)
-                {
-                    return int.MaxValue;
-                }
-
-                return b.Stars.Min(s => a.Distance(s));
+                return Stars.Min(s => Star.Distance(star, s));
             }
         }
 
