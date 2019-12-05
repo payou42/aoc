@@ -3,6 +3,7 @@ using System.Text;
 using System.Linq;
 using System.Collections.Generic;
 using Aoc.Common;
+using Aoc.Common.Simulators;
 
 namespace Aoc
 {
@@ -12,9 +13,7 @@ namespace Aoc
 
         public string Name { get; private set; }
 
-        private int[] _code;
-
-        private int _ip;
+        private IntCpu _cpu;
 
         public Day201902()
         {
@@ -23,19 +22,19 @@ namespace Aoc
         }
 
         public void Init()
-        {
-            _code = Aoc.Framework.Input.GetIntVector(this, ",");
-            _ip = 0;
+        {            
+            _cpu = new IntCpu();
         }
 
         public string Run(Aoc.Framework.Part part)
         {
             if (part == Aoc.Framework.Part.Part1)
             {
-                _code[1] = 12;
-                _code[2] = 2;
-                Run();
-                return _code[0].ToString();
+                _cpu.Reset(Aoc.Framework.Input.GetIntVector(this, ","));
+                _cpu.Code[1] = 12;
+                _cpu.Code[2] = 2;
+                _cpu.Run();
+                return _cpu.Code[0].ToString();
             }
 
             if (part == Aoc.Framework.Part.Part2)
@@ -44,11 +43,11 @@ namespace Aoc
                 {
                     for (int verb = 0; verb <= 99; verb++)
                     {
-                        Init();
-                        _code[1] = noun;
-                        _code[2] = verb;
-                        Run();
-                        if (_code[0] == 19690720)
+                        _cpu.Reset(Aoc.Framework.Input.GetIntVector(this, ","));
+                        _cpu.Code[1] = noun;
+                        _cpu.Code[2] = verb;
+                        _cpu.Run();
+                        if (_cpu.Code[0] == 19690720)
                         {
                             return (100 * noun + verb).ToString();
                         }
@@ -58,35 +57,6 @@ namespace Aoc
             }
 
             return "";
-        }
-
-        private void Run()
-        {
-            while (_code[_ip] != 99)
-            {
-                switch (_code[_ip])
-                {
-                    case 1:
-                    {
-                        int a = _code[_code[_ip + 1]];
-                        int b = _code[_code[_ip + 2]];
-                        int x = _code[_ip + 3];
-                        _code[x] = a + b;
-                        _ip += 4;
-                        break;
-                    }
-
-                    case 2:
-                    {
-                        int a = _code[_code[_ip + 1]];
-                        int b = _code[_code[_ip + 2]];
-                        int x = _code[_ip + 3];
-                        _code[x] = a * b;
-                        _ip += 4;
-                        break;
-                    }
-                }
-            }
         }
     }   
 }
