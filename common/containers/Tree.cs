@@ -46,6 +46,41 @@ namespace Aoc.Common.Containers
                     child.Traverse(visitor);
                 }
             }
+
+            public Node CommonParent(Node child1, Node child2)
+            {
+                Node current = child1;
+                while (current != this && !current.IsParentOf(child2))
+                {
+                    current = current.Parent;
+                }
+
+                return current;
+            }
+
+            public bool IsParentOf(Node child)
+            {
+                Node current = child;
+                while (!current.IsRoot && current != this)
+                {
+                    current = current.Parent;
+                }
+
+                return current == this;
+            }
+
+            public int DistanceToParent(Node parent)
+            {
+                Node current = this;
+                int dist = 0;
+                while (current != parent)
+                {
+                    dist++;
+                    current = current.Parent;
+                }
+
+                return dist;
+            }
         }
 
         public Node Root { get; }
