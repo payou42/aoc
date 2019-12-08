@@ -32,7 +32,7 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part1)
             {
                 Direction direction = Direction.Up;
-                Point position;
+                Point position = new Point(0, 0);
                 foreach (string s in _input)
                 {
                     direction = Board<Int64>.Turn(direction, (s[0] == 'R') ? Direction.Right : Direction.Left);
@@ -44,7 +44,7 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part2)
             {
                 Direction direction = Direction.Up;
-                Point position;
+                Point position = new Point(0, 0);
                 Registers<Int64> history = new Registers<Int64>();
                 history[position.X.ToString() + "_" + position.Y.ToString()]++;
                 foreach (string s in _input)
