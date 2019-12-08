@@ -13,21 +13,30 @@ namespace Aoc.Common.Simulators
             Code = null;
             Input = new Queue<int>();
             Output = new Queue<int>();
+            OnOutput = null;
             Ip = 0;
             Running = false;
             InstructionsSet = new Dictionary<int, Action<int>>();
             LoadDefaultInstructionsSet();
         }
 
+        public delegate void OnOutputDelegate();
+
         public int[] Code { get; private set; }
 
         public Queue<int> Input { get; }
+
+        public event OnOutputDelegate OnOutput;
 
         public Queue<int> Output { get; }
 
         public int Ip { get; private set; }
 
         public bool Running { get; private set; }
+
+        public bool Halted { get; private set; }
+
+        public bool PauseOnOutput { get; private set; }
 
         public Dictionary<int, Action<int>> InstructionsSet { get; private set; }
 
@@ -36,13 +45,16 @@ namespace Aoc.Common.Simulators
             Code = code;
             Ip = 0;
             Running = false;
+            PauseOnOutput = false;
+            Halted = false;
             Input.Clear();
             Output.Clear();
         }
 
-        public void Run()
+        public void Run(bool pauseOnOutput = false)
         {
             Running = true;
+            PauseOnOutput =  pauseOnOutput;
             while (Running)
             {
                 int op = Code[Ip];
@@ -77,6 +89,20 @@ namespace Aoc.Common.Simulators
             Code[x] = value;                
         }
 
+        private void WriteOutput(int v)
+        {
+            Output.Enqueue(v);
+            if (PauseOnOutput)
+            {
+                this.Running = false;
+            }
+
+            if (this.OnOutput != null)
+            {
+                OnOutput();
+            }
+        }
+
         private void LoadDefaultInstructionsSet()
         {
             // ADD command
@@ -108,6 +134,12 @@ namespace Aoc.Common.Simulators
             // For example, the instruction 3,50 would take an input value and store it at address 50.
             InstructionsSet[3] = (modes) =>
             {
+                if (Input.Count == 0)
+                {
+                    Running = false;
+                    return;
+                }
+
                 int input = Input.Dequeue();
                 WriteOperand(0, input);
                 Ip += 2;
@@ -119,7 +151,7 @@ namespace Aoc.Common.Simulators
             InstructionsSet[4] = (modes) =>
             {
                 int a = ReadOperand(0, modes);
-                Output.Enqueue(a);
+                WriteOutput(a);
                 Ip += 2;
             };
 
@@ -182,7 +214,8 @@ namespace Aoc.Common.Simulators
             InstructionsSet[99] = (mode) =>
             {
                 Ip += 1;
-                Running = false; 
+                Running = false;
+                Halted = true;
             };
         }
     }   
