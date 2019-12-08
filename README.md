@@ -1,5 +1,5 @@
-# Advent of code 2015, 2016, 2017 & 2018
-Solutions for https://adventofcode.com/2015, https://adventofcode.com/2016, https://adventofcode.com/2017, and https://adventofcode.com/2018 in Dotnet Core 2.0
+# Advent of code 2015 -> 2019
+Solutions for https://adventofcode.com/2015, https://adventofcode.com/2016, https://adventofcode.com/2017, https://adventofcode.com/2018 and https://adventofcode.com/2019 in Dotnet Core 2.0 (and lately Dotnet Core 3.0)
 
 # Build instructions
 - Build with "dotnet build"
