@@ -17,7 +17,7 @@ namespace Aoc
 
         private IntCpu[] _amplifiers;
 
-        private int[] _code;
+        private long[] _code;
 
         public Day201907()
         {
@@ -27,7 +27,7 @@ namespace Aoc
 
         public void Init()
         {
-            _code = Aoc.Framework.Input.GetIntVector(this, ",");
+            _code = Aoc.Framework.Input.GetLongVector(this, ",");
             _cpu = new IntCpu();
             _amplifiers = new IntCpu[5];
             for (int i = 0; i < 5; ++i)
@@ -51,20 +51,20 @@ namespace Aoc
         {
             if (part == Aoc.Framework.Part.Part1)
             {
-                int max = TestAllSettings(DirectRun, 0, new List<int>(), new List<int> {0, 1, 2, 3, 4});
+                long max = TestAllSettings(DirectRun, 0, new List<int>(), new List<int> {0, 1, 2, 3, 4});
                 return max.ToString();
             }
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                int max = TestAllSettings(FeedbackRun, 0, new List<int>(), new List<int> {5, 6, 7, 8, 9});
+                long max = TestAllSettings(FeedbackRun, 0, new List<int>(), new List<int> {5, 6, 7, 8, 9});
                 return max.ToString();
             }
 
             return "";
         }
 
-        private int TestAllSettings(Func<List<int>, int> evaluator, int max, List<int> used, List<int> available)
+        private long TestAllSettings(Func<List<int>, long> evaluator, long max, List<int> used, List<int> available)
         {
             if (available.Count == 0)
             {
@@ -72,7 +72,7 @@ namespace Aoc
                 return Math.Max(max, evaluator(used));
             }
 
-            int output = max;
+            long output = max;
             for (int i = 0; i < available.Count; ++i)
             {
                 int phase = available[i];
@@ -86,9 +86,9 @@ namespace Aoc
             return output;
         }
 
-        private int DirectRun(List<int> settings)
+        private long DirectRun(List<int> settings)
         {
-            int output = 0;
+            long output = 0;
             for (int i = 0; i < settings.Count; ++i)
             {
                 _cpu.Reset(_code);
@@ -101,7 +101,7 @@ namespace Aoc
             return output;
         }
 
-        private int FeedbackRun(List<int> settings)
+        private long FeedbackRun(List<int> settings)
         {
             
             for (int i = 0; i < settings.Count; ++i)

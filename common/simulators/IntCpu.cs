@@ -11,26 +11,29 @@ namespace Aoc.Common.Simulators
         public IntCpu()
         {
             Code = null;
-            Input = new Queue<int>();
-            Output = new Queue<int>();
+            Input = new Queue<long>();
+            Output = new Queue<long>();
             OnOutput = null;
             Ip = 0;
+            Rb = 0;
             Running = false;
-            InstructionsSet = new Dictionary<int, Action<int>>();
+            InstructionsSet = new Dictionary<long, Action<long>>();
             LoadDefaultInstructionsSet();
         }
 
         public delegate void OnOutputDelegate();
 
-        public int[] Code { get; private set; }
+        public long[] Code { get; private set; }
 
-        public Queue<int> Input { get; }
+        public Queue<long> Input { get; }
 
         public event OnOutputDelegate OnOutput;
 
-        public Queue<int> Output { get; }
+        public Queue<long> Output { get; }
 
-        public int Ip { get; private set; }
+        public long Ip { get; private set; }
+
+        public long Rb { get; private set; }
 
         public bool Running { get; private set; }
 
@@ -38,12 +41,13 @@ namespace Aoc.Common.Simulators
 
         public bool PauseOnOutput { get; private set; }
 
-        public Dictionary<int, Action<int>> InstructionsSet { get; private set; }
+        public Dictionary<long, Action<long>> InstructionsSet { get; private set; }
 
-        public void Reset(int[] code)
+        public void Reset(long[] code)
         {
             Code = code;
             Ip = 0;
+            Rb = 0;
             Running = false;
             PauseOnOutput = false;
             Halted = false;
@@ -57,39 +61,56 @@ namespace Aoc.Common.Simulators
             PauseOnOutput =  pauseOnOutput;
             while (Running)
             {
-                int op = Code[Ip];
-                int opcode = op % 100;
-                int modes = op / 100;
+                long op = Read(Ip);
+                long opcode = op % 100;
+                long modes = op / 100;
                 InstructionsSet[opcode](modes);
             }
         }
 
-        private int ReadOperand(int index, int modes)
+        private long ReadOperand(int index, long modes)
         {
-            int mode = (modes / (int)(Math.Pow(10, index))) & 0x01;
+            long mode = (modes / (long)(Math.Pow(10, index))) % 10;
             if (mode == 0)
             {
                 // Position mode
-                return Code[Code[Ip + index + 1]];
+                return Read(Read(Ip + index + 1));
             }
 
             if (mode == 1)
             {
                 // Immediate mode
-                return Code[Ip + index + 1];
+                return Read(Ip + index + 1);
+            }
+
+            if (mode == 2)
+            {
+                // Relative mode
+                return Read(Rb + Read(Ip + index + 1));
             }
 
             return 0;
         }
 
-        private void WriteOperand(int index, int value)
+        private void WriteOperand(int index, long modes, long value)
         {
-            // Always in position mode
-            int x = Code[Ip + index + 1];
-            Code[x] = value;                
+            long mode = (modes / (long)(Math.Pow(10, index))) % 10;
+            if (mode == 0)
+            {
+                // Position mode
+                long x = Read(Ip + index + 1);
+                Write(x, value);
+            }
+
+            if (mode == 2)
+            {
+                // Relative mode
+                long x = Rb + Read(Ip + index + 1);
+                Write(x, value);
+            }
         }
 
-        private void WriteOutput(int v)
+        private void WriteOutput(long v)
         {
             Output.Enqueue(v);
             if (PauseOnOutput)
@@ -103,6 +124,33 @@ namespace Aoc.Common.Simulators
             }
         }
 
+        private void CheckBondaries(long index)
+        {
+            if (index < 0)
+            {
+                return;
+            }
+
+            if (index >= Code.Length)
+            {
+                long[] newCode = new long[index * 2];
+                Buffer.BlockCopy(Code, 0, newCode, 0, Code.Length * sizeof(long));
+                Code = newCode;
+            }
+        }
+
+        private long Read(long index)
+        {
+            CheckBondaries(index);
+            return Code[index];
+        }
+
+        private void Write(long index, long value)
+        {
+            CheckBondaries(index);
+            Code[index] = value;
+        }
+
         private void LoadDefaultInstructionsSet()
         {
             // ADD command
@@ -112,9 +160,9 @@ namespace Aoc.Common.Simulators
             // and the third indicates the position at which the output should be stored.
             InstructionsSet[1] = (modes) =>
             {
-                int a = ReadOperand(0, modes);
-                int b = ReadOperand(1, modes);
-                WriteOperand(2, a + b);
+                long a = ReadOperand(0, modes);
+                long b = ReadOperand(1, modes);
+                WriteOperand(2, modes, a + b);
                 Ip += 4;
             };
 
@@ -123,9 +171,9 @@ namespace Aoc.Common.Simulators
             // Again, the three integers after the opcode indicate where the inputs and outputs are, not their values.
             InstructionsSet[2] = (modes) =>
             {
-                int a = ReadOperand(0, modes);
-                int b = ReadOperand(1, modes);
-                WriteOperand(2, a * b);
+                long a = ReadOperand(0, modes);
+                long b = ReadOperand(1, modes);
+                WriteOperand(2, modes, a * b);
                 Ip += 4;
             };
 
@@ -140,8 +188,8 @@ namespace Aoc.Common.Simulators
                     return;
                 }
 
-                int input = Input.Dequeue();
-                WriteOperand(0, input);
+                long input = Input.Dequeue();
+                WriteOperand(0, modes, input);
                 Ip += 2;
             };
 
@@ -150,7 +198,7 @@ namespace Aoc.Common.Simulators
             // For example, the instruction 4,50 would output the value at address 50.
             InstructionsSet[4] = (modes) =>
             {
-                int a = ReadOperand(0, modes);
+                long a = ReadOperand(0, modes);
                 WriteOutput(a);
                 Ip += 2;
             };
@@ -160,8 +208,8 @@ namespace Aoc.Common.Simulators
             // it sets the instruction pointer to the value from the second parameter. Otherwise, it does nothing.
             InstructionsSet[5] = (modes) =>
             {
-                int a = ReadOperand(0, modes);
-                int b = ReadOperand(1, modes);
+                long a = ReadOperand(0, modes);
+                long b = ReadOperand(1, modes);
                 if (a != 0)
                 {
                     Ip = b;
@@ -177,8 +225,8 @@ namespace Aoc.Common.Simulators
             // value from the second parameter. Otherwise, it does nothing.
             InstructionsSet[6] = (modes) =>
             {
-                int a = ReadOperand(0, modes);
-                int b = ReadOperand(1, modes);
+                long a = ReadOperand(0, modes);
+                long b = ReadOperand(1, modes);
                 if (a == 0)
                 {
                     Ip = b;
@@ -194,9 +242,9 @@ namespace Aoc.Common.Simulators
             // it stores 1 in the position given by the third parameter. Otherwise, it stores 0.
             InstructionsSet[7] = (modes) =>
             {
-                int a = ReadOperand(0, modes);
-                int b = ReadOperand(1, modes);
-                WriteOperand(2, a < b ? 1 : 0);
+                long a = ReadOperand(0, modes);
+                long b = ReadOperand(1, modes);
+                WriteOperand(2, modes, a < b ? 1 : 0);
                 Ip += 4;
             };
 
@@ -204,10 +252,19 @@ namespace Aoc.Common.Simulators
             // it stores 1 in the position given by the third parameter. Otherwise, it stores 0.
             InstructionsSet[8] = (modes) =>
             {
-                int a = ReadOperand(0, modes);
-                int b = ReadOperand(1, modes);
-                WriteOperand(2, a == b ? 1 : 0);
+                long a = ReadOperand(0, modes);
+                long b = ReadOperand(1, modes);
+                WriteOperand(2, modes, a == b ? 1 : 0);
                 Ip += 4;
+            };
+
+            // Opcode 9 adjusts the relative base by the value of its only parameter.
+            // The relative base increases (or decreases, if the value is negative) by the value of the parameter.
+            InstructionsSet[9] = (modes) =>
+            {
+                long a = ReadOperand(0, modes);
+                Rb += a;
+                Ip += 2;
             };
 
             // Stop command

@@ -30,7 +30,7 @@ namespace Aoc
         {
             if (part == Aoc.Framework.Part.Part1)
             {
-                _cpu.Reset(Aoc.Framework.Input.GetIntVector(this, ","));
+                _cpu.Reset(Aoc.Framework.Input.GetLongVector(this, ","));
                 _cpu.Code[1] = 12;
                 _cpu.Code[2] = 2;
                 _cpu.Run();
@@ -43,7 +43,7 @@ namespace Aoc
                 {
                     for (int verb = 0; verb <= 99; verb++)
                     {
-                        _cpu.Reset(Aoc.Framework.Input.GetIntVector(this, ","));
+                        _cpu.Reset(Aoc.Framework.Input.GetLongVector(this, ","));
                         _cpu.Code[1] = noun;
                         _cpu.Code[2] = verb;
                         _cpu.Run();

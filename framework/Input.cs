@@ -88,6 +88,23 @@ namespace Aoc.Framework
             return vector;
         }
 
+        public static Int64[] GetLongVector(Day day, string separator = "\r\n")
+        {
+            string raw = GetString(day);
+            if (raw == null)
+            {
+                return null;
+            }            
+            
+            String[] lines = raw.Split(separator);
+            Int64[] vector = new Int64[lines.Length];
+            for (int i = 0; i < lines.Length; ++i)
+            {
+                vector[i] = Int64.Parse(lines[i]);
+            }
+            return vector;
+        }
+
         public static Int32[][] GetIntMatrix(Day day, string row = "\t", string column = "\r\n")
         {
             string raw = GetString(day);
