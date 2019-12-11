@@ -68,6 +68,7 @@ namespace Aoc
 
             return "";
         }
+        
         private long Paint(long initial)
         {
             long painted = 0;
