@@ -79,11 +79,11 @@ namespace Aoc
             _position = new Point(0, 0);
             _cpu.Reset(Aoc.Framework.Input.GetLongVector(this, ","));
             _cpu.Input.Enqueue(_hull[_position.X, _position.Y]);
-            while (!_cpu.Halted)
+            while (_cpu.State != IntCpu.RunningState.Halted)
             {
                 _cpu.Run();
 
-                if (!_cpu.Halted)
+                if (_cpu.State != IntCpu.RunningState.Halted)
                 {
                     if (!_painted[_position.X, _position.Y])
                     {
