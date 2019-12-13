@@ -31,10 +31,8 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part1)
             {
                 // Init the board
-                Point position;
+                Point position = new Point(1, 1);
                 Board<int> board = new Board<int>();
-                position.X = 1;
-                position.Y = 1;
                 for (int i = 0; i < 9; ++i)
                 {
                     board[i % 3, 2 - (i / 3)] = i + 1;
@@ -47,10 +45,8 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part2)
             {
                 // Init the board                
-                Point position;
+                Point position = new Point(0, 2);
                 Board<int> board = new Board<int>();
-                position.X = 0;
-                position.Y = 2;
                 board[2, 4] = 1;
                 for (int i = 1; i <= 3; i++) board[i, 3] = i + 1;
                 for (int i = 0; i <= 4; i++) board[i, 2] = i + 5;

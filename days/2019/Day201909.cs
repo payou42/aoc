@@ -7,7 +7,7 @@ using Aoc.Common.Simulators;
 
 namespace Aoc
 {
-    public class Day201905 : Aoc.Framework.Day
+    public class Day201909 : Aoc.Framework.Day
     {
         public string Codename { get; private set; }
 
@@ -15,10 +15,10 @@ namespace Aoc
 
         private IntCpu _cpu;
 
-        public Day201905()
+        public Day201909()
         {
-            Codename = "2019-05";
-            Name = "Sunny with a Chance of Asteroids";
+            Codename = "2019-09";
+            Name = "Sensor Boost";
         }
 
         public void Init()
@@ -33,23 +33,13 @@ namespace Aoc
                 _cpu.Reset(Aoc.Framework.Input.GetLongVector(this, ","));
                 _cpu.Input.Enqueue(1);
                 _cpu.Run();
-
-                while (_cpu.Output.Count > 0)
-                {
-                    long result = _cpu.Output.Dequeue();
-                    if (_cpu.Output.Count == 0)
-                    {
-                        return result.ToString();
-                    }
-                }
-
-                return "Not found";
+                return _cpu.Output.Dequeue().ToString();
             }
 
             if (part == Aoc.Framework.Part.Part2)
             {
                 _cpu.Reset(Aoc.Framework.Input.GetLongVector(this, ","));
-                _cpu.Input.Enqueue(5);
+                _cpu.Input.Enqueue(2);
                 _cpu.Run();
                 return _cpu.Output.Dequeue().ToString();
             }

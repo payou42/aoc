@@ -12,197 +12,131 @@ namespace Aoc
 
         public string Name { get; private set; }
 
-        public enum ItemType
+        public static class Building
         {
-            Chip = 0,
-            Generator = 1
-        }
+            public static uint MICROCHIP = 0;
 
-        public class Item
-        {
-            public string Element { get; set; }
+            public static uint GENERATOR = 1;
 
-            public ItemType Type { get; set; }
-        }
+            public static uint ELEVATOR = 2;
 
-        public class Floor
-        {
-            public List<Item> Items { get; private set; }
-
-            public Floor()
+            public static uint GetIndex(uint id, uint kind)
             {
-                Items = new List<Item>();
+                if (kind == ELEVATOR)
+                    return 0;
+
+                return 2 + id * 4 + kind * 2;
             }
 
-            public Floor(Floor other)
+            public static uint GetIndex(uint id)
             {
-                Items = other.Items.Select(i => i).ToList();
+                return 2 + (id * 2);
             }
 
-            public long Hash
+            public static uint Set(uint initial, uint index, uint floor)
             {
-                get
+                uint state = initial;
+                state &= ~((uint)0x3 << (int)index);
+                state |= (floor & (uint)0x03) << (int)index;
+                return state;
+            }
+
+            public static uint Get(uint state, uint index)
+            {
+                return (state >> (int)index) & 0x03;
+            }
+            
+            public static uint Move(uint initial, uint index, uint floor)
+            {
+                uint state = initial;
+                state = Building.Set(state, index, floor);
+                state = Building.Set(state, 0, floor);
+                return state;
+            }
+
+            public static uint Move(uint initial, uint index1, uint index2, uint floor)
+            {
+                uint state = Building.Move(initial, index1, floor);
+                state = Building.Set(state, index2, floor);
+                return state;
+            }
+
+            public static bool IsFinal(uint state, uint count)
+            {
+                for (int i = 0; i < 1 + 2 * count; ++i)
                 {
-                    long hash = 0;
-                    foreach (Item item in Items)
+                    if (((state >> (2 * i)) & 0x03) != 0x03)
                     {
-                        hash ^= item.GetHashCode();
+                        return false;
                     }
-                    return hash;
                 }
+
+                return true;
             }
 
-            public bool IsValid
+            public static bool IsValid(uint state, uint count)
             {
-                get
+                for (uint i = 0; i < count; ++i)
                 {
-                    var generators = Items.Where(item => item.Type == ItemType.Generator);
-                    var chips = Items.Where(item => item.Type == ItemType.Chip);
-                    foreach (Item generator in generators)
+                    // Get the floor of the item
+                    uint itemFloor = Building.Get(state, Building.GetIndex(i, Building.MICROCHIP));
+
+                    // If the generator is on the same floor, we're good
+                    if (Building.Get(state, Building.GetIndex(i, Building.GENERATOR)) == itemFloor)
                     {
-                        foreach (Item chip in chips.Where(chip => chip.Element != generator.Element))
+                        continue;
+                    }
+
+                    // if there's another generator on the same floor, we're not good
+                    for (uint j = 0; j < count; ++j)
+                    {
+                        if (i == j)
                         {
-                            if (!generators.Any(g => g.Element == chip.Element))
-                            {
-                                return false;
-                            }
+                            continue;
                         }
-                    }
-                    return true;
-                }
-            }
 
-            public bool HasChips
-            {
-                get
-                {
-                    return Items.Any(item => item.Type == ItemType.Chip);
-                }
-            }
-
-            public bool HasItems
-            {
-                get
-                {
-                    return Items.Any();
-                }
-            }
-        }
-
-        public class Building
-        {
-            private Floor[] _floors;
-
-            private int _elevator;
-
-            public string Hash
-            {
-                get
-                {
-                    return _elevator.ToString() + '>' + string.Join('.', _floors.Select(floor => floor.Hash.ToString()));
-                }
-            }
-
-            public bool IsValid
-            {
-                get
-                {
-                    return _floors.All(floor => floor.IsValid);
-                }
-            }
-
-            public bool IsComplete
-            {
-                get
-                {
-                    for (int i = 0; i < _floors.Length - 1; ++i)
-                    {
-                        if (_floors[i].HasItems)
+                        if (Building.Get(state, Building.GetIndex(j, Building.GENERATOR)) == itemFloor)
                         {
                             return false;
                         }
                     }
-                    return true;
                 }
+
+                return true;
             }
 
-            public Building(string[] input)
+            public static void Dump(uint state, uint count)
             {
-                _elevator = 0;
-                _floors = new Floor[input.Length];
-                for (int i = 0; i < input.Length; ++i)
+                for (int floor = 3; floor >= 0; floor--)
                 {
-                    // Create the floor
-                    _floors[i] = new Floor();
+                    // Draw floor
+                    Console.Write($"F{floor} | ");
 
-                    // Create the items on the floor
-                    string[] items = input[i].Split(" ");
-                    for (int j = 1; j < items.Length; ++j)
+                    // Draw elevator
+                    Console.Write(Building.Get(state, 0) == floor ? "E " : "  ");
+
+                    // Draw each element
+                    for (uint e = 0; e < count; ++e)
                     {
-                        if (items[j].StartsWith("generator"))
-                        {
-                            _floors[i].Items.Add(new Item { Element = items[j - 1], Type = ItemType.Generator });
-                        }
-
-                        if (items[j].StartsWith("microchip"))
-                        {
-                            string element = items[j - 1].Split("-")[0];
-                            _floors[i].Items.Add(new Item { Element = element, Type = ItemType.Chip });
-                        }
+                        bool present = (Building.Get(state, Building.GetIndex(e, Building.MICROCHIP))) == floor;
+                        Console.Write(present ? $"{e}M " : "-- ");
+                        present = (Building.Get(state, Building.GetIndex(e, Building.GENERATOR))) == floor;
+                        Console.Write(present ? $"{e}G " : "-- ");
                     }
+
+                    // Next floor
+                    Console.WriteLine();
                 }
-            }
 
-            public Building(Building other)
-            {
-                _elevator = other._elevator;
-                _floors = new Floor[other._floors.Count()];
-                for (int i = 0; i < _floors.Length; ++i)
-                {
-                    _floors[i] = new Floor(other._floors[i]);
-                }
-            }
-
-            public Floor GetCurrentFloor()
-            {
-                return _floors[_elevator];
-            }
-
-            public bool CanMoveUp()
-            {
-                return _elevator < _floors.Length - 1;
-            }
-
-            public bool CanMoveDown()
-            {
-                return _elevator > 0;
-            }
-
-            public Building MoveItem(int direction, Item item1, Item item2 = null)
-            {
-                Building building = new Building(this);
-                building.ApplyMove(direction, item1, item2);
-                return building;
-            }
-
-            private void ApplyMove(int direction, Item item1, Item item2 = null)
-            {
-                _floors[_elevator].Items.Remove(item1);
-                _floors[_elevator + direction].Items.Add(item1);
-                if (item2 != null)
-                {
-                    _floors[_elevator].Items.Remove(item2);
-                    _floors[_elevator + direction].Items.Add(item2);
-                }
-                _elevator += direction;
+                Console.WriteLine();
             }
         }
     
-        private string[] _input;
+        private uint _state;
 
-        private Building _building;
+        private uint _count;
 
-        private Dictionary<string, (long, bool)> _history;
+        private Dictionary<uint, (long, bool)> _history;
 
         public Day201611()
         {
@@ -212,126 +146,136 @@ namespace Aoc
 
         public void Init()
         {
-            _input = Aoc.Framework.Input.GetStringVector(this);
-            _building = new Building(_input);
-            _history = new Dictionary<string, (long, bool)>();
+            _history = new Dictionary<uint, (long, bool)>();
+        }
+
+        public void Reset(bool extended = false)
+        {
+            // Initial set up
+            // 0. Thulium
+            // 1. Plutonium
+            // 2. Strontium
+            // 3. Promethium
+            // 4. Ruthenium
+            // 5. Elerium
+            // 6. Dilithium
+            _count = 5;
+            _state = 0;
+            _state = Building.Set(_state, Building.GetIndex(0, Building.GENERATOR), 0);
+            _state = Building.Set(_state, Building.GetIndex(0, Building.MICROCHIP), 0);
+            _state = Building.Set(_state, Building.GetIndex(1, Building.GENERATOR), 0);
+            _state = Building.Set(_state, Building.GetIndex(2, Building.GENERATOR), 0);
+            _state = Building.Set(_state, Building.GetIndex(1, Building.MICROCHIP), 1);
+            _state = Building.Set(_state, Building.GetIndex(2, Building.MICROCHIP), 1);
+            _state = Building.Set(_state, Building.GetIndex(3, Building.GENERATOR), 2);
+            _state = Building.Set(_state, Building.GetIndex(3, Building.MICROCHIP), 2);
+            _state = Building.Set(_state, Building.GetIndex(4, Building.GENERATOR), 2);
+            _state = Building.Set(_state, Building.GetIndex(4, Building.MICROCHIP), 2);
+
+            if (extended)
+            {
+                _count = 7;
+                _state = Building.Set(_state, Building.GetIndex(5, Building.GENERATOR), 0);
+                _state = Building.Set(_state, Building.GetIndex(5, Building.MICROCHIP), 0);
+                _state = Building.Set(_state, Building.GetIndex(6, Building.GENERATOR), 0);
+                _state = Building.Set(_state, Building.GetIndex(6, Building.MICROCHIP), 0);
+            }
+           
+            _history.Clear();
         }
 
         public string Run(Aoc.Framework.Part part)
         {
             if (part == Aoc.Framework.Part.Part1)
             {
-                // Recursively search for a valid building
-                DeepScan(_building);
-
-                // Look for the minimum valid solution
+                Reset(false);
+                DeepScan(_state);
                 return (1 + _history.Values.Where(item => item.Item2).Select(item => item.Item1).Min()).ToString();
             }
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                // Prepare new items
-                Floor ground = _building.GetCurrentFloor();
-                ground.Items.AddRange( new[]
-                {
-                    new Item { Element = "elerium", Type = ItemType.Chip },
-                    new Item { Element = "elerium", Type = ItemType.Generator },
-                    new Item { Element = "dilithium", Type = ItemType.Chip },
-                    new Item { Element = "dilithium", Type = ItemType.Generator }
-                });
-
-                // Clean history
-                _history.Clear();
-
-                // Recursively search for a valid building
-                DeepScan(_building);
-
-                // Look for the minimum valid solution
+                Reset(true);
+                DeepScan(_state);
                 return (1 + _history.Values.Where(item => item.Item2).Select(item => item.Item1).Min()).ToString();
             }
 
             return "";
         }
 
-        private void DeepScan(Building initial)
+        private void DeepScan(uint initial)
         {
-            // Build the oves stack
-            Building building = initial;
-            Queue<(Building, long)> queue = new Queue<(Building, long)>();
+            // Build the moves stack
+            uint state = initial;
+            Queue<(uint, long)> queue = new Queue<(uint, long)>();
 
             // Add the current building in the history
-            _history[building.Hash] = (0, building.IsComplete);
+            _history[state] = (0, Building.IsFinal(state, _count));
 
             // Add all possible moves in the stack
-            AddMoves(queue, building, 0);
+            AddMoves(queue, state, 0);
 
             // Process stack
             while (queue.TryDequeue(out var item))
             {
                 // Get the building
-                building = item.Item1;
+                state = item.Item1;
                 long moves = item.Item2;
 
                 // Check the validity of the move
-                if (building.IsValid)
+                if (Building.IsValid(state, _count))
                 {
                     // Check the current state in the history
-                    string hash = building.Hash;
-                    if (!_history.ContainsKey(hash))
+                    if (!_history.ContainsKey(state))
                     {
-                        bool complete = building.IsComplete;
-                        _history[hash] = (moves, complete);
+                        bool complete = Building.IsFinal(state, _count);
+                        _history[state] = (moves, complete);
                         if (complete)
                         {
                             // Since we are doing a width-first scan, we have the minimum
                             return;
                         }
-                        AddMoves(queue, building, moves + 1);
+        
+                        AddMoves(queue, state, moves + 1);
                     }
                 }
             }
         }
 
-        private void AddMoves(Queue<(Building, long)> queue, Building building, long moves)
+        private void AddMoves(Queue<(uint, long)> queue, uint state, long moves)
         {
-            // Try all possible moves from the current situation
-            var items = building.GetCurrentFloor().Items;
+            // Get the current floor
+            uint floor = Building.Get(state, 0);
 
-            // Move up
-            if (building.CanMoveUp())
+            // Try combinaison of one item
+            for (uint i = 0; i < 2 * _count; ++i)
             {
-                // Try combinaison of one item
-                for (int i = 0; i < items.Count; ++i)
-                {
-                    queue.Enqueue((building.MoveItem(1, items[i], null), moves));
-                }
+                if (Building.Get(state, Building.GetIndex(i)) != floor)
+                    continue;
+                
+                if (floor < 3) 
+                    queue.Enqueue((Building.Move(state, Building.GetIndex(i), floor + 1), moves));
 
-                // Try combinaison of 2 items
-                for (int i = 0; i < items.Count - 1; ++i)
-                {
-                    for (int j = i + 1; j < items.Count; ++j)
-                    {
-                        queue.Enqueue((building.MoveItem(1, items[i], items[j]), moves));
-                    }
-                }
+                if (floor > 0)
+                    queue.Enqueue((Building.Move(state, Building.GetIndex(i), floor - 1), moves));
             }
 
-            // Move down
-            if (building.CanMoveDown())
+            // Try combinaison of 2 items
+            for (uint i = 0; i < 2 * _count - 1; ++i)
             {
-                // Try combinaison of one item
-                for (int i = 0; i < items.Count; ++i)
-                {
-                    queue.Enqueue((building.MoveItem(-1, items[i], null), moves));
-                }
+                if (Building.Get(state, Building.GetIndex(i)) != floor)
+                    continue;
 
-                // Try combinaison of 2 items
-                for (int i = 0; i < items.Count - 1; ++i)
+                for (uint j = i + 1; j < 2 * _count; ++j)
                 {
-                    for (int j = i + 1; j < items.Count; ++j)
-                    {
-                        queue.Enqueue((building.MoveItem(-1, items[i], items[j]), moves));
-                    }
+                    if (Building.Get(state, Building.GetIndex(j)) != floor)
+                        continue;
+
+                    if (floor < 3) 
+                        queue.Enqueue((Building.Move(state, Building.GetIndex(i), Building.GetIndex(j), floor + 1), moves));
+
+                    if (floor > 0)
+                        queue.Enqueue((Building.Move(state, Building.GetIndex(i), Building.GetIndex(j), floor - 1), moves));
                 }
             }
         }
