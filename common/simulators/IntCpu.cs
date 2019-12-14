@@ -7,6 +7,18 @@ namespace Aoc.Common.Simulators
 {
     public class IntCpu
     {
+        public enum RunningState
+        {
+            Stopped = 0,
+
+            Halted = 1,
+            
+            Running = 2,
+
+            WaitingInput = 3,
+
+            WaitingOutput = 4,
+        };
 
         public IntCpu()
         {
@@ -16,7 +28,7 @@ namespace Aoc.Common.Simulators
             OnOutput = null;
             Ip = 0;
             Rb = 0;
-            Running = false;
+            State = RunningState.Stopped;
             InstructionsSet = new Dictionary<long, Action<long>>();
             LoadDefaultInstructionsSet();
         }
@@ -35,9 +47,7 @@ namespace Aoc.Common.Simulators
 
         public long Rb { get; private set; }
 
-        public bool Running { get; private set; }
-
-        public bool Halted { get; private set; }
+        public RunningState State { get; set; }
 
         public bool PauseOnOutput { get; private set; }
 
@@ -48,18 +58,17 @@ namespace Aoc.Common.Simulators
             Code = code;
             Ip = 0;
             Rb = 0;
-            Running = false;
+            State = RunningState.Stopped;
             PauseOnOutput = false;
-            Halted = false;
             Input.Clear();
             Output.Clear();
         }
 
         public void Run(bool pauseOnOutput = false)
         {
-            Running = true;
+            State = RunningState.Running;
             PauseOnOutput =  pauseOnOutput;
-            while (Running)
+            while (State == RunningState.Running)
             {
                 long op = Read(Ip);
                 long opcode = op % 100;
@@ -115,7 +124,7 @@ namespace Aoc.Common.Simulators
             Output.Enqueue(v);
             if (PauseOnOutput)
             {
-                this.Running = false;
+                this.State = RunningState.WaitingOutput;
             }
 
             if (this.OnOutput != null)
@@ -184,7 +193,7 @@ namespace Aoc.Common.Simulators
             {
                 if (Input.Count == 0)
                 {
-                    Running = false;
+                    State = RunningState.WaitingInput;
                     return;
                 }
 
@@ -271,8 +280,7 @@ namespace Aoc.Common.Simulators
             InstructionsSet[99] = (mode) =>
             {
                 Ip += 1;
-                Running = false;
-                Halted = true;
+                State = RunningState.Halted;
             };
         }
     }   

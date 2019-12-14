@@ -111,7 +111,7 @@ namespace Aoc
             }
 
             _amplifiers[0].Input.Enqueue(0);
-            while (!_amplifiers[0].Halted)
+            while (_amplifiers[0].State != IntCpu.RunningState.Halted)
             {
                 for (int i = 0; i < settings.Count; ++i)
                 {
