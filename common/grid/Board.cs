@@ -47,6 +47,35 @@ namespace Aoc.Common.Grid
             }
         }
 
+        /// <summary>
+        /// Get or set the content of a cell
+        /// When getting an empty cell, a default new Cell is resturned
+        /// </summary>
+        /// <value>The cell content</value>
+        public Cell this[Point p]
+        { 
+            get
+            {
+                if (_board.ContainsKey(p.X))
+                {                    
+                    if (_board[p.X].ContainsKey(p.Y))
+                    {
+                        return _board[p.X][p.Y];
+                    }
+                }
+                return default(Cell);
+            }
+
+            set
+            {
+                if (!_board.ContainsKey(p.X))
+                {
+                    _board[p.X] = new Dictionary<int, Cell>();
+                }
+                _board[p.X][p.Y] = value;               
+            }
+        }
+
         public List<Cell> Values
         {
             get
