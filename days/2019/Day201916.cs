@@ -14,7 +14,7 @@ namespace Aoc
 
         private int[] _input;
 
-        private int[] _pattern = {0, 1, 0, -1};
+        private readonly int[] _pattern = {0, 1, 0, -1};
 
         public Day201916()
         {
