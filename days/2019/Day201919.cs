@@ -44,12 +44,13 @@ namespace Aoc
 
             if (part == Aoc.Framework.Part.Part2)
             {
+                // Start at x = 5 because the first 5 columns are edge case : there's no beam on them
                 int x = 5;
                 int min = 0;
                 int max = 0;
                 Queue<int> maxes = new Queue<int>();
 
-                // Initialisation : run the loop at least 100 times
+                // Initialisation : run the loop at least 99 times
                 while (maxes.Count < 99)
                 {
                     (min, max) = ScanColumn(x, min, max);
@@ -57,7 +58,7 @@ namespace Aoc
                     x++;
                 }
                 
-                // Searcg for a place where max(x - 100) > 99 + min(x)
+                // Search for a place where max(x - 100) > 99 + min(x)
                 while (true)
                 {
                     (min, max) = ScanColumn(x, min, max);
