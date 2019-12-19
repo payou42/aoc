@@ -7,7 +7,7 @@ using Aoc.Common.Simulators;
 
 namespace Aoc
 {
-    public class Day201919 : Aoc.Framework.Day
+    public class Day201919 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -105,14 +105,14 @@ namespace Aoc
             // Find the min value in the tractor beam, based on the previous value
             int y = ymin;
             y = LookAside(x, y, 0, -1);
-            y = LookAside(x, y, 1, +1);
+            y = LookAside(x, y + 1, 1, +1);
             int newMin = y;
 
             // Find the max value in the tractor beam, based on the previous value
-            y = Math.Max(y, ymax);
+            y = 1 + Math.Max(y, ymax);
             y = LookAside(x, y, 0, +1);
             int newMax = y - 1;
-            
+
             return (newMin, newMax);
         }
     }   

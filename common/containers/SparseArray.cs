@@ -6,11 +6,11 @@ namespace Aoc.Common.Containers
 {
     public class SparseArray<T>
     {
-        (long, long, T)[] _array;
-
         public long Length { get; private set; }
 
         public long RealLength { get; private set; }
+
+        private readonly (long, long, T)[] _array;
 
         public SparseArray(long length)
         {

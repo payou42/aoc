@@ -10,7 +10,7 @@ namespace Aoc.Common.Simulators
     /// </summary>
     public class Tape
     {
-        private Dictionary<Int64, Int64> _tape;
+        private readonly Dictionary<Int64, Int64> _tape;
 
         private Int64 _cursor;
 

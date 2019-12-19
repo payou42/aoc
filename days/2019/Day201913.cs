@@ -7,7 +7,7 @@ using Aoc.Common.Simulators;
 
 namespace Aoc
 {
-    public class Day201913 : Aoc.Framework.Day
+    public class Day201913 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -102,23 +102,6 @@ namespace Aoc
                         _board[(int)x, (int)y] = (int)a;
                 }
             }       
-        }
-
-        private void Draw()
-        {
-            string[] characters = new string[5] { " ", "#", "B", "_", "*" };
-            Console.WriteLine($"Score: {_score}, Blocks = {_board.Cells.Count(c => c.Item2 == BLOCK)}");
-            for (int j = 0; j < 24; ++j)
-            {
-                for (int i = 0; i < 43; ++i)
-                {
-                    Console.Write(characters[_board[i, j]]);
-                }
-
-                Console.WriteLine();
-            }
-            
-            Console.WriteLine();
         }
 
         private void Play()

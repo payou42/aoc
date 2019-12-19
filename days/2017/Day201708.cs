@@ -6,7 +6,7 @@ using Aoc.Common.Simulators;
 
 namespace Aoc
 {
-    public class Day201708 : Aoc.Framework.Day
+    public class Day201708 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -55,16 +55,16 @@ namespace Aoc
         private bool CheckCondition(string register, string op, Int64 value)
         {
             Int64 r = _cpu.Registers[register];
-            switch (op)
+            return op switch
             {
-                case "==": return r == value;
-                case "!=": return r != value;
-                case ">": return r > value;
-                case "<": return r < value;
-                case ">=": return r >= value;
-                case "<=": return r <= value;
-                default: return true;
-            }
+                "==" => r == value,
+                "!=" => r != value,
+                ">" => r > value,
+                "<" => r < value,
+                ">=" => r >= value,
+                "<=" => r <= value,
+                _ => true,
+            };
         }
 
         private void ApplyOperation(string register, string op, Int64 value)

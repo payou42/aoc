@@ -10,7 +10,7 @@ namespace Aoc.Common.Simulators
     /// </summary>
     public class Registers<T>
     {
-        private Dictionary<string, T> _registers;
+        private readonly Dictionary<string, T> _registers;
 
         public Dictionary<string, T> Storage
         {
@@ -35,7 +35,7 @@ namespace Aoc.Common.Simulators
             {
                 if (!_registers.ContainsKey(r))
                 {
-                    _registers[r] = default(T);
+                    _registers[r] = default;
                 }
                 return _registers[r];
             }

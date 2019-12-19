@@ -21,7 +21,7 @@ namespace Aoc.Common.Simulators
             }
         }
 
-        private List<int> _content;
+        private readonly List<int> _content;
 
         public Bot(string name)
         {

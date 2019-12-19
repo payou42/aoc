@@ -8,7 +8,7 @@ using Aoc.Common.Grid;
 
 namespace Aoc
 {
-    public class Day201506 : Aoc.Framework.Day
+    public class Day201506 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 

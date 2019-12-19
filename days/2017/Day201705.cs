@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Aoc
 {
-    public class Day201705 : Aoc.Framework.Day
+    public class Day201705 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -46,7 +46,7 @@ namespace Aoc
                         _input[current]++;
                     }
                 }                
-                current = current + jump;
+                current += jump;
                 
                 steps++;
             }

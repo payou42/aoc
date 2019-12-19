@@ -6,13 +6,13 @@ using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201812 : Aoc.Framework.Day
+    public class Day201812 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
         public string Name { get; private set; }
 
-        private string _initial = "##..#..##....#..#..#..##.#.###.######..#..###.#.#..##.###.#.##..###..#.#..#.##.##..###.#.#...#.##..";
+        private readonly string _initial = "##..#..##....#..#..#..##.#.###.######..#..###.#.#..##.###.#.##..###..#.#..#.##.##..###.#.#...#.##..";
 
         private Dictionary<string, char> _rules;
 

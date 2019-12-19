@@ -8,7 +8,7 @@ using Aoc.Common.Crypto;
 
 namespace Aoc
 {
-    public class Day201614 : Aoc.Framework.Day
+    public class Day201614 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 

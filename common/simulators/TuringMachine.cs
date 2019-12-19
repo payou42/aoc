@@ -11,11 +11,11 @@ namespace Aoc.Common.Simulators
     /// </summary>
     public class TuringMachine
     {
-        private Tape _tape;
+        private readonly Tape _tape;
 
         private string _state;
 
-        private Dictionary<string, Tuple<Int64, Direction, string>> _rules; 
+        private readonly Dictionary<string, Tuple<Int64, Direction, string>> _rules; 
 
         public TuringMachine(string initialState)
         {

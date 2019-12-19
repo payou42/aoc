@@ -6,7 +6,7 @@ using Aoc.Common.Simulators;
 
 namespace Aoc
 {
-    public class Day201718 : Aoc.Framework.Day
+    public class Day201718 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 

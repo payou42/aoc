@@ -7,7 +7,7 @@ using Aoc.Common.Rpg;
 
 namespace Aoc
 {
-    public class Day201521 : Aoc.Framework.Day
+    public class Day201521 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -66,14 +66,18 @@ namespace Aoc
             int best = winner ? int.MaxValue : 0;
 
             // Prepare our player
-            Character me = new Character();
-            me.Health = 100;
+            Character me = new Character
+            {
+                Health = 100
+            };
 
             // Prepare the enemy
-            Character boss = new Character();
-            boss.Health = 103;
-            boss.Damage = 9;
-            boss.Armor = 2;
+            Character boss = new Character
+            {
+                Health = 103,
+                Damage = 9,
+                Armor = 2
+            };
 
             // Pick one weapon
             var weapons = _store.Where(item => item.Type == Item.GearType.Weapon);

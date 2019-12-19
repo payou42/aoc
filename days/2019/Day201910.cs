@@ -7,7 +7,7 @@ using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201910 : Aoc.Framework.Day
+    public class Day201910 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -118,8 +118,7 @@ namespace Aoc
         {
             double x = q.X - center.X;
             double y = q.Y - center.Y;
-            double t = 0.0f;
-
+            double t;
             if (x == 0)
             {                
                 t = (y > 0) ? -double.MaxValue : double.MaxValue;

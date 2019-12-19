@@ -7,7 +7,7 @@ using Aoc.Common.Grid;
 
 namespace Aoc
 {
-    public class Day201725 : Aoc.Framework.Day
+    public class Day201725 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -31,7 +31,7 @@ namespace Aoc
             _steps = Int64.Parse(_input[1].Split(" ")[5]);
 
             string initial = _input[0].Split(" ")[3];
-            _machine = new TuringMachine(initial.Substring(0, initial.Length - 1));
+            _machine = new TuringMachine(initial[0..^1]);
             AddRules();
         }
 

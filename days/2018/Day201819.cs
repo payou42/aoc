@@ -6,7 +6,7 @@ using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201819 : Aoc.Framework.Day
+    public class Day201819 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -49,10 +49,7 @@ namespace Aoc
                 return Equals((Registers)other);
             }
 
-            public override int GetHashCode()
-            {
-                return base.GetHashCode();
-            }
+            public override int GetHashCode() => base.GetHashCode();
 
             public bool Equals(Registers other)
             {
@@ -227,11 +224,13 @@ namespace Aoc
             // Parse an instruction like:
             // seti 0 2 1
             string[] items = input[line].Split(" ");
-            Instruction instruction = new Instruction();
-            instruction.Opcode = items[0];
-            instruction.A = int.Parse(items[1]);
-            instruction.B = int.Parse(items[2]);
-            instruction.C = int.Parse(items[3]);
+            Instruction instruction = new Instruction
+            {
+                Opcode = items[0],
+                A = int.Parse(items[1]),
+                B = int.Parse(items[2]),
+                C = int.Parse(items[3])
+            };
             return instruction;
         }
     }   

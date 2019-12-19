@@ -7,7 +7,7 @@ using Aoc.Common.Containers;
 
 namespace Aoc
 {
-    public class Day201906 : Aoc.Framework.Day
+    public class Day201906 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 

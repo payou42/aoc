@@ -8,7 +8,7 @@ using Aoc.Common.Grid;
 
 namespace Aoc
 {
-    public class Day201806 : Aoc.Framework.Day
+    public class Day201806 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -93,7 +93,7 @@ namespace Aoc
         {
             int[] dest = _destinations.Select(p => Math.Abs(p[0] - x) + Math.Abs(p[1] - y)).ToArray();
             int min = dest.Min();
-            int[] closest = dest.Select((dist, index) => (dist, index)).Where(d => d.Item1 == min).Select(d => d.Item2).ToArray();
+            int[] closest = dest.Select((dist, index) => (dist, index)).Where(d => d.dist == min).Select(d => d.index).ToArray();
             if (closest.Length == 1)
             {
                 return closest[0];

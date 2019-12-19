@@ -7,15 +7,15 @@ using Aoc.Common.Simulators;
 
 namespace Aoc
 {
-    public class Day201610 : Aoc.Framework.Day
+    public class Day201610 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
         public string Name { get; private set; }
 
-        private int _target1 = 61;
+        private readonly int _target1 = 61;
 
-        private int _target2 = 17;
+        private readonly int _target2 = 17;
 
         private string[] _input;
 

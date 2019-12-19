@@ -6,7 +6,7 @@ using Aoc.Common.Hexgrid;
 
 namespace Aoc
 {
-    public class Day201711 : Aoc.Framework.Day
+    public class Day201711 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 

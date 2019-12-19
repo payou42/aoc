@@ -6,7 +6,7 @@ using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201616 : Aoc.Framework.Day
+    public class Day201616 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -38,12 +38,6 @@ namespace Aoc
             }
 
             return "";
-        }
-
-        private string Iterate(string s)
-        {
-            var t = string.Join("", s.Select(c => c == '1' ? '0' : '1').Reverse());
-            return s + '0' + t;
         }
 
         private string GenerateHash(int length)

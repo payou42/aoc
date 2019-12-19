@@ -7,7 +7,7 @@ namespace Aoc.Common
 {
     public class Particle
     {
-        private Int64[][] _components = null;
+        private readonly Int64[][] _components = null;
 
         public Particle(string desc)
         {
@@ -15,7 +15,7 @@ namespace Aoc.Common
             string[] components = desc.Split(", ");
             for (int cmp = 0; cmp < 3;  ++cmp)
             {
-                _components[cmp] = components[cmp].Substring(3, components[cmp].Length - 4).Split(",").Select(s => Int64.Parse(s)).ToArray();
+                _components[cmp] = components[cmp][3..^1].Split(",").Select(s => Int64.Parse(s)).ToArray();
             }
         }
 

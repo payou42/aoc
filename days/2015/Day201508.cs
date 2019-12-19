@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace Aoc
 {
-    public class Day201508 : Aoc.Framework.Day
+    public class Day201508 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 

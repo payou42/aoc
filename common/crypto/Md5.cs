@@ -6,7 +6,7 @@ namespace Aoc.Common.Crypto
 {
     public static class Md5
     {
-        private static MD5 _md5;
+        private static readonly MD5 _md5;
 
         static Md5()
         {

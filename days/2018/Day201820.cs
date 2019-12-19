@@ -8,7 +8,7 @@ using Aoc.Common.Grid;
 
 namespace Aoc
 {
-    public class Day201820 : Aoc.Framework.Day
+    public class Day201820 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -194,7 +194,7 @@ namespace Aoc
                             else
                             {
                                 // Create the last group
-                                groups.Add(regex.Substring(groupIndex, i - groupIndex));
+                                groups.Add(regex[groupIndex..i]);
 
                                 // Enqueue all next tasks
                                 foreach (string group in groups)
@@ -223,7 +223,7 @@ namespace Aoc
                         if (level == 0)
                         {
                             // Add this group
-                            groups.Add(regex.Substring(groupIndex, i - groupIndex));
+                            groups.Add(regex[groupIndex..i]);
 
                             // Move to the next one
                             groupIndex = i + 1;

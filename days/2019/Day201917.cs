@@ -9,7 +9,7 @@ using Aoc.Common.Simulators;
 
 namespace Aoc
 {
-    public class Day201917 : Aoc.Framework.Day
+    public class Day201917 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -146,18 +146,5 @@ namespace Aoc
 
             return true;
         }
-
-        private void Draw(int width, int height)
-        {
-            for (int j = 0; j < height; ++j)
-            {
-                for (int i = 0; i < width; ++i)
-                {
-                    Console.Write((char)_board[i, j]);
-                }
-                Console.WriteLine();
-            }
-        }
-
     }
 }

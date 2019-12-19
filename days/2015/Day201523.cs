@@ -7,7 +7,7 @@ using Aoc.Common.Simulators;
 
 namespace Aoc
 {
-    public class Day201523 : Aoc.Framework.Day
+    public class Day201523 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -50,7 +50,7 @@ namespace Aoc
                 b++;
                 if (a % 2 == 0)
                 {
-                    a = a / 2;
+                    a /= 2;
                 }
                 else
                 {
