@@ -9,7 +9,7 @@ using Aoc.Common.Grid;
 
 namespace Aoc
 {
-    public class Day201817 : Aoc.Framework.Day
+    public class Day201817 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -104,14 +104,14 @@ namespace Aoc
 
                 // Let it flow
                 waterCount = current.Count + stagning.Values.Count;
-                flowing = Flow(current, flowing, stagning);
+                flowing = Flow(current, stagning);
             }
 
             _flowing = flowing.Cells.Count(c => c.Item2 && c.Item1.Y >= _top);
             _stagning = stagning.Cells.Count(c => c.Item2 && c.Item1.Y >= _top);
         }
 
-        private Board<bool> Flow(List<(Point, bool)> current, Board<bool> flowing, Board<bool> stagning)
+        private Board<bool> Flow(List<(Point, bool)> current, Board<bool> stagning)
         {
             Board<bool> newFlowing = new Board<bool>();
             foreach (var drop in current)
@@ -190,35 +190,6 @@ namespace Aoc
             }
 
             return (min >= 0 && max >= 0);
-        }
-
-        private void Dump(Board<bool> flowing, Board<bool> stagning, Board<bool> clay)
-        {
-            Console.WriteLine("");
-            for (int y = 0; y <= _depth; ++y)
-            {
-                for (int x = _left; x <= _right; ++x)
-                {
-                    if (clay[x, y])
-                    {
-                        Console.Write("#");
-                    }
-                    else if (flowing[x, y])
-                    {
-                        Console.Write("|");
-                    }                    
-                    else if (stagning[x, y])
-                    {
-                        Console.Write("~");
-                    }
-                    else
-                    {
-                        Console.Write(".");
-                    }
-                    Console.WriteLine($"{x},{y}");
-                }
-                Console.WriteLine("");
-            }
         }
     }
 }

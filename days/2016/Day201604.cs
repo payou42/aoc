@@ -6,7 +6,7 @@ using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201604 : Aoc.Framework.Day
+    public class Day201604 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -61,10 +61,10 @@ namespace Aoc
         private Tuple<string, int, string> ParseRoom(string room)
         {
             string[] items = room.Split("[");
-            string checksum = items[1].Substring(0, items[1].Length - 1);
+            string checksum = items[1][0..^1];
 
             string[] dashes = items[0].Split("-");
-            int id = Int32.Parse(dashes[dashes.Length - 1]);
+            int id = Int32.Parse(dashes[^1]);
 
             string name = String.Join(" ", dashes, 0, dashes.Length - 1);
             return new Tuple<string, int, string>(name, id, checksum);

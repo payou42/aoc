@@ -7,7 +7,7 @@ using Aoc.Common.Simulators;
 
 namespace Aoc
 {
-    public class Day201919 : Aoc.Framework.Day
+    public class Day201919 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -44,12 +44,13 @@ namespace Aoc
 
             if (part == Aoc.Framework.Part.Part2)
             {
+                // Start at x = 5 because the first 5 columns are edge case : there's no beam on them
                 int x = 5;
                 int min = 0;
                 int max = 0;
                 Queue<int> maxes = new Queue<int>();
 
-                // Initialisation : run the loop at least 100 times
+                // Initialisation : run the loop at least 99 times
                 while (maxes.Count < 99)
                 {
                     (min, max) = ScanColumn(x, min, max);
@@ -57,7 +58,7 @@ namespace Aoc
                     x++;
                 }
                 
-                // Searcg for a place where max(x - 100) > 99 + min(x)
+                // Search for a place where max(x - 100) > 99 + min(x)
                 while (true)
                 {
                     (min, max) = ScanColumn(x, min, max);
@@ -104,14 +105,14 @@ namespace Aoc
             // Find the min value in the tractor beam, based on the previous value
             int y = ymin;
             y = LookAside(x, y, 0, -1);
-            y = LookAside(x, y, 1, +1);
+            y = LookAside(x, y + 1, 1, +1);
             int newMin = y;
 
             // Find the max value in the tractor beam, based on the previous value
-            y = Math.Max(y, ymax);
+            y = 1 + Math.Max(y, ymax);
             y = LookAside(x, y, 0, +1);
             int newMax = y - 1;
-            
+
             return (newMin, newMax);
         }
     }   

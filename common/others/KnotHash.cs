@@ -9,9 +9,9 @@ namespace Aoc.Common
     {
         public static byte[] FOOTER = new byte[5] {17, 31, 73, 47, 23};
        
-        private int _size;
+        private readonly int _size;
 
-        private int _rounds;
+        private readonly int _rounds;
 
         private int[] _knots = null;        
 

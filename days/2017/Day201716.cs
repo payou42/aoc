@@ -6,7 +6,7 @@ using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201716 : Aoc.Framework.Day
+    public class Day201716 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -44,8 +44,10 @@ namespace Aoc
             string[] moves = Aoc.Framework.Input.GetStringVector(this, ",");
 
             // Build an history of positions
-            Dictionary<string, int> positions = new Dictionary<string, int>();
-            positions[dance.ToString()] = 0;
+            Dictionary<string, int> positions = new Dictionary<string, int>
+            {
+                [dance.ToString()] = 0
+            };
 
             // Repeat dance until exhaustion
             int counter = 0;
@@ -60,7 +62,6 @@ namespace Aoc
                 if (positions.ContainsKey(hash))
                 {
                     // Found a cycle, skip forward
-                    int from = counter;
                     int length = counter - positions[hash];
 
                     // Skip the cycle as many times as possible

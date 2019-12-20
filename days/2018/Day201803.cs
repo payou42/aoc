@@ -8,7 +8,7 @@ using Aoc.Common.Grid;
 
 namespace Aoc
 {
-    public class Day201803 : Aoc.Framework.Day
+    public class Day201803 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -94,7 +94,7 @@ namespace Aoc
             string[] items = input.Split(" ");
             string[] pos = items[2].Split(",");
             int x = int.Parse(pos[0]);
-            int y = int.Parse(pos[1].Substring(0, pos[1].Length - 1));
+            int y = int.Parse(pos[1][0..^1]);
 
             string[] size = items[3].Split("x");
             int w = int.Parse(size[0]);

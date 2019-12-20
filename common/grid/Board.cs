@@ -34,7 +34,7 @@ namespace Aoc.Common.Grid
                         return _board[x][y];
                     }
                 }
-                return default(Cell);
+                return default;
             }
 
             set
@@ -63,7 +63,7 @@ namespace Aoc.Common.Grid
                         return _board[p.X][p.Y];
                     }
                 }
-                return default(Cell);
+                return default;
             }
 
             set

@@ -8,16 +8,16 @@ namespace Aoc.Framework
 {
     public class Days
     {
-        private static Dictionary<string, Day> _registry;
+        private static readonly Dictionary<string, IDay> _registry;
 
         static Days()
         {
-            _registry = new Dictionary<string, Day>();
+            _registry = new Dictionary<string, IDay>();
         }
 
         public static void Register(Type type)
         {
-            Day instance = (Day)Activator.CreateInstance(type);
+            IDay instance = (IDay)Activator.CreateInstance(type);
             _registry[instance.Codename] = instance;
         }
 
@@ -26,7 +26,7 @@ namespace Aoc.Framework
             Assembly current = Assembly.GetExecutingAssembly();
             foreach (Type type in current.GetTypes())
             {
-                Type[] interfaces = type.FindInterfaces((typeObj, criteriaObj) => typeObj.ToString() == (string)criteriaObj, "Aoc.Framework.Day");
+                Type[] interfaces = type.FindInterfaces((typeObj, criteriaObj) => typeObj.ToString() == (string)criteriaObj, "Aoc.Framework.IDay");
                 if (interfaces.Length > 0)
                 {
                     Register(type);
@@ -36,7 +36,7 @@ namespace Aoc.Framework
 
         public static void RunAll()
         {
-            foreach (Day day in _registry.Values)
+            foreach (IDay day in _registry.Values)
             {
                 RunSingle(day.Codename);
             }
@@ -45,7 +45,7 @@ namespace Aoc.Framework
         public static void RunSingle(string codename)
         {
             int width = 80;
-            Day day = _registry[codename];
+            IDay day = _registry[codename];
             ConsoleColor savedColor = Console.ForegroundColor;            
            
             Console.ForegroundColor = ConsoleColor.Green;

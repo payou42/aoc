@@ -7,7 +7,7 @@ namespace Aoc.Framework
 {
     public class Input
     {
-        public static string GetString(Day day)
+        public static string GetString(IDay day)
         {
             try
             {
@@ -15,11 +15,10 @@ namespace Aoc.Framework
                 string[] items = day.Codename.Split("-");
 
                 // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader($"./inputs/{items[0]}/{day.Codename}.txt"))
-                {
-                    // Read the stream to a string, and write the string to the console.
-                    return sr.ReadToEnd();
-                }
+                using StreamReader sr = new StreamReader($"./inputs/{items[0]}/{day.Codename}.txt");
+                
+                // Read the stream to a string, and write the string to the console.
+                return sr.ReadToEnd();
             }
             catch (Exception)
             {
@@ -27,7 +26,7 @@ namespace Aoc.Framework
             }
         }
 
-        public static string[] GetStringVector(Day day, string separator = "\r\n")
+        public static string[] GetStringVector(IDay day, string separator = "\r\n")
         {
             string raw = GetString(day);
             if (raw == null)
@@ -38,7 +37,7 @@ namespace Aoc.Framework
             return raw.Split(separator);
         }
 
-        public static string[][] GetStringMatrix(Day day, string row = "\t", string column = "\r\n")
+        public static string[][] GetStringMatrix(IDay day, string row = "\t", string column = "\r\n")
         {
             string raw = GetString(day);
             if (raw == null)
@@ -61,7 +60,7 @@ namespace Aoc.Framework
             return matrix;
         }
 
-        public static Int32 GetInt(Day day)
+        public static Int32 GetInt(IDay day)
         {
             string raw = GetString(day);
             if (raw == null)
@@ -71,7 +70,7 @@ namespace Aoc.Framework
             
             return Int32.Parse(raw);
         }
-        public static Int32[] GetIntVector(Day day, string separator = "\r\n")
+        public static Int32[] GetIntVector(IDay day, string separator = "\r\n")
         {
             string raw = GetString(day);
             if (raw == null)
@@ -88,7 +87,7 @@ namespace Aoc.Framework
             return vector;
         }
 
-        public static Int64[] GetLongVector(Day day, string separator = "\r\n")
+        public static Int64[] GetLongVector(IDay day, string separator = "\r\n")
         {
             string raw = GetString(day);
             if (raw == null)
@@ -105,7 +104,7 @@ namespace Aoc.Framework
             return vector;
         }
 
-        public static Int32[][] GetIntMatrix(Day day, string row = "\t", string column = "\r\n")
+        public static Int32[][] GetIntMatrix(IDay day, string row = "\t", string column = "\r\n")
         {
             string raw = GetString(day);
             if (raw == null)

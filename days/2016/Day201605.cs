@@ -7,7 +7,7 @@ using Aoc.Common.Crypto;
 
 namespace Aoc
 {
-    public class Day201605 : Aoc.Framework.Day
+    public class Day201605 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -55,8 +55,7 @@ namespace Aoc
                     string hash = Md5.Compute(key, index);
                     if (hash.StartsWith("00000"))
                     {
-                        int position = -1;
-                        if (Int32.TryParse(hash.Substring(5, 1), out position))
+                        if (Int32.TryParse(hash.Substring(5, 1), out int position))
                         {
                             if (position < 8 && !found[position])
                             {

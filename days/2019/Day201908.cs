@@ -6,7 +6,7 @@ using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201908 : Aoc.Framework.Day
+    public class Day201908 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -42,7 +42,7 @@ namespace Aoc
         {
             if (part == Aoc.Framework.Part.Part1)
             {
-                var layer = _layers.Select(l => (l.Count((c) => c == '0'), l)).OrderBy(l => l.Item1).Select(l => l.Item2).First();
+                var layer = _layers.Select(l => (l.Count((c) => c == '0'), l)).OrderBy(l => l.Item1).Select(l => l.l).First();
                 return (layer.Count((c) => c == '1') * layer.Count((c) => c == '2')).ToString();
             }
 

@@ -6,7 +6,7 @@ using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201515 : Aoc.Framework.Day
+    public class Day201515 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -33,13 +33,13 @@ namespace Aoc
         {
             _ingredients = Aoc.Framework.Input.GetStringMatrix(this, " ").Select(line => new Ingredient
             {
-                Name = line[0].Substring(0, line[0].Length - 1),
+                Name = line[0][0..^1],
                 Properties = new int[4]
                 {
-                    int.Parse(line[2].Substring(0, line[2].Length - 1)),
-                    int.Parse(line[4].Substring(0, line[4].Length - 1)),
-                    int.Parse(line[6].Substring(0, line[6].Length - 1)),
-                    int.Parse(line[8].Substring(0, line[8].Length - 1))
+                    int.Parse(line[2][0..^1]),
+                    int.Parse(line[4][0..^1]),
+                    int.Parse(line[6][0..^1]),
+                    int.Parse(line[8][0..^1])
                 },
                 Calories = int.Parse(line[10])
             }).ToArray();

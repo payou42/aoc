@@ -6,7 +6,7 @@ using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201816 : Aoc.Framework.Day
+    public class Day201816 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -49,10 +49,7 @@ namespace Aoc
                 return Equals((Registers)other);
             }
 
-            public override int GetHashCode()
-            {
-                return base.GetHashCode();
-            }
+            public override int GetHashCode() => base.GetHashCode();
 
             public bool Equals(Registers other)
             {
@@ -229,21 +226,21 @@ namespace Aoc
                     countSolved = _assembler.Keys.Count;
 
                     // Mark the easy one
-                    var resolved = matches.Where(item => item.Value.Count == 1).Select(item => (Key: item.Key, Value: item.Value[0])).ToList();
-                    foreach (var item in resolved)
+                    var resolved = matches.Where(item => item.Value.Count == 1).Select(item => (item.Key, Value: item.Value[0])).ToList();
+                    foreach (var (Key, Value) in resolved)
                     {
-                        _assembler[item.Key] = item.Value;
+                        _assembler[Key] = Value;
                     }
 
                     // Remove them from the list
                     foreach (List<Command> v in matches.Values.ToList())
                     {
-                        foreach (var c in resolved)
+                        foreach (var (Key, Value) in resolved)
                         {
-                            v.Remove(c.Value);
+                            v.Remove(Value);
                             if (v.Count == 0)
                             {
-                                matches.Remove(c.Key);
+                                matches.Remove(Key);
                             }
                         }
                     }
@@ -295,11 +292,13 @@ namespace Aoc
             // Parse an instruction like:
             // 5 0 2 1
             string[] items = input[line].Split(" ");
-            Instruction instruction = new Instruction();
-            instruction.Opcode = int.Parse(items[0]);
-            instruction.A = int.Parse(items[1]);
-            instruction.B = int.Parse(items[2]);
-            instruction.C = int.Parse(items[3]);
+            Instruction instruction = new Instruction
+            {
+                Opcode = int.Parse(items[0]),
+                A = int.Parse(items[1]),
+                B = int.Parse(items[2]),
+                C = int.Parse(items[3])
+            };
             return instruction;
         }
     }

@@ -6,7 +6,7 @@ namespace Aoc.Common
 {
     public class Dance
     {
-        private char[] _programs = null;
+        private readonly char[] _programs = null;
 
         private int _start = 0;
 

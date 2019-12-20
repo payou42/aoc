@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Aoc
 {
-    public class Day201702 : Aoc.Framework.Day
+    public class Day201702 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 

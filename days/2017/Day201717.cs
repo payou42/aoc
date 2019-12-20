@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Aoc
 {
-    public class Day201717 : Aoc.Framework.Day
+    public class Day201717 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -26,8 +26,7 @@ namespace Aoc
             int step = Aoc.Framework.Input.GetInt(this);
             if (part == Aoc.Framework.Part.Part1)
             {
-                List<int> data = new List<int>();
-                data.Add(0);
+                List<int> data = new List<int> { 0 };
                 int cursor = 0;
                 for (int i = 1; i <= 2017; ++i)
                 {

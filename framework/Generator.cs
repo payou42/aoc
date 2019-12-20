@@ -47,34 +47,24 @@ namespace Aoc.Framework
                 {
                     case "gzip":
                     {
-                        using (GZipStream decompressionStream = new GZipStream(data, CompressionMode.Decompress))
-                        {
-                            using (StreamReader reader = new StreamReader(decompressionStream))
-                            {
-                                s = reader.ReadToEnd();
-                            }
-                        }
+                        using GZipStream decompressionStream = new GZipStream(data, CompressionMode.Decompress);
+                        using StreamReader reader = new StreamReader(decompressionStream);
+                        s = reader.ReadToEnd();
                         break;
                     }
 
                     case "deflate":
                     {
-                        using (DeflateStream decompressionStream = new DeflateStream(data, CompressionMode.Decompress))
-                        {
-                            using (StreamReader reader = new StreamReader(decompressionStream))
-                            {
-                                s = reader.ReadToEnd();
-                            }
-                        }
+                        using DeflateStream decompressionStream = new DeflateStream(data, CompressionMode.Decompress);
+                        using StreamReader reader = new StreamReader(decompressionStream);
+                        s = reader.ReadToEnd();
                         break;
                     }
 
                     default:
                     {
-                        using (StreamReader reader = new StreamReader(data))
-                        {
-                            s = reader.ReadToEnd();
-                        }
+                        using StreamReader reader = new StreamReader(data);
+                        s = reader.ReadToEnd();
                         break;
                     }
 
@@ -94,11 +84,10 @@ namespace Aoc.Framework
             try
             {
                 // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader("./cookie.txt"))
-                {
-                    // Read the stream to a string, and write the string to the console.
-                    return sr.ReadToEnd();
-                }
+                using StreamReader sr = new StreamReader("./cookie.txt");
+                
+                // Read the stream to a string, and write the string to the console.
+                return sr.ReadToEnd();
             }
             catch (Exception)
             {
@@ -111,11 +100,10 @@ namespace Aoc.Framework
             try
             {
                 // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader("./framework/template.txt"))
-                {
-                    // Read the stream to a string, and write the string to the console.
-                    return sr.ReadToEnd();
-                }
+                using StreamReader sr = new StreamReader("./framework/template.txt");
+                
+                // Read the stream to a string, and write the string to the console.
+                return sr.ReadToEnd();
             }
             catch (Exception)
             {
@@ -129,12 +117,11 @@ namespace Aoc.Framework
             try
             {
                 // Open the text file using a stream writer.
-                using (StreamWriter sw = new StreamWriter($"./inputs/{path}/{codeName}.txt"))
-                {
-                    // Write the content of the input in the file.
-                    sw.Write(formatted);
-                    sw.Close();
-                }
+                using StreamWriter sw = new StreamWriter($"./inputs/{path}/{codeName}.txt");
+                
+                // Write the content of the input in the file.
+                sw.Write(formatted);
+                sw.Close();
             }
             catch (Exception e)
             {
@@ -152,12 +139,11 @@ namespace Aoc.Framework
             try
             {
                 // Open the text file using a stream writer.
-                using (StreamWriter sw = new StreamWriter($"./days/{classPath}/{className}.cs"))
-                {
-                    // Write the content of the input in the file.
-                    sw.Write(template);
-                    sw.Close();
-                }
+                using StreamWriter sw = new StreamWriter($"./days/{classPath}/{className}.cs");
+                
+                // Write the content of the input in the file.
+                sw.Write(template);
+                sw.Close();
             }
             catch (Exception e)
             {

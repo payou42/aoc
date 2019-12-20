@@ -6,7 +6,7 @@ namespace Aoc.Common
 {
     public class Firewall
     {
-        private List<Scanner> _firewall;
+        private readonly List<Scanner> _firewall;
 
         public Firewall()
         {

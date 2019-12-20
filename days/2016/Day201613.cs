@@ -8,7 +8,7 @@ using Aoc.Common.Grid;
 
 namespace Aoc
 {
-    public class Day201613 : Aoc.Framework.Day
+    public class Day201613 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -108,8 +108,8 @@ namespace Aoc
             int count = 0;            
             while (sum > 0)
             {
-                count = count + 1;
-                sum = sum & (sum - 1);
+                count += 1;
+                sum &= (sum - 1);
             }
             return (count % 2) == 1;
         }

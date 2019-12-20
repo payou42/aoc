@@ -6,7 +6,7 @@ using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201809 : Aoc.Framework.Day
+    public class Day201809 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -73,7 +73,7 @@ namespace Aoc
                         }
                     }
                     scores[currentPlayer] += currentMarble + currentPosition.Value;
-                    LinkedListNode<int> next = null;
+                    LinkedListNode<int> next;
                     if (currentPosition == board.Last)
                     {
                         next = board.First;

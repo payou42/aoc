@@ -6,7 +6,7 @@ using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201514 : Aoc.Framework.Day
+    public class Day201514 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -80,7 +80,7 @@ namespace Aoc
                     var top = leaderboard.First().Item2;
 
                     // Only get the firsts
-                    var firsts = leaderboard.Where(r => r.Item2 == top).Select(r => r.Item1);
+                    var firsts = leaderboard.Where(r => r.Item2 == top).Select(r => r.i);
 
                     // Count the points
                     foreach (int n in firsts)
