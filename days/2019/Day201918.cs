@@ -1,11 +1,6 @@
-using System;
 using System.Drawing;
-using System.Text;
 using System.Linq;
 using System.Collections.Generic;
-using System.Runtime.Intrinsics.X86;
-using Aoc.Common;
-using Aoc.Common.Graphes;
 using Aoc.Common.Grid;
 
 namespace Aoc
@@ -29,6 +24,7 @@ namespace Aoc
                 Position = initial;
                 Keys = 0;
                 Distance = 0;
+                Count = 0;
             }
 
             public State(State other, Point position)
@@ -36,11 +32,13 @@ namespace Aoc
                 Position = position;
                 Keys = other.Keys;
                 Distance = other.Distance + 1;
+                Count = other.Count;
             }
 
             public void AddKey(char k)
             {
                 Keys |= (uint)1 << (int)(k - 'a');
+                Count++;
             }
 
             public bool ContainsKey(char k)
@@ -50,7 +48,7 @@ namespace Aoc
 
             public uint CountKeys()
             {
-                return Popcnt.PopCount(Keys);
+                return Count;
             }
 
             public Point Position { get; set; }
@@ -58,6 +56,8 @@ namespace Aoc
             public uint Keys { get; private set; }
 
             public long Distance { get; set; }
+
+            public uint Count { get; set; }
 
             public long GetHashLong()
             {
