@@ -6,7 +6,7 @@ using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201615 : Aoc.Framework.Day
+    public class Day201615 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -45,7 +45,7 @@ namespace Aoc
                 string[] items = _input[i].Split(" ");
                 int id = int.Parse(items[1].Substring(1));
                 int slots = int.Parse(items[3]);
-                int initial = int.Parse(items[items.Length - 1].Substring(0, items[items.Length - 1].Length - 1));
+                int initial = int.Parse(items[^1][0..^1]);
                 _discs[i] = new Disc { Id = id, Slots = slots, Initial = initial };
             }
         }

@@ -1,13 +1,10 @@
 using System;
-using System.Text;
-using System.Linq;
 using System.Collections.Generic;
-using Aoc.Common;
 using Aoc.Common.Simulators;
 
 namespace Aoc
 {
-    public class Day201907 : Aoc.Framework.Day
+    public class Day201907 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 

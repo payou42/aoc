@@ -7,7 +7,7 @@ using Aoc.Common.Logic;
 
 namespace Aoc
 {
-    public class Day201507 : Aoc.Framework.Day
+    public class Day201507 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -79,7 +79,7 @@ namespace Aoc
                 }
 
                 // Process all kind of commands
-                switch (items[items.Length - 4])
+                switch (items[^4])
                 {
                     // NOT dq -> dr
                     case "NOT":

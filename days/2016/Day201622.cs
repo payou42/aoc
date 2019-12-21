@@ -7,7 +7,7 @@ using Aoc.Common.Grid;
 
 namespace Aoc
 {
-    public class Day201622 : Aoc.Framework.Day
+    public class Day201622 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -59,8 +59,8 @@ namespace Aoc
                 int y = int.Parse(coordinates[2].Substring(1));
 
                 // Get the sizes
-                int size = int.Parse(items[1].Substring(0, items[1].Length - 1));
-                int used = int.Parse(items[2].Substring(0, items[2].Length - 1));
+                int size = int.Parse(items[1][0..^1]);
+                int used = int.Parse(items[2][0..^1]);
 
                 // Build the node
                 _grid.Add(new Node { X = x, Y = y, Size = size, Used = used });

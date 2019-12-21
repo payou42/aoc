@@ -7,7 +7,7 @@ using Aoc.Common.Grid;
 
 namespace Aoc
 {
-    public class Day201818 : Aoc.Framework.Day
+    public class Day201818 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -162,37 +162,5 @@ namespace Aoc
             
             return count;
         }
-
-        private void Dump(Board<Cell> current)
-        {
-            System.Console.WriteLine("");
-            for (int y = 0; y <= 50; ++y)
-            {
-                for (int x = 0; x <= 50; ++x)
-                {
-                    switch (current[x, y])
-                    {
-                        case Cell.Open:
-                        {
-                            Console.Write(".");
-                            break;
-                        }
-
-                        case Cell.Tree:
-                        {
-                            Console.Write("|");
-                            break;
-                        }
-
-                        case Cell.Lumberyard:
-                        {
-                            Console.Write("#");
-                            break;
-                        }
-                    }
-                }
-                System.Console.WriteLine("");;
-            }
-        }
-    }   
+    }
 }

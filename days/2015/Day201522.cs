@@ -8,7 +8,7 @@ using Aoc.Common.Rpg.Spells;
 
 namespace Aoc
 {
-    public class Day201522 : Aoc.Framework.Day
+    public class Day201522 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -54,8 +54,6 @@ namespace Aoc
             });
 
             int minimumMana = int.MaxValue;
-            List<string> minimumHistory = null;
-
             while (queue.TryDequeue(out var combat))
             {
                 foreach (Spell spell in _spells)
@@ -68,7 +66,7 @@ namespace Aoc
                             if (next.TotalMana < minimumMana)
                             {
                                 minimumMana = next.TotalMana;
-                                minimumHistory = next.History;
+                                List<string> minimumHistory = next.History;
                             }
                             continue;
                         }

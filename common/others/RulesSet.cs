@@ -6,7 +6,7 @@ namespace Aoc.Common
 {    
     public class RulesSet
     {  
-        private Dictionary<string, string> _rules = null;
+        private readonly Dictionary<string, string> _rules = null;
 
         public string this[string hash]
         {

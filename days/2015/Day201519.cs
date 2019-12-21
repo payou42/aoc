@@ -7,7 +7,7 @@ using Aoc.Common.Strings;
 
 namespace Aoc
 {
-    public class Day201519 : Aoc.Framework.Day
+    public class Day201519 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -30,7 +30,7 @@ namespace Aoc
             _reactions = new Dictionary<string, List<string>>();
             _reductions = new Dictionary<string, List<string>>();
             string[] input = Aoc.Framework.Input.GetStringVector(this);
-            _molecule = input[input.Length - 1];
+            _molecule = input[^1];
             for (int i = 0; i < input.Length - 1; ++i)
             {
                 string[] line = input[i].Split(" ");

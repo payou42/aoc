@@ -59,8 +59,7 @@ namespace Aoc.Common.Simulators
         /// <returns>The actual value of the parameter</returns>
         public Int64 Resolve(string v)
         {
-            Int64 output = 0;
-            if (Int64.TryParse(v, out output))
+            if (Int64.TryParse(v, out long output))
             {
                 return output;
             }

@@ -7,11 +7,11 @@ namespace Aoc.Common.Containers
 
     public class PriorityQueue<T>
     {
-        private Dictionary<T, long> _dataByContent;
+        private readonly Dictionary<T, long> _dataByContent;
 
-        private Dictionary<long, List<T>> _dataByPriority;
+        private readonly Dictionary<long, List<T>> _dataByPriority;
 
-        private SortedSet<long> _priorities;
+        private readonly SortedSet<long> _priorities;
 
         private long _count;
 
@@ -90,7 +90,7 @@ namespace Aoc.Common.Containers
             // Empty queue ?
             if (_count == 0)
             {
-                data = default(T);
+                data = default;
                 return false;
             }
 
@@ -104,7 +104,7 @@ namespace Aoc.Common.Containers
             // Empty queue ?
             if (_count == 0)
             {
-                data = default(T);
+                data = default;
                 return false;
             }
 

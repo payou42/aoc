@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Aoc.Framework
 {
-    public interface Day
+    public interface IDay
     {
         string Codename { get; }
 

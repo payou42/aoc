@@ -7,7 +7,7 @@ using Aoc.Common.Grid;
 
 namespace Aoc
 {
-    public class Day201722 : Aoc.Framework.Day
+    public class Day201722 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -75,6 +75,7 @@ namespace Aoc
                 case Cell.Weakened: return Direction.Up;
                 case Cell.Infected: return Direction.Right;
                 case Cell.Flagged: return Direction.Down;
+                case Cell.Count: break;
             }
             return Direction.Up;
         }

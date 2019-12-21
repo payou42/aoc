@@ -28,7 +28,7 @@ namespace Aoc.Common.Strings
 
         public static string ReversePart(string input, int x, int y)
         {
-            return (x > 0 ? input.Substring(0, x) : "") + Reverse(input.Substring(x, y + 1 - x)) + (y < input.Length - 1 ? input.Substring(y + 1) : "");
+            return (x > 0 ? input.Substring(0, x) : "") + Reverse(input[x..(y + 1)]) + (y < input.Length - 1 ? input.Substring(y + 1) : "");
         }
 
         public static string Splice(string input, int start, int length, string replacement = "")

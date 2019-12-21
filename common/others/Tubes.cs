@@ -8,7 +8,7 @@ namespace Aoc.Common
 {
     public class Tubes
     {
-        private string[] _network = null;
+        private readonly string[] _network = null;
 
         private Point _position;
 
@@ -16,9 +16,9 @@ namespace Aoc.Common
 
         private string _letters = null;  
 
-        private int _width = 0;
+        private readonly int _width = 0;
 
-        private int _height = 0;
+        private readonly int _height = 0;
 
         private int _steps = 0;
 

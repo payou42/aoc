@@ -6,7 +6,7 @@ using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201825 : Aoc.Framework.Day
+    public class Day201825 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -14,7 +14,7 @@ namespace Aoc
 
         public class Star
         {
-            private int[] _coordinates;
+            private readonly int[] _coordinates;
 
             public int this[int index]
             {

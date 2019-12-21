@@ -9,7 +9,7 @@ using Aoc.Common.Containers;
 
 namespace Aoc
 {
-    public class Day201822 : Aoc.Framework.Day
+    public class Day201822 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -43,29 +43,24 @@ namespace Aoc
 
             public CellType Type(int depth)
             {
-                switch (ErosionLevel(depth) % 3)
+                return (ErosionLevel(depth) % 3) switch
                 {
-                    case 0: return CellType.Rocky;
-                    case 1: return CellType.Wet;
-                    case 2: return CellType.Narrow;
-                }
-                return CellType.Unknown;
+                    0 => CellType.Rocky,
+                    1 => CellType.Wet,
+                    2 => CellType.Narrow,
+                    _ => CellType.Unknown,
+                };
             }
 
             public bool Accept(int depth, Tools tool)
             {
-                switch (Type(depth))
+                return (Type(depth)) switch
                 {
-                    case CellType.Rocky:
-                        return tool == Tools.ClimbingGear || tool == Tools.Torch;
-
-                    case CellType.Wet:
-                        return tool == Tools.ClimbingGear || tool == Tools.Neither;
-
-                    case CellType.Narrow:
-                        return tool == Tools.Neither || tool == Tools.Torch;
-                }
-                return false;
+                    CellType.Rocky => tool == Tools.ClimbingGear || tool == Tools.Torch,
+                    CellType.Wet => tool == Tools.ClimbingGear || tool == Tools.Neither,
+                    CellType.Narrow => tool == Tools.Neither || tool == Tools.Torch,
+                    _ => false,
+                };
             }
         }
 

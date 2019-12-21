@@ -6,7 +6,7 @@ using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201513 : Aoc.Framework.Day
+    public class Day201513 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -29,7 +29,7 @@ namespace Aoc
             string[][] input = Aoc.Framework.Input.GetStringMatrix(this, " ");
             foreach (string[] line in input)
             {
-                var last = line[10].Substring(0, line[10].Length - 1);
+                var last = line[10][0..^1];
                 if (!_invited.ContainsKey(line[0]))
                 {
                     _invited[line[0]] = _invited.Keys.Count;

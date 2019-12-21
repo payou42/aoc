@@ -6,7 +6,7 @@ using Aoc.Common.Containers;
 
 namespace Aoc
 {
-    public class Day201707 : Aoc.Framework.Day
+    public class Day201707 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -54,7 +54,7 @@ namespace Aoc
             {
                 String[] items = lines[i].Split(" ");
                 String name = items[0];
-                Int32 weight = Int32.Parse(items[1].Substring(1, items[1].Length - 2));
+                Int32 weight = Int32.Parse(items[1][1..^1]);
                 elements[name] = new Tree<WeightTree.Header>.Node(null, new WeightTree.Header { Name = name, LocalWeight = weight });
             }
 
@@ -68,9 +68,9 @@ namespace Aoc
                     for (int j = 3; j < items.Length; ++j)
                     {
                         String childName = items[j];
-                        if (childName[childName.Length - 1] == ',')
+                        if (childName[^1] == ',')
                         {
-                            childName = childName.Substring(0, childName.Length - 1);
+                            childName = childName[0..^1];
                         }
                         var child = elements[childName];
                         parent.Children.Add(child);

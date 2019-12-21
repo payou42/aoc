@@ -8,7 +8,7 @@ using Aoc.Common.Grid;
 
 namespace Aoc
 {
-    public class Day201815 : Aoc.Framework.Day
+    public class Day201815 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -246,7 +246,7 @@ namespace Aoc
             var distances = BuildDistanceMap(to);
             int minDistance = int.MaxValue;
             Point best = from;
-            int currentDistance = distances[from.X, from.Y];
+            _ = distances[from.X, from.Y];
             if (distances[from.X, from.Y - 1] > 0 && distances[from.X, from.Y - 1] < minDistance)
             {
                 minDistance = distances[from.X, from.Y - 1];
@@ -264,7 +264,7 @@ namespace Aoc
             }
             if (distances[from.X, from.Y + 1] > 0 && distances[from.X, from.Y + 1] < minDistance)
             {
-                minDistance = distances[from.X, from.Y + 1];
+                _ = distances[from.X, from.Y + 1];
                 best = new Point(from.X, from.Y + 1);
             }
             return best;
@@ -309,7 +309,7 @@ namespace Aoc
             {
                 if (_map[target.X, target.Y].Health < lowestHealth)
                 {
-                    lowestHealth = _map[target.X, target.Y].Health;
+                    _ = _map[target.X, target.Y].Health;
                     best = target;
                 }
             }

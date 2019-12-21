@@ -7,7 +7,7 @@ using Aoc.Common.Chemistry;
 
 namespace Aoc
 {
-    public class Day201914 : Aoc.Framework.Day
+    public class Day201914 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 

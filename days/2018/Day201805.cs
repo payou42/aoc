@@ -6,7 +6,7 @@ using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201805 : Aoc.Framework.Day
+    public class Day201805 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -45,36 +45,6 @@ namespace Aoc
             }
 
             return "";
-        }
-
-        private long GetPolymerLengthOld(string polymer)
-        {
-            bool changed = true;
-            string current = polymer;
-
-            // Build the pairs
-            string[] pairs = new string[52];
-            char c = 'a';
-            for (int i = 0; i < 26; ++i)                
-            {
-                string s = c.ToString();
-                pairs[2 * i] = s + s.ToUpper();
-                pairs[2 * i + 1] = s.ToUpper() + s;
-                c++;
-            }
-
-            while (changed)
-            {
-                string next = current;
-                foreach (string s in pairs)
-                {
-                    next = next.Replace(s, "");
-                }
-                changed = (current.Length != next.Length);
-                current = next;
-            }
-
-            return current.Length;
         }
 
         private long GetPolymerLength(string polymer)

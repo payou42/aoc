@@ -6,7 +6,7 @@ using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201801 : Aoc.Framework.Day
+    public class Day201801 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -36,8 +36,7 @@ namespace Aoc
             {
                 long counter = 0;
                 long sum = 0;
-                HashSet<long> seen = new HashSet<long>();
-                seen.Add(0);
+                HashSet<long> seen = new HashSet<long> { 0 };
                 while (true)
                 {
                     sum += _frequencies[counter++ % _frequencies.Length];

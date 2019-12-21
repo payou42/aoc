@@ -6,7 +6,7 @@ using Aoc.Common;
 
 namespace Aoc
 {
-    public class Day201516 : Aoc.Framework.Day
+    public class Day201516 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 
@@ -48,9 +48,9 @@ namespace Aoc
                     bool valid = true;
                     for (int index = 2; index < line.Length; index += 2)
                     {
-                        string property = line[index].Substring(0, line[index].Length - 1);
+                        string property = line[index][0..^1];
                         string svalue = line[index + 1];
-                        int value = int.Parse(svalue.EndsWith(',') ? svalue.Substring(0, svalue.Length - 1) : svalue);
+                        int value = int.Parse(svalue.EndsWith(',') ? svalue[0..^1] : svalue);
                         if (target[property] != value)
                         {
                             valid = false;
@@ -90,9 +90,9 @@ namespace Aoc
                     bool valid = true;
                     for (int index = 2; index < line.Length; index += 2)
                     {
-                        string property = line[index].Substring(0, line[index].Length - 1);
+                        string property = line[index][0..^1];
                         string svalue = line[index + 1];
-                        int value = int.Parse(svalue.EndsWith(',') ? svalue.Substring(0, svalue.Length - 1) : svalue);
+                        int value = int.Parse(svalue.EndsWith(',') ? svalue[0..^1] : svalue);
                         if (property == "cats" || property == "trees")
                         {
                             if (target[property] >= value)

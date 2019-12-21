@@ -9,7 +9,7 @@ using Aoc.Common.Physics;
 
 namespace Aoc
 {
-    public class Day201912 : Aoc.Framework.Day
+    public class Day201912 : Aoc.Framework.IDay
     {
         public string Codename { get; private set; }
 

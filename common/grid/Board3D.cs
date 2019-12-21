@@ -37,7 +37,7 @@ namespace Aoc.Common.Grid
                         }
                     }
                 }
-                return default(Cell);
+                return default;
             }
 
             set
