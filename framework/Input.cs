@@ -37,7 +37,7 @@ namespace Aoc.Framework
             return raw.Split(separator);
         }
 
-        public static string[][] GetStringMatrix(IDay day, string row = "\t", string column = "\r\n")
+        public static string[][] GetStringMatrix(IDay day, string column = "\t", string row = "\r\n")
         {
             string raw = GetString(day);
             if (raw == null)
@@ -45,11 +45,11 @@ namespace Aoc.Framework
                 return null;
             }
             
-            String[] lines = raw.Split(column);
+            String[] lines = raw.Split(row);
             string[][] matrix = new string[lines.Length][];
             for (int i = 0; i < lines.Length; ++i)
             {                
-                String[] cells = lines[i].Split(row);
+                String[] cells = lines[i].Split(column);
                 matrix[i] = new string[cells.Length];
                 for (int j = 0; j < cells.Length; ++j)
                 {
@@ -104,7 +104,7 @@ namespace Aoc.Framework
             return vector;
         }
 
-        public static Int32[][] GetIntMatrix(IDay day, string row = "\t", string column = "\r\n")
+        public static Int32[][] GetIntMatrix(IDay day, string column = "\t", string row = "\r\n")
         {
             string raw = GetString(day);
             if (raw == null)
@@ -112,11 +112,11 @@ namespace Aoc.Framework
                 return null;
             }
             
-            String[] lines = raw.Split(column);
+            String[] lines = raw.Split(row);
             Int32[][] matrix = new Int32[lines.Length][];
             for (int i = 0; i < lines.Length; ++i)
             {                
-                String[] cells = lines[i].Split(row);
+                String[] cells = lines[i].Split(column);
                 matrix[i] = new Int32[cells.Length];
                 for (int j = 0; j < cells.Length; ++j)
                 {

@@ -28,6 +28,7 @@ namespace Aoc.Framework
             string title = fullTitle.Split(":")[1].Trim();
             return title;
         }
+
         private static string FetchInput(string year, string day)
         {
             string s = "";
@@ -67,8 +68,8 @@ namespace Aoc.Framework
                         s = reader.ReadToEnd();
                         break;
                     }
-
                 }
+
                 data.Close();
             }
             catch (Exception e)
@@ -113,7 +114,7 @@ namespace Aoc.Framework
 
         private static void StoreInput(string path, string codeName, string input)
         {
-            string formatted = input.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n");
+            string formatted = input.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n").Replace("\r\n\r\n", "\r\n");
             try
             {
                 // Open the text file using a stream writer.
