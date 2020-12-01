@@ -23,6 +23,7 @@ namespace Aoc
         public void Init()
         {
             _input = Aoc.Framework.Input.GetIntVector(this);
+            Array.Sort(_input);
         }
 
         public string Run(Aoc.Framework.Part part)
@@ -37,6 +38,11 @@ namespace Aoc
                         {
                             return (_input[i] * _input[j]).ToString();
                         }
+
+                        if (_input[i] + _input[j] > 2020)
+                        {
+                            break;
+                        }
                     }
                 }
             
@@ -49,11 +55,21 @@ namespace Aoc
                 {
                     for (int j = i + 1; j < _input.Length - 1; ++j)
                     {
+                        if (_input[i] + _input[j] >= 2020)
+                        {
+                            break;
+                        }
+
                         for (int k = j + 1; k < _input.Length; ++k)
                         {
                             if (_input[i] + _input[j] + _input[k]== 2020)
                             {
                                 return (_input[i] * _input[j] * _input[k]).ToString();
+                            }
+
+                            if (_input[i] + _input[j] + _input[k] > 2020)
+                            {
+                                break;
                             }
                         }
                     }
