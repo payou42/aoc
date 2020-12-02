@@ -41,7 +41,7 @@ namespace Aoc
 
         private bool IsPasswordValid(string s, Aoc.Framework.Part part)
         {
-            // Extact the info from the string
+            // Extract the info from the string
             string[] items = s.Split(new string[] {"-", ":", " "}, StringSplitOptions.RemoveEmptyEntries);
             int low = int.Parse(items[0]);
             int high = int.Parse(items[1]);
