@@ -103,8 +103,8 @@ namespace Aoc
 
         private bool CheckHeight(Dictionary<string, string> passport, string field)
         {
-            string unit = passport[field][^2..^0];           
-            if (!int.TryParse(passport[field][0..^2], out int height))
+            string unit = passport[field][^2..];           
+            if (!int.TryParse(passport[field][..^2], out int height))
                 return false;
 
             if (unit == "cm" && height >= 150 && height <= 193)
@@ -125,7 +125,7 @@ namespace Aoc
             if (color.Length != 7)
                 return false;
 
-            if (!int.TryParse(color[1..^1], NumberStyles.HexNumber, null, out var _))
+            if (!int.TryParse(color[1..], NumberStyles.HexNumber, null, out var _))
                 return false;
 
             return true;
