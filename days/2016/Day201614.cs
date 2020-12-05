@@ -92,16 +92,17 @@ namespace Aoc
                     CleanCandidates(candidates, pepper - 1000);
 
                     // Compute the hash
-                    string hash = Md5.ComputeString(_salt, pepper);
-                    for (int i = 0; i < 2016; ++i)
+                    byte[] hash = Md5.Compute(_salt, pepper);
+                    for (int i = 0; i < 2015; ++i)
                     {
-                        hash = Md5.ComputeString(hash);
+                        hash = Md5.Compute(hash);
                     }
 
                     // Check if we have quintuples
+                    string hashString = Md5.ComputeString(hash);
                     foreach (var kvp in candidates)
                     {
-                        if (kvp.Value.Any() && Repetition.Continuous(hash, kvp.Key, 5))
+                        if (kvp.Value.Any() && Repetition.Continuous(hashString, kvp.Key, 5))
                         {
                             // Validate those keys
                             keys.AddRange(kvp.Value);
@@ -118,14 +119,14 @@ namespace Aoc
                     }
                     
                     // Check if we have a triplicates
-                    char? firstTriple = Repetition.First(hash, 3);
+                    char? firstTriple = Repetition.First(hashString, 3);
                     if (firstTriple.HasValue)
                     {
                         if (!candidates.ContainsKey(firstTriple.Value))
                         {
                             candidates.Add(firstTriple.Value, new List<(long, string)>());
                         }
-                        candidates[firstTriple.Value].Add((pepper, hash));
+                        candidates[firstTriple.Value].Add((pepper, hashString));
                     }
                 }
 
