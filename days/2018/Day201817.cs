@@ -98,7 +98,6 @@ namespace Aoc
                 var current = flowing.Cells.OrderByDescending(cell => cell.Item1.Y).ToList();
                 if (current.Count + stagning.Values.Count == waterCount)
                 {
-                    // Dump(flowing, stagning, _clay);
                     break;
                 }
 
