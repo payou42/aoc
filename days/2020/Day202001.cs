@@ -14,6 +14,8 @@ namespace Aoc
 
         private int[] _input;
 
+        private HashSet<int> _set;
+
         public Day202001()
         {
             Codename = "2020-01";
@@ -23,26 +25,18 @@ namespace Aoc
         public void Init()
         {
             _input = Aoc.Framework.Input.GetIntVector(this);
-            Array.Sort(_input);
+            _set = new HashSet<int>(_input);
         }
 
         public string Run(Aoc.Framework.Part part)
         {
             if (part == Aoc.Framework.Part.Part1)
             {
-                for (int i = 0; i < _input.Length - 1; ++i)
+                foreach (int v in _input)
                 {
-                    for (int j = i + 1; j < _input.Length; ++j)
+                    if (_set.Contains(2020 - v))
                     {
-                        if (_input[i] + _input[j] == 2020)
-                        {
-                            return (_input[i] * _input[j]).ToString();
-                        }
-
-                        if (_input[i] + _input[j] > 2020)
-                        {
-                            break;
-                        }
+                        return (v * (2020 - v)).ToString();
                     }
                 }
             
@@ -51,26 +45,13 @@ namespace Aoc
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                for (int i = 0; i < _input.Length - 2; ++i)
+                for (int i = 0; i < _input.Length - 2; i++)
                 {
-                    for (int j = i + 1; j < _input.Length - 1; ++j)
+                    for (int j = 1; j < _input.Length - 1; ++j)
                     {
-                        if (_input[i] + _input[j] >= 2020)
+                        if (_set.Contains(2020 - _input[i] - _input[j]))
                         {
-                            break;
-                        }
-
-                        for (int k = j + 1; k < _input.Length; ++k)
-                        {
-                            if (_input[i] + _input[j] + _input[k]== 2020)
-                            {
-                                return (_input[i] * _input[j] * _input[k]).ToString();
-                            }
-
-                            if (_input[i] + _input[j] + _input[k] > 2020)
-                            {
-                                break;
-                            }
+                            return ((2020 - _input[i] - _input[j]) * _input[i] * _input[j]).ToString();
                         }
                     }
                 }
