@@ -31,21 +31,31 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part1)
             {
                 long i = 1;
-                while (!Md5.Compute(_input, i).StartsWith("00000"))
+                while (true)
                 {
+                    byte[] md5 = Md5.Compute(_input, i);
+                    if ((md5[0] == 0) && (md5[1] == 0) && ((md5[2] & 0xF0) == 0))
+                    {
+                        return i.ToString();
+                    }
+
                     i++;
                 }
-                return i.ToString();
             }
 
             if (part == Aoc.Framework.Part.Part2)
             {
                 long i = 1;
-                while (!Md5.Compute(_input, i).StartsWith("000000"))
+                while (true)
                 {
+                    byte[] md5 = Md5.Compute(_input, i);
+                    if ((md5[0] == 0) && (md5[1] == 0) && (md5[2] == 0))
+                    {
+                        return i.ToString();
+                    }
+
                     i++;
                 }
-                return i.ToString();
             }
 
             return "";

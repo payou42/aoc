@@ -58,7 +58,7 @@ namespace Aoc
             while (queue.TryDequeue(out var state))
             {
                 // Calculate current hash
-                string hash = Md5.Compute(_input + state.Item1);
+                string hash = Md5.ComputeString(_input + state.Item1);
 
                 // Enqueue all moves from there
                 if ((state.Item3 > 0) && (hash[0] >= 'b'))

@@ -13,7 +13,18 @@ namespace Aoc.Common.Crypto
             _md5 = MD5.Create();
         }
 
-        public static string Compute(string s)
+        public static byte[] Compute(string s)
+        {
+            // Convert the input string to a byte array and compute the hash.
+            return _md5.ComputeHash(Encoding.UTF8.GetBytes(s));
+        }
+
+        public static byte[] Compute(string salt, long index)
+        {
+            return Compute(salt + index.ToString());
+        }
+
+        public static string ComputeString(string s)
         {
             // Convert the input string to a byte array and compute the hash.
             byte[] data = _md5.ComputeHash(Encoding.UTF8.GetBytes(s));
@@ -33,9 +44,9 @@ namespace Aoc.Common.Crypto
             return sBuilder.ToString();
         }
 
-        public static string Compute(string salt, long index)
+        public static string ComputeString(string salt, long index)
         {
-            return Compute(salt + index.ToString());
+            return ComputeString(salt + index.ToString());
         }
     }
 }

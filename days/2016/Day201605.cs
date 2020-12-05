@@ -32,7 +32,7 @@ namespace Aoc
                 string key = Aoc.Framework.Input.GetString(this);
                 while (password.Length < 8)
                 {
-                    string hash = Md5.Compute(key, index);
+                    string hash = Md5.ComputeString(key, index);
                     if (hash.StartsWith("00000"))
                     {
                         password += hash[5];
@@ -52,7 +52,7 @@ namespace Aoc
                 string key = Aoc.Framework.Input.GetString(this);
                 while (count < 8)
                 {
-                    string hash = Md5.Compute(key, index);
+                    string hash = Md5.ComputeString(key, index);
                     if (hash.StartsWith("00000"))
                     {
                         if (Int32.TryParse(hash.Substring(5, 1), out int position))

@@ -43,7 +43,7 @@ namespace Aoc
                     CleanCandidates(candidates, pepper - 1000);
 
                     // Compute the hash
-                    string hash = Md5.Compute(_salt, pepper);
+                    string hash = Md5.ComputeString(_salt, pepper);
 
                     // Check if we have quintuples
                     foreach (var kvp in candidates)
@@ -92,10 +92,10 @@ namespace Aoc
                     CleanCandidates(candidates, pepper - 1000);
 
                     // Compute the hash
-                    string hash = Md5.Compute(_salt, pepper);
+                    string hash = Md5.ComputeString(_salt, pepper);
                     for (int i = 0; i < 2016; ++i)
                     {
-                        hash = Md5.Compute(hash);
+                        hash = Md5.ComputeString(hash);
                     }
 
                     // Check if we have quintuples
