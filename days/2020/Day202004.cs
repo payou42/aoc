@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Linq;
 using System.Collections.Generic;
 using System.Globalization;
@@ -16,6 +17,18 @@ namespace Aoc
         private string[] _input;
 
         private Dictionary<string, string>[] _passports;
+
+        private Dictionary<string, string> _rules = new Dictionary<string, string>()
+        {
+            { "byr", @"\b(19[2-9][0-9]|200[0-2])\b" },
+            { "iyr", @"\b(201[0-9]|2020)\b" },
+            { "eyr", @"\b(202[0-9]|2030)\b" },
+            { "hgt", @"\b(1[5-8][0-9]cm|19[0-3]cm|59in|6[0-9]in|7[0-6]in)\b" },
+            { "hcl", @"\s*\#[0-9a-z]{6}" },
+            { "ecl", @"\b(amb|blu|brn|gry|grn|hzl|oth)\b" },
+            { "pid", @"\b[0-9]{9}\b" },
+            { "cid", @".*" }
+        };
 
         public Day202004()
         {
@@ -61,72 +74,13 @@ namespace Aoc
 
         private bool AreFieldsValid(Dictionary<string, string> passport)
         {
-            // Check years
-            if (!CheckYear(passport, "byr", 1920, 2002))
-                return false;
-
-            if (!CheckYear(passport, "iyr", 2010, 2020))
-                return false;
-
-            if (!CheckYear(passport, "eyr", 2020, 2030))
-                return false;
-
-            if (!CheckHeight(passport, "hgt"))
-                return false;
-
-            if (!CheckColor(passport, "hcl"))
-                return false;
-
-            if (!(new string[] { "amb", "blu", "brn", "gry" ,"grn", "hzl", "oth"}.Contains(passport["ecl"])))
-                return false;
-            
-            if (passport["pid"].Length == 9 && int.TryParse(passport["pid"], out var _))
-                return true;
-
-            return false;
-        }
-
-        private bool CheckYear(Dictionary<string, string> passport, string field, int min, int max)
-        {
-            if (!passport.ContainsKey(field))
-                return false;
-            
-            if (passport[field].Length != 4)
-                return false;
-            
-            int v = int.Parse(passport[field]);
-            if (v < min || v > max)
-                return false;
-
-            return true;
-        } 
-
-        private bool CheckHeight(Dictionary<string, string> passport, string field)
-        {
-            string unit = passport[field][^2..];           
-            if (!int.TryParse(passport[field][..^2], out int height))
-                return false;
-
-            if (unit == "cm" && height >= 150 && height <= 193)
-                return true;
-
-            if (unit == "in" && height >= 59 && height <= 76)
-                return true;
-
-            return false;
-        }
-
-        private bool CheckColor(Dictionary<string, string> passport, string field)
-        {
-            string color = passport[field];
-            if (color[0] != '#')
-                return false;
-
-            if (color.Length != 7)
-                return false;
-
-            if (!int.TryParse(color[1..], NumberStyles.HexNumber, null, out var _))
-                return false;
+            foreach (var kvp in passport)
+            {
+                if (!Regex.IsMatch(kvp.Value, _rules[kvp.Key]))
+                {
+                    return false;
+                }
+            }
 
             return true;
         }
