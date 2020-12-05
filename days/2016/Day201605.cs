@@ -32,11 +32,12 @@ namespace Aoc
                 string key = Aoc.Framework.Input.GetString(this);
                 while (password.Length < 8)
                 {
-                    string hash = Md5.ComputeString(key, index);
-                    if (hash.StartsWith("00000"))
+                    byte[] hash = Md5.Compute(key, index);
+                    if (hash[0] == 0 && hash[1] == 0 && ((hash[2] & 0xF0) == 0))
                     {
-                        password += hash[5];
+                        password += (hash[2] & 0x0F).ToString("x");
                     }
+
                     index++;
                 }
 
@@ -47,24 +48,23 @@ namespace Aoc
             {
                 Int64 index = 0;
                 int count = 0;
-                bool[] found = new bool[8] {false, false, false, false, false, false, false, false};
-                char[] password = new char[8] {'0', '0', '0', '0', '0', '0', '0', '0'};
+                bool[] found = new bool[8] { false, false, false, false, false, false, false, false };
+                char[] password = new char[8] { '0', '0', '0', '0', '0', '0', '0', '0'};
                 string key = Aoc.Framework.Input.GetString(this);
                 while (count < 8)
                 {
-                    string hash = Md5.ComputeString(key, index);
-                    if (hash.StartsWith("00000"))
+                    byte[] hash = Md5.Compute(key, index);
+                    if (hash[0] == 0 && hash[1] == 0 && ((hash[2] & 0xF0) == 0))
                     {
-                        if (Int32.TryParse(hash.Substring(5, 1), out int position))
+                        int position = hash[2] & 0x0F;
+                        if (position < 8 && !found[position])
                         {
-                            if (position < 8 && !found[position])
-                            {
-                                found[position] = true;
-                                password[position] = hash[6];
-                                count++;
-                            }
+                            found[position] = true;
+                            password[position] = (hash[3] & 0xF0).ToString("x")[0];
+                            count++;
                         }
                     }
+
                     index++;
                 }
 
