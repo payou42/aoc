@@ -56,6 +56,7 @@ namespace Aoc
                     i++;
                 }
             }
+
             return "";
         }
     }   
