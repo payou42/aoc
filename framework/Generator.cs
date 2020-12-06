@@ -114,7 +114,12 @@ namespace Aoc.Framework
 
         private static void StoreInput(string path, string codeName, string input)
         {
-            string formatted = input.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n").Replace("\r\n\r\n", "\r\n");
+            string formatted = input.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n");
+            if (formatted.EndsWith("\r\n"))
+            {
+                formatted = formatted[..^2];
+            }
+
             try
             {
                 // Open the text file using a stream writer.
