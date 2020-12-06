@@ -177,5 +177,30 @@ namespace Aoc
 
             return instruction;
         }
+
+        private void LogInstruction(Instruction instruction, int line)
+        {
+            Console.Write($"[{line.ToString().PadLeft(2, '0')}] {instruction.Opcode} - ");
+            switch (instruction.Opcode)
+            {
+                case OpCodes.Addr: Console.WriteLine($"R{instruction.C} = R{instruction.A} + R{instruction.B}"); break;
+                case OpCodes.Addi: Console.WriteLine($"R{instruction.C} = R{instruction.A} + {instruction.B}"); break;
+                case OpCodes.Mulr: Console.WriteLine($"R{instruction.C} = R{instruction.A} * R{instruction.B}"); break;
+                case OpCodes.Muli: Console.WriteLine($"R{instruction.C} = R{instruction.A} * {instruction.B}"); break;
+                case OpCodes.Banr: Console.WriteLine($"R{instruction.C} = R{instruction.A} & R{instruction.B}"); break;
+                case OpCodes.Bani: Console.WriteLine($"R{instruction.C} = R{instruction.A} & {instruction.B}"); break;
+                case OpCodes.Borr: Console.WriteLine($"R{instruction.C} = R{instruction.A} | R{instruction.B}"); break;
+                case OpCodes.Bori: Console.WriteLine($"R{instruction.C} = R{instruction.A} | {instruction.B}"); break;
+                case OpCodes.Setr: Console.WriteLine($"R{instruction.C} = R{instruction.A}"); break;
+                case OpCodes.Seti: Console.WriteLine($"R{instruction.C} = {instruction.A}"); break;
+                case OpCodes.Gtir: Console.WriteLine($"R{instruction.C} = {instruction.A} > R{instruction.B} ? 1 : 0"); break;
+                case OpCodes.Gtri: Console.WriteLine($"R{instruction.C} = R{instruction.A} > {instruction.B} ? 1 : 0"); break;
+                case OpCodes.Gtrr: Console.WriteLine($"R{instruction.C} = R{instruction.A} > R{instruction.B} ? 1 : 0"); break;
+                case OpCodes.Eqir: Console.WriteLine($"R{instruction.C} = {instruction.A} == R{instruction.B} ? 1 : 0"); break;
+                case OpCodes.Eqri: Console.WriteLine($"R{instruction.C} = R{instruction.A} == {instruction.B} ? 1 : 0"); break;
+                case OpCodes.Eqrr: Console.WriteLine($"R{instruction.C} = R{instruction.A} == R{instruction.B} ? 1 : 0"); break;
+                default: Console.WriteLine("Unknown"); break;
+            }
+        }
     }   
 }
