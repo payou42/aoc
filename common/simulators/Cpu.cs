@@ -63,6 +63,7 @@ namespace Aoc.Common.Simulators
             {
                 return output;
             }
+
             return Registers[v];
         }        
 
