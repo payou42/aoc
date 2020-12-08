@@ -37,27 +37,18 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part2)
             {
                 // Try to change exactly one instruction at a time
+                Dictionary<string, string> map = new() { {"jmp", "nop"}, {"nop", "jmp"} };
                 for (int i = 0; i < _program.Length; ++i)
                 {
-                    if (_program[i].StartsWith("jmp"))
+                    if (map.ContainsKey(_program[i][..3]))
                     {
-                        _program[i] = "nop" + _program[i][3..];
+                        _program[i] = map[_program[i][..3]] + _program[i][3..];
                         if (Run(out var result))
                         {
                             return result.ToString();
                         }
 
-                        _program[i] = "jmp" + _program[i][3..];
-                    }
-                    else if (_program[i].StartsWith("nop"))
-                    {
-                        _program[i] = "jmp" + _program[i][3..];
-                        if (Run(out var result))
-                        {
-                            return result.ToString();
-                        }
-
-                        _program[i] = "nop" + _program[i][3..];
+                        _program[i] = map[_program[i][..3]] + _program[i][3..];
                     }
                 }
             }
