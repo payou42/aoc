@@ -66,7 +66,7 @@ namespace Aoc
                         }
                         else
                         {
-                            // Sum is still to low, update the entry
+                            // Sum is still too low, update the entry
                             sums[l] = (s.Sum + v, Math.Min(s.Min, v), Math.Max(s.Max, v));
                         }
                     }
