@@ -45,9 +45,9 @@ namespace Aoc
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                // Counting all arrangemùents is long. However, all jolt3 gaps are mandatory, so we now than when there
-                // is a jolt3 gap, the 2 adapters of this gaps have to be used no matter what
-                // The last one is also mandatory
+                // Counting all arrangemùents is long. However, all jolt3 gaps are mandatory, so we know that when there
+                // is a jolt3 gap, the 2 adapters of this gaps have to be used no matter what.
+                // The last one is also mandatory.
                 long combination = 1;
                 int previous = 0;
                 for (int i = 1; i < _input.Length; i++)
