@@ -78,39 +78,18 @@ namespace Aoc
             var size = end - begin - 1;
 
             // If there's no optional adapters, then e have a single solution.
-            if (size == 0)
+            if (size <= 0)
                 return 1;
             
             long result = 0;
-            for (int i = 0; i < Math.Pow(2, size); ++i)
-            {         
-                // Check if the given chain is valid
-                long prev = _input[begin];
-                bool valid = true;
-                for (int j = begin + 1; j < end; ++j)
+            for (int j = begin + 1; j <= end; ++j)
+            {
+                if (_input[j] - _input[begin] <= 3)
                 {
-                    long mask = (byte)(1 << (j - begin - 1));
-                    if ((i & mask) != 0)
-                    {
-                        if (_input[j] - prev > 3)
-                        {
-                            valid = false;
-                            break;
-                        }
-
-                        prev = _input[j];
-                    }
+                    result += CountCombinations(j, end);
                 }
-
-                if (_input[end] - prev > 3)
-                {
-                    valid = false;
-                }
-
-                if (valid)
-                    result++;
             }
-            
+
             return result;
         }
     }   
