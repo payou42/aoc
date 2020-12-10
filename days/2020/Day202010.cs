@@ -45,9 +45,9 @@ namespace Aoc
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                // Counting all arrangements is long. However, all jolt3 gaps are mandatory, so we know that when there
-                // is a jolt3 gap, the 2 adapters of this gaps have to be used no matter what.
-                // The last one is also mandatory.
+                // Counting all arrangements is long. However, all 3-jolts gaps are mandatory,
+                // so we know that when there is a 3-jolts gap, the 2 adapters of this gap have to be used no matter what.
+                // The last one is also mandatory, because our device is 3 jolts higher than the max adapter.
                 long combination = 1;
                 int previous = 0;
                 for (int i = 1; i < _input.Length; i++)
@@ -74,7 +74,7 @@ namespace Aoc
 
         private long CountCombinations(int begin, int end)
         {
-            // Build the list of opional adapters
+            // Build the list of optional adapters
             var size = end - begin - 1;
 
             // If there's no optional adapter, then we have a single solution.
