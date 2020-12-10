@@ -74,10 +74,10 @@ namespace Aoc
 
         private long CountCombinations(int begin, int end)
         {
-            // Build the list of otpional adapters
+            // Build the list of opional adapters
             var size = end - begin - 1;
 
-            // If there's no optional adapters, then we have a single solution.
+            // If there's no optional adapter, then we have a single solution.
             if (size <= 0)
                 return 1;
             
