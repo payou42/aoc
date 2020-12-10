@@ -77,7 +77,7 @@ namespace Aoc
             // Build the list of otpional adapters
             var size = end - begin - 1;
 
-            // If there's no optional adapters, then e have a single solution.
+            // If there's no optional adapters, then we have a single solution.
             if (size <= 0)
                 return 1;
             
