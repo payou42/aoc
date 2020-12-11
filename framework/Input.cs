@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using System.IO;
 using System.Collections.Generic;
+using Aoc.Common.Grid;
 
 namespace Aoc.Framework
 {
@@ -125,6 +126,27 @@ namespace Aoc.Framework
             }
 
             return matrix;
+        }
+
+        public static Board<T> GetBoard<T>(IDay day, Func<char, T> parser, string row = "\r\n")
+        {
+            string raw = GetString(day);
+            if (raw == null)
+            {
+                return null;
+            }
+            
+            String[] lines = raw.Split(row);
+            Board<T> board = new Board<T>();
+            for (int y = 0; y < lines.Length; ++y)
+            {
+                for (int x = 0; x < lines[y].Length; ++x)
+                {
+                    board[x, y] = parser(lines[y][x]);
+                }
+            }
+
+            return board;
         }
     }
 }

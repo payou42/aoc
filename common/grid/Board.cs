@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Aoc.Common.Grid
 {
@@ -252,6 +253,82 @@ namespace Aoc.Common.Grid
                 }
             }
             return p;
+        }
+
+        public (Point topleft, Point bottomright) GetBounds()
+        {
+            int xmin = 0;
+            int xmax = 0;
+            int ymin = 0;
+            int ymax = 0;
+
+            var xvalues = _board.Keys;
+            if (xvalues.Count > 0)
+            {
+                bool bEmpty = false;
+                ymin = int.MaxValue;
+                ymax = int.MinValue;
+                foreach (var v in _board.Values)
+                {
+                    if (v.Keys.Count > 0)
+                    {
+                        bEmpty = false;
+                        ymin = Math.Min(ymin, v.Keys.Min());
+                        ymax = Math.Max(ymax, v.Keys.Max());
+                    }
+                }
+
+                if (!bEmpty)
+                {
+                    xmin = xvalues.Min();
+                    xmax = xvalues.Max();
+                }
+                else
+                {
+                    ymin = 0;
+                    ymax = 0;
+                }
+            }
+
+            return (new Point(xmin, ymin), new Point(xmax, ymax));
+        }
+
+        public int CountNeighbours(Point position, Predicate<Cell> predicate, bool includeDiagonals = false)
+        {
+            int count = 0;
+            if (predicate(this[position.X - 1, position.Y]))
+                count++;
+
+            if (predicate(this[position.X + 1, position.Y]))
+                count++;
+
+            if (predicate(this[position.X, position.Y - 1]))
+                count++;
+
+            if (predicate(this[position.X, position.Y + 1]))
+                count++;
+
+            if (includeDiagonals)
+            {
+                if (predicate(this[position.X - 1, position.Y - 1]))
+                    count++;
+
+                if (predicate(this[position.X + 1, position.Y - 1]))
+                    count++;
+
+                if (predicate(this[position.X - 1, position.Y + 1]))
+                    count++;
+
+                if (predicate(this[position.X + 1, position.Y + 1]))
+                    count++;
+            }
+
+            return count;
+        }
+
+        public long Count(Predicate<Cell> predicate)
+        {
+            return _board.Sum(x => x.Value.Sum(y => predicate(y.Value) ? 1L : 0L));
         }
     }
 }
