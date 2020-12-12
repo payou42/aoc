@@ -135,17 +135,41 @@ namespace Aoc.Common.Grid
         /// </summary>
         /// <param name="current">The current direction of the turtle</param>
         /// <param name="where">The way the turtle turn</param>
+        /// <param name="times">The number of times to turn</param>
         /// <returns>The new direction of the turtle</returns>
-        public static Direction Turn(Direction current, Direction where)
+        public static Direction Turn(Direction current, Direction where, int times = 1)
         {
             int increment = 0;
-            switch (where)
+            for (int i = 0; i < times; ++i)
             {
-                case Direction.Left: increment = -1; break;
-                case Direction.Right: increment = 1; break;
-                case Direction.Down: increment = 2; break;
+                switch (where)
+                {
+                    case Direction.Left: increment += -1; break;
+                    case Direction.Right: increment += 1; break;
+                    case Direction.Down: increment += 2; break;
+                }
             }
-            return (Direction)(((int)current + (int)Direction.Count + increment) % (int)Direction.Count);
+
+            return (Direction)(((int)current + (10 * (int)Direction.Count) + increment) % (int)Direction.Count);
+        }
+
+        /// <summary>
+        /// Rotate the given point around the center
+        /// </summary>
+        /// <param name="current">The current position to rotate</param>
+        /// <param name="where">The direction to rotate</param>
+        /// <param name="times">The number of times to rotate</param>
+        /// <returns>The new direction of the turtle</returns>
+        public static Point Rotate(Point current, Direction where, int times = 1)
+        {
+            int nTimes = (4 + (where == Direction.Right ? -times : times)) % 4;
+            Point next = new Point(current.X, current.Y);
+            for (int i = 0; i < nTimes; ++i)
+            {
+                next = new Point(-next.Y, next.X);
+            }
+
+            return next;
         }
 
         /// <summary>
