@@ -1,8 +1,3 @@
-using System;
-using System.Drawing;
-using System.Collections.Generic;
-using Aoc.Common.Simulators;
-
 namespace Aoc.Common.Numbers
 {
     public static class Gcd
