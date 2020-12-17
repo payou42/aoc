@@ -16,7 +16,7 @@ namespace Aoc
 
         private int _input;
 
-        private Board<int> _cells;
+        private Board2D<int> _cells;
 
         public Day201811()
         {
@@ -27,7 +27,7 @@ namespace Aoc
         public void Init()
         {
             _input = Aoc.Framework.Input.GetInt(this);
-            _cells = new Board<int>();
+            _cells = new Board2D<int>();
             BuildPowerLevels();
         }
 
@@ -43,7 +43,7 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part2)
             {
                 (Point, int) best = (new Point(0, 0), 0);
-                Board<int> power = new Board<int>();                
+                Board2D<int> power = new Board2D<int>();                
                 int bestSize = 0;
                 // Find the best power cell
                 for (int size = 1; size <= 30; ++size)
@@ -96,7 +96,7 @@ namespace Aoc
             return (bestX, bestY, bestValue);
         }
 
-        private void IncrementPowerGrid(Board<int> power, int size)
+        private void IncrementPowerGrid(Board2D<int> power, int size)
         {
             for (int x = 1; x <= 300; ++x)
             {

@@ -33,7 +33,7 @@ namespace Aoc
 
             public Direction GetNextDirection(Direction from)
             {
-                Direction opposite = Board<Track>.Turn(from, Direction.Down);
+                Direction opposite = Board2D<Track>.Turn(from, Direction.Down);
                 Direction next = Directions.Where(d => d != opposite).First();
                 return next;
             }
@@ -47,16 +47,16 @@ namespace Aoc
 
             public int DirectionIndex { get; set; }
 
-            public Point Move(Point from, Board<Track> tracks)
+            public Point Move(Point from, Board2D<Track> tracks)
             {
                 // Move the cart
-                Point next = Board<Track>.MoveForward(from, Direction, 1, true);
+                Point next = Board2D<Track>.MoveForward(from, Direction, 1, true);
 
                 // Change the direction if needed
                 Track cell = tracks[next.X, next.Y];
                 if (cell.IsIntersection)
                 {
-                    Direction = Board<Track>.Turn(Direction, DirectionChooser[DirectionIndex]);
+                    Direction = Board2D<Track>.Turn(Direction, DirectionChooser[DirectionIndex]);
                     DirectionIndex = (DirectionIndex + 1) % DirectionChooser.Length;
                 }
                 else
@@ -69,9 +69,9 @@ namespace Aoc
             }
         }
 
-        private Board<Track> _tracks;
+        private Board2D<Track> _tracks;
 
-        private Board<Cart> _carts;
+        private Board2D<Cart> _carts;
 
         public Day201813()
         {
@@ -81,8 +81,8 @@ namespace Aoc
 
         public void Init()
         {
-            _tracks = new Board<Track>();
-            _carts = new Board<Cart>();
+            _tracks = new Board2D<Track>();
+            _carts = new Board2D<Cart>();
             string[] input = Aoc.Framework.Input.GetStringVector(this);
             for (int y = 0; y < input.Length; ++y)
             {
@@ -190,7 +190,7 @@ namespace Aoc
             return $"{cell.Item1.X},{cell.Item1.Y}";
         }
 
-        private Point? Tick(Board<Cart> carts)
+        private Point? Tick(Board2D<Cart> carts)
         {
             List<Cart> crashed = new List<Cart>();
             Point? collision = null;

@@ -20,7 +20,7 @@ namespace Aoc
 
         private bool[] _intersects;
 
-        private Board<bool> _board;
+        private Board2D<bool> _board;
 
         public Day201803()
         {
@@ -32,7 +32,7 @@ namespace Aoc
         {
             _input = Aoc.Framework.Input.GetStringVector(this);
             _slices = _input.Select(s => ParseRectangle(s)).ToArray();
-            _board = new Board<bool>();
+            _board = new Board2D<bool>();
             _intersects = new bool[_slices.Length];
         }
 

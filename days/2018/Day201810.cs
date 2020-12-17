@@ -50,7 +50,7 @@ namespace Aoc
                 while (true)
                 {
                     // Build the board at time try
-                    Board<bool> board = BuildBoard(time);
+                    Board2D<bool> board = BuildBoard(time);
 
                     if (IsConnected(board))
                     {
@@ -72,7 +72,7 @@ namespace Aoc
                 while (true)
                 {
                     // Build the board at time try
-                    Board<bool> board = BuildBoard(time);
+                    Board2D<bool> board = BuildBoard(time);
 
                     if (IsConnected(board))
                     {
@@ -87,9 +87,9 @@ namespace Aoc
             return "";
         }
 
-        private Board<bool> BuildBoard(int time)
+        private Board2D<bool> BuildBoard(int time)
         {
-            Board<bool> board = new Board<bool>();
+            Board2D<bool> board = new Board2D<bool>();
             foreach (Star s in _stars)
             {
                 board[s.Position.X + time * s.Velocity.X, s.Position.Y + time * s.Velocity.Y] = true;
@@ -97,7 +97,7 @@ namespace Aoc
             return board;
         }
 
-        private bool IsConnected(Board<bool> board)
+        private bool IsConnected(Board2D<bool> board)
         {
             int singleCells = 0;
             foreach (var cell in board.Cells)
@@ -113,7 +113,7 @@ namespace Aoc
             return singleCells < 10;
         }
 
-        private void DumpBoard(Board<bool> board)
+        private void DumpBoard(Board2D<bool> board)
         {
             var cells = board.Cells;
             int minX = cells.Min(cell => cell.Item1.X);

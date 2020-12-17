@@ -21,7 +21,7 @@ namespace Aoc
 
         private IntCpu _cpu;
 
-        private Board<int> _board;
+        private Board2D<int> _board;
 
         private Point _position;
 
@@ -36,7 +36,7 @@ namespace Aoc
         public void Init()
         {
             _cpu = new IntCpu();
-            _board = new Board<int>();
+            _board = new Board2D<int>();
         }
 
         public string Run(Aoc.Framework.Part part)
@@ -89,7 +89,7 @@ namespace Aoc
         private void Move(Direction d)
         {
             // Get the place we want to visit
-            Point moved = Board<long>.MoveForward(_position, d);
+            Point moved = Board2D<long>.MoveForward(_position, d);
 
             // Check if there's a wall
             if (_board[moved] == -1)
@@ -147,24 +147,24 @@ namespace Aoc
             _cpu.Input.Enqueue(DirectionToBacktrack[(int)d]);
             _cpu.Run(true);
             _cpu.Output.Dequeue();
-            _position = Board<long>.MoveBackward(_position, d);
+            _position = Board2D<long>.MoveBackward(_position, d);
         }
 
         private void Spread(Point p)
         {
-            Point moved = Board<long>.MoveForward(p, Direction.Up);
+            Point moved = Board2D<long>.MoveForward(p, Direction.Up);
             if (_board[moved] == 0)
                 _board[moved] = 1;
 
-            moved = Board<long>.MoveForward(p, Direction.Down);
+            moved = Board2D<long>.MoveForward(p, Direction.Down);
             if (_board[moved] == 0)
                 _board[moved] = 1;
 
-            moved = Board<long>.MoveForward(p, Direction.Left);
+            moved = Board2D<long>.MoveForward(p, Direction.Left);
             if (_board[moved] == 0)
                 _board[moved] = 1;
 
-            moved = Board<long>.MoveForward(p, Direction.Right);
+            moved = Board2D<long>.MoveForward(p, Direction.Right);
             if (_board[moved] == 0)
                 _board[moved] = 1;
         }

@@ -29,9 +29,9 @@ namespace Aoc
             public CreatureType Type { get; set; }
         }
 
-        private Board<bool> _terrain;
+        private Board2D<bool> _terrain;
 
-        private Board<Creature> _map;
+        private Board2D<Creature> _map;
 
         public Day201815()
         {
@@ -45,8 +45,8 @@ namespace Aoc
 
         private void Reset(int elfDamage)
         {
-            _terrain = new Board<bool>();
-            _map = new Board<Creature>();
+            _terrain = new Board2D<bool>();
+            _map = new Board2D<Creature>();
             string[] input = Aoc.Framework.Input.GetStringVector(this);
             for (int y = 0; y < input.Length; ++y)
             {
@@ -170,7 +170,7 @@ namespace Aoc
             return true;
         }
 
-        private void EnqueueIfValid(Point point, Board<int> distances, Queue<Point> queue, int distance)
+        private void EnqueueIfValid(Point point, Board2D<int> distances, Queue<Point> queue, int distance)
         {
             if (_terrain[point.X, point.Y] && _map[point.X, point.Y] == null && distances[point.X, point.Y] == 0)
             {
@@ -180,10 +180,10 @@ namespace Aoc
             }
         }
 
-        private Board<int> BuildDistanceMap(Point from)
+        private Board2D<int> BuildDistanceMap(Point from)
         {
             // Build the reachability and distance map
-            Board<int> distances = new Board<int>();
+            Board2D<int> distances = new Board2D<int>();
             Queue<Point> queue = new Queue<Point>();
             distances[from.X, from.Y] = 1;
             queue.Enqueue(from);
@@ -220,7 +220,7 @@ namespace Aoc
             }).Where(point => _terrain[point.X, point.Y] && (_map[point.X, point.Y] == null || _map[point.X, point.Y] == cell.Item2)).ToList();
 
             // Build the distance map from the current creature
-            Board<int> fromSource = BuildDistanceMap(cell.Item1);
+            Board2D<int> fromSource = BuildDistanceMap(cell.Item1);
 
             // Get the best target
             var bestPoints = targetPoints.Where(point => fromSource[point.X, point.Y] > 0).OrderBy(point => fromSource[point.X, point.Y]).ThenBy(point => point.Y).ThenBy(point => point.X).Take(1).ToList();

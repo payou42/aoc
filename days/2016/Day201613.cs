@@ -16,7 +16,7 @@ namespace Aoc
 
         private int _input;
 
-        private Board<int?> _board;
+        private Board2D<int?> _board;
 
         public Day201613()
         {
@@ -27,7 +27,7 @@ namespace Aoc
         public void Init()
         {
             _input = Aoc.Framework.Input.GetInt(this);
-            _board = new Board<int?>();
+            _board = new Board2D<int?>();
         }
 
         public string Run(Aoc.Framework.Part part)
@@ -68,7 +68,7 @@ namespace Aoc
         {
             for (int i = 0; i < (int)Direction.Count; ++i)
             {
-                Point newPos = Board<int?>.MoveForward(position, (Direction)i, 1, true);
+                Point newPos = Board2D<int?>.MoveForward(position, (Direction)i, 1, true);
                 if (!IsValid(newPos))
                 {
                     // Off-limit

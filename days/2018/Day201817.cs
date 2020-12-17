@@ -15,7 +15,7 @@ namespace Aoc
 
         public string Name { get; private set; }
 
-        private Board<bool> _clay;
+        private Board2D<bool> _clay;
 
         private int _top;
 
@@ -37,7 +37,7 @@ namespace Aoc
 
         public void Init()
         {
-            _clay = new Board<bool>();
+            _clay = new Board2D<bool>();
             string[] input = Aoc.Framework.Input.GetStringVector(this);
             foreach (string line in input)
             {
@@ -88,8 +88,8 @@ namespace Aoc
 
         private void Go()
         {
-            Board<bool> flowing = new Board<bool>();
-            Board<bool> stagning = new Board<bool>();
+            Board2D<bool> flowing = new Board2D<bool>();
+            Board2D<bool> stagning = new Board2D<bool>();
             flowing[500, 0] = true;
             long waterCount = 0;
             while (true)
@@ -110,9 +110,9 @@ namespace Aoc
             _stagning = stagning.Cells.Count(c => c.Item2 && c.Item1.Y >= _top);
         }
 
-        private Board<bool> Flow(List<(Point, bool)> current, Board<bool> stagning)
+        private Board2D<bool> Flow(List<(Point, bool)> current, Board2D<bool> stagning)
         {
-            Board<bool> newFlowing = new Board<bool>();
+            Board2D<bool> newFlowing = new Board2D<bool>();
             foreach (var drop in current)
             {
                 if (drop.Item1.Y == _depth)
@@ -154,7 +154,7 @@ namespace Aoc
             return newFlowing;
         }
 
-        private bool HasBorder(Point from, Board<bool> stagning, out int min, out int max)
+        private bool HasBorder(Point from, Board2D<bool> stagning, out int min, out int max)
         {
             min = -1;
             max = -1;

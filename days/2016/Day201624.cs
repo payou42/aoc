@@ -16,11 +16,11 @@ namespace Aoc
 
         private string[] _input;
 
-        private Board<bool> _board;
+        private Board2D<bool> _board;
 
         private Dictionary<int, Point> _targets;
 
-        private Board<int> _distances;
+        private Board2D<int> _distances;
 
         public Day201624()
         {
@@ -86,12 +86,12 @@ namespace Aoc
         private void BuildDistances()
         {
             // Build distances between each targets
-            _distances = new Board<int>();
+            _distances = new Board2D<int>();
             int max = _targets.Keys.Count();
             foreach (var kvp in _targets)
             {
                 // Build the distance map
-                Board<int> distanceBoard = new Board<int>();
+                Board2D<int> distanceBoard = new Board2D<int>();
 
                 // Prepare the distance queue
                 Queue<(Point, int)> queue = new Queue<(Point, int)>();
@@ -139,7 +139,7 @@ namespace Aoc
 
         private void ParseContent()
         {
-            _board = new Board<bool>();
+            _board = new Board2D<bool>();
             _targets = new Dictionary<int, Point>();
             for (int y = 0; y < _input.Length; ++y)
             {

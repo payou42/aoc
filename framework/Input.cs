@@ -128,7 +128,7 @@ namespace Aoc.Framework
             return matrix;
         }
 
-        public static Board<T> GetBoard<T>(IDay day, Func<char, T> parser, string row = "\r\n")
+        public static Board2D<T> GetBoard2D<T>(IDay day, Func<char, T> parser, string row = "\r\n")
         {
             string raw = GetString(day);
             if (raw == null)
@@ -137,7 +137,7 @@ namespace Aoc.Framework
             }
             
             String[] lines = raw.Split(row);
-            Board<T> board = new Board<T>();
+            Board2D<T> board = new Board2D<T>();
             for (int y = 0; y < lines.Length; ++y)
             {
                 for (int x = 0; x < lines[y].Length; ++x)

@@ -13,7 +13,7 @@ namespace Aoc
 
         public string Name { get; private set; }
 
-        private Board<bool> _grid;
+        private Board2D<bool> _grid;
 
         private string[] _input;
 
@@ -25,7 +25,7 @@ namespace Aoc
 
         public void Init()
         {
-            _grid = new Board<bool>();
+            _grid = new Board2D<bool>();
             _input = Aoc.Framework.Input.GetStringVector(this);
             for (int y = 0; y < _input.Length; ++y )
             {
@@ -43,11 +43,11 @@ namespace Aoc
         {
             if (part == Aoc.Framework.Part.Part1)
             {                
-                Board<bool> current = _grid;
+                Board2D<bool> current = _grid;
                 for (int i = 0; i < 100; ++i)
                 {
                     // Evaluate next step
-                    Board<bool> next = new Board<bool>();
+                    Board2D<bool> next = new Board2D<bool>();
                     for (int x = 0; x < 100; ++x)
                     {
                         for (int y = 0; y < 100; ++y)
@@ -65,7 +65,7 @@ namespace Aoc
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                Board<bool> current = _grid;
+                Board2D<bool> current = _grid;
                 for (int i = 0; i < 100; ++i)
                 {
                     // Force the corners to be on
@@ -75,7 +75,7 @@ namespace Aoc
                     current[99, 99] = true;
 
                     // Evaluate next step
-                    Board<bool> next = new Board<bool>();
+                    Board2D<bool> next = new Board2D<bool>();
                     for (int x = 0; x < 100; ++x)
                     {
                         for (int y = 0; y < 100; ++y)
@@ -100,7 +100,7 @@ namespace Aoc
             return "";
         }
 
-        private bool GetNextState(Board<bool> board, int x, int y)
+        private bool GetNextState(Board2D<bool> board, int x, int y)
         {
             int count = 0;
             for (int i = x - 1; i <= x + 1; ++i)

@@ -9,12 +9,12 @@ namespace Aoc.Common.Grid
     /// Square board
     /// </summary>
     /// <typeparam name="Cell">The content of the cell of the board</typeparam>
-    public class Board<Cell>
+    public class Board2D<Cell>
     {
         protected Dictionary<Int32, Dictionary<Int32, Cell>> _board;
 
        
-        public Board()
+        public Board2D()
         {
             _board = new Dictionary<Int32, Dictionary<Int32, Cell>>();
         }

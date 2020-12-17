@@ -38,25 +38,25 @@ namespace Aoc
         {
             if (part == Aoc.Framework.Part.Part1)
             {
-                Board<Cell> map = BuildMap();
+                Board2D<Cell> map = BuildMap();
                 // Dump(map);
-                Board<int>  pathes = BuildPathes(map);
+                Board2D<int>  pathes = BuildPathes(map);
                 return (pathes.Cells.Max(cell => cell.Item2) - 1).ToString();
             }
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                Board<Cell> map = BuildMap();
-                Board<int>  pathes = BuildPathes(map);
+                Board2D<Cell> map = BuildMap();
+                Board2D<int>  pathes = BuildPathes(map);
                 return (pathes.Cells.Count(cell => cell.Item2 > 1000)).ToString();
             }
 
             return "";
         }
 
-        private Board<int> BuildPathes(Board<Cell> map)
+        private Board2D<int> BuildPathes(Board2D<Cell> map)
         {
-            Board<int> pathes = new Board<int>();
+            Board2D<int> pathes = new Board2D<int>();
             Queue<Point> queue= new Queue<Point>();
             pathes[0, 0] = 1;
             queue.Enqueue(new Point(0, 0));
@@ -71,7 +71,7 @@ namespace Aoc
             return pathes;
         }
 
-        private void EnqueueIfValid(int x, int y, int xoffset, int yoffset, Board<int> pathes, Board<Cell> map, Queue<Point> queue)
+        private void EnqueueIfValid(int x, int y, int xoffset, int yoffset, Board2D<int> pathes, Board2D<Cell> map, Queue<Point> queue)
         {
             if (map[x + xoffset, y + yoffset] == Cell.Door && pathes[x + 2 * xoffset, y + yoffset * 2] <= 0)
             {
@@ -80,9 +80,9 @@ namespace Aoc
             }
         }
 
-        private Board<Cell> BuildMap()
+        private Board2D<Cell> BuildMap()
         {
-            Board<Cell> map = new Board<Cell>();
+            Board2D<Cell> map = new Board2D<Cell>();
             Queue<(string, Point)> queue = new Queue<(string, Point)>();
             queue.Enqueue((_regex, new Point(0, 0)));
             map[0, 0] = Cell.Room;
@@ -153,7 +153,7 @@ namespace Aoc
             return map;
         }
 
-        private Point Move(Point from, Board<Cell> map, int xoffset, int yoffset)
+        private Point Move(Point from, Board2D<Cell> map, int xoffset, int yoffset)
         {
             map[from.X + xoffset, from.Y + yoffset] = Cell.Door;
             map[from.X + 2*xoffset, from.Y + 2*yoffset] = Cell.Room;
@@ -234,7 +234,7 @@ namespace Aoc
             }
         }
 
-        private void Dump(Board<Cell> map)
+        private void Dump(Board2D<Cell> map)
         {
             char[] walls = new char[] { '═', '═', '═', '═', '║', '╝', '╚', '╩', '║', '╗', '╔', '╦', '║', '╣', '╠', '╬'};
             int xmin = map.Cells.Min(cell => cell.Item1.X) - 1;

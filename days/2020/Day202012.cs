@@ -40,17 +40,17 @@ namespace Aoc
                     int distance = int.Parse(s[1..]);
                     switch (command)
                     {
-                        case 'N': currentPos = Board<long>.MoveForward(currentPos, Direction.Up, distance); break;
-                        case 'S': currentPos = Board<long>.MoveForward(currentPos, Direction.Down, distance); break;
-                        case 'E': currentPos = Board<long>.MoveForward(currentPos, Direction.Right, distance); break;
-                        case 'W': currentPos = Board<long>.MoveForward(currentPos, Direction.Left, distance); break;
-                        case 'F': currentPos = Board<long>.MoveForward(currentPos, currentDir, distance); break;
-                        case 'L': currentDir = Board<long>.Turn(currentDir, Direction.Left, distance / 90); break;
-                        case 'R': currentDir = Board<long>.Turn(currentDir, Direction.Right, distance / 90); break;
+                        case 'N': currentPos = Board2D<long>.MoveForward(currentPos, Direction.Up, distance); break;
+                        case 'S': currentPos = Board2D<long>.MoveForward(currentPos, Direction.Down, distance); break;
+                        case 'E': currentPos = Board2D<long>.MoveForward(currentPos, Direction.Right, distance); break;
+                        case 'W': currentPos = Board2D<long>.MoveForward(currentPos, Direction.Left, distance); break;
+                        case 'F': currentPos = Board2D<long>.MoveForward(currentPos, currentDir, distance); break;
+                        case 'L': currentDir = Board2D<long>.Turn(currentDir, Direction.Left, distance / 90); break;
+                        case 'R': currentDir = Board2D<long>.Turn(currentDir, Direction.Right, distance / 90); break;
                     }
                 }
 
-                return Board<long>.GetDistance(currentPos).ToString();
+                return Board2D<long>.GetDistance(currentPos).ToString();
             }
 
             if (part == Aoc.Framework.Part.Part2)
@@ -64,18 +64,18 @@ namespace Aoc
                     int distance = int.Parse(s[1..]);
                     switch (command)
                     {
-                        case 'N': waypoint = Board<long>.MoveForward(waypoint, Direction.Up, distance); break;
-                        case 'S': waypoint = Board<long>.MoveForward(waypoint, Direction.Down, distance); break;
-                        case 'E': waypoint = Board<long>.MoveForward(waypoint, Direction.Right, distance); break;
-                        case 'W': waypoint = Board<long>.MoveForward(waypoint, Direction.Left, distance); break;
-                        case 'L': waypoint = Board<long>.Rotate(waypoint, Direction.Left, distance / 90); break;
-                        case 'R': waypoint = Board<long>.Rotate(waypoint, Direction.Right, distance / 90); break;
+                        case 'N': waypoint = Board2D<long>.MoveForward(waypoint, Direction.Up, distance); break;
+                        case 'S': waypoint = Board2D<long>.MoveForward(waypoint, Direction.Down, distance); break;
+                        case 'E': waypoint = Board2D<long>.MoveForward(waypoint, Direction.Right, distance); break;
+                        case 'W': waypoint = Board2D<long>.MoveForward(waypoint, Direction.Left, distance); break;
+                        case 'L': waypoint = Board2D<long>.Rotate(waypoint, Direction.Left, distance / 90); break;
+                        case 'R': waypoint = Board2D<long>.Rotate(waypoint, Direction.Right, distance / 90); break;
                         case 'F': currentPos = new Point(currentPos.X + (distance * waypoint.X), currentPos.Y + (distance * waypoint.Y)); break;
                     }
 
                 }
 
-                return Board<long>.GetDistance(currentPos).ToString();
+                return Board2D<long>.GetDistance(currentPos).ToString();
             }
 
             return "";

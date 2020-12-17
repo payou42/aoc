@@ -22,7 +22,7 @@ namespace Aoc
             Occupied,
         }
 
-        private Board<Seat> _input;
+        private Board2D<Seat> _input;
 
         private Point _tl;
 
@@ -38,7 +38,7 @@ namespace Aoc
 
         public void Init()
         {
-            _input = Aoc.Framework.Input.GetBoard<Seat>(this, (c) => c switch
+            _input = Aoc.Framework.Input.GetBoard2D<Seat>(this, (c) => c switch
             {
                 'L' => Seat.Empty,
                 '#' => Seat.Occupied,
@@ -53,7 +53,7 @@ namespace Aoc
         {
             if (part == Aoc.Framework.Part.Part1)
             {
-                Board<Seat> current = _input;
+                Board2D<Seat> current = _input;
                 bool changed = true;
                 while (changed)
                 {
@@ -66,7 +66,7 @@ namespace Aoc
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                Board<Seat> current = _input;
+                Board2D<Seat> current = _input;
                 bool changed = true;
                 while (changed)
                 {
@@ -80,10 +80,10 @@ namespace Aoc
             return "";
         }
 
-        private bool Round(Board<Seat> previous, out Board<Seat> next, Func<Board<Seat>, int, int, int> counter, int threshold)
+        private bool Round(Board2D<Seat> previous, out Board2D<Seat> next, Func<Board2D<Seat>, int, int, int> counter, int threshold)
         {
             bool changed = false;
-            next = new Board<Seat>();
+            next = new Board2D<Seat>();
 
             for (int x = _tl.X; x <= _br.X; ++x)
             {
@@ -135,7 +135,7 @@ namespace Aoc
             return changed;
         }
 
-        private int CountVisibles(Board<Seat> board, int x, int y)
+        private int CountVisibles(Board2D<Seat> board, int x, int y)
         {
             int count = 0;
             foreach (var (xdir, ydir) in _directions)
@@ -146,7 +146,7 @@ namespace Aoc
             return count;
         }
 
-        private int CountVisibles(Board<Seat> board, int x, int y, int xdir, int ydir)
+        private int CountVisibles(Board2D<Seat> board, int x, int y, int xdir, int ydir)
         {
             var xcur = x + xdir;
             var ycur = y + ydir;

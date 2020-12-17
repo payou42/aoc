@@ -50,7 +50,7 @@ namespace Aoc
 
         private long GetLargestRegionSize()
         {
-            Board<int> board = new Board<int>();
+            Board2D<int> board = new Board2D<int>();
 
             // Build the map
             for (int x = 0; x <= _maxX; ++x)
@@ -101,7 +101,7 @@ namespace Aoc
             return -1;            
         }
 
-        private HashSet<int> GetInfiniteRegions(Board<int> board)
+        private HashSet<int> GetInfiniteRegions(Board2D<int> board)
         {
             HashSet<int> infinite = new HashSet<int>();
             for (int x = 0; x <= _maxX; ++x)
@@ -117,7 +117,7 @@ namespace Aoc
             return infinite;
         }
 
-        private long GetRegionSize(Board<int> board, int index, HashSet<int> excluded = null)
+        private long GetRegionSize(Board2D<int> board, int index, HashSet<int> excluded = null)
         {
             if (excluded != null && excluded.Contains(index))
             {

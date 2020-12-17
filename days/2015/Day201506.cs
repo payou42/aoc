@@ -31,7 +31,7 @@ namespace Aoc
         {
             if (part == Aoc.Framework.Part.Part1)
             {
-                Board<bool> board = new Board<bool>();
+                Board2D<bool> board = new Board2D<bool>();
                 foreach (string instruction in _instructions)
                 {
                     // Parse the instruction
@@ -80,7 +80,7 @@ namespace Aoc
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                Board<int> board = new Board<int>();
+                Board2D<int> board = new Board2D<int>();
                 foreach (string instruction in _instructions)
                 {
                     // Parse the instruction

@@ -21,7 +21,7 @@ namespace Aoc
             Lumberyard = 3,
         };
 
-        private Board<Cell> _ground;
+        private Board2D<Cell> _ground;
 
         public Day201818()
         {
@@ -31,7 +31,7 @@ namespace Aoc
 
         public void Init()
         {
-            _ground = new Board<Cell>();
+            _ground = new Board2D<Cell>();
             string[] input = Aoc.Framework.Input.GetStringVector(this);
             for (int y = 0; y < input.Length; ++y)
             {
@@ -47,7 +47,7 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part1)
             {
                 // Pass time
-                Board<Cell> current = _ground;
+                Board2D<Cell> current = _ground;
                 for (int i = 0; i < 10; ++i)
                 {
                     current = Tick(current);
@@ -61,7 +61,7 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part2)
             {
                 // Run a long time in order to stabilize
-                Board<Cell> current = _ground;
+                Board2D<Cell> current = _ground;
                 for (int i = 0; i < 1000; ++i)
                 {
                     current = Tick(current);
@@ -104,9 +104,9 @@ namespace Aoc
             return "";
         }
 
-        private Board<Cell> Tick(Board<Cell> current)
+        private Board2D<Cell> Tick(Board2D<Cell> current)
         {
-            Board<Cell> after = new Board<Cell>();
+            Board2D<Cell> after = new Board2D<Cell>();
             for (int x = 0; x < 50; ++x)
             {
                 for (int y = 0; y < 50; ++y)
@@ -140,7 +140,7 @@ namespace Aoc
             return after;
         }
 
-        private int CountAround(Board<Cell> current, int x, int y, Cell cell)
+        private int CountAround(Board2D<Cell> current, int x, int y, Cell cell)
         {
             // Count the cell around us
             int count = 0;

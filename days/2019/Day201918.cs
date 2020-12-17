@@ -11,7 +11,7 @@ namespace Aoc
 
         public string Name { get; private set; }
 
-        private Board<char> _board;
+        private Board2D<char> _board;
 
         private Dictionary<char, Point> _items;
 
@@ -77,7 +77,7 @@ namespace Aoc
         public void Init()
         {
             // Init values
-            _board = new Board<char>();
+            _board = new Board2D<char>();
             _items = new Dictionary<char, Point>();
             string[] lines = Aoc.Framework.Input.GetStringVector(this);
             for (int h = 0; h < lines.Length; ++h)
@@ -187,7 +187,7 @@ namespace Aoc
                 // Add the next states
                 for (int d = 0; d < (int)Direction.Count; ++d)
                 {
-                    Point np = Board<long>.MoveForward(current.Position, (Direction)d);
+                    Point np = Board2D<long>.MoveForward(current.Position, (Direction)d);
                     char nc = _board[np];
                     if (nc == '#')
                         continue;

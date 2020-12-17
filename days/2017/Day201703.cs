@@ -14,7 +14,7 @@ namespace Aoc
 
         private int _input;
         
-        private Board<Int32> _board;
+        private Board2D<Int32> _board;
 
         private int x;
 
@@ -30,7 +30,7 @@ namespace Aoc
         public void Init()
         {
             _input = Aoc.Framework.Input.GetInt(this);
-            _board = new Board<Int32>();
+            _board = new Board2D<Int32>();
         }
 
         public string Run(Aoc.Framework.Part part)

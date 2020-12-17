@@ -32,7 +32,7 @@ namespace Aoc
             {
                 // Init the board
                 Point position = new Point(1, 1);
-                Board<int> board = new Board<int>();
+                Board2D<int> board = new Board2D<int>();
                 for (int i = 0; i < 9; ++i)
                 {
                     board[i % 3, 2 - (i / 3)] = i + 1;
@@ -46,7 +46,7 @@ namespace Aoc
             {
                 // Init the board                
                 Point position = new Point(0, 2);
-                Board<int> board = new Board<int>();
+                Board2D<int> board = new Board2D<int>();
                 board[2, 4] = 1;
                 for (int i = 1; i <= 3; i++) board[i, 3] = i + 1;
                 for (int i = 0; i <= 4; i++) board[i, 2] = i + 5;
@@ -60,7 +60,7 @@ namespace Aoc
             return "";
         }
 
-        private string FindCode(Board<int> board, Point position)
+        private string FindCode(Board2D<int> board, Point position)
         {
             // Look for the code
             string chars = "0123456789ABCD";
@@ -76,10 +76,10 @@ namespace Aoc
                         if (c == 'R') d = Direction.Right;
                         if (c == 'D') d = Direction.Down;
 
-                        position = Board<Int64>.MoveForward(position, d);
+                        position = Board2D<Int64>.MoveForward(position, d);
                         if (board[position.X, position.Y] == 0)
                         {
-                            position = Board<Int64>.MoveBackward(position, d);
+                            position = Board2D<Int64>.MoveBackward(position, d);
                         }                        
                     }
                     code += chars[board[position.X, position.Y]];

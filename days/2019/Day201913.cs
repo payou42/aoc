@@ -23,7 +23,7 @@ namespace Aoc
 
         public static int BALL = 4;
 
-        private Board<int> _board;
+        private Board2D<int> _board;
 
         private IntCpu _cpu;
 
@@ -38,7 +38,6 @@ namespace Aoc
         public void Init()
         {
             _cpu = new IntCpu();
-
             _score = 0;
         }
 
@@ -47,7 +46,7 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part1)
             {
                 // Run the simulation
-                _board = new Board<int>();
+                _board = new Board2D<int>();
                 _cpu.Reset(Aoc.Framework.Input.GetLongVector(this, ","));
                 while (_cpu.State != IntCpu.RunningState.Halted)
                     _cpu.Run();
@@ -68,7 +67,7 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part2)
             {
                 // Run the simulation
-                _board = new Board<int>();
+                _board = new Board2D<int>();
                 _cpu.Reset(Aoc.Framework.Input.GetLongVector(this, ","));
                 _cpu.Code[0] = 2;
 

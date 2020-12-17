@@ -35,10 +35,10 @@ namespace Aoc
                 Point position = new Point(0, 0);
                 foreach (string s in _input)
                 {
-                    direction = Board<Int64>.Turn(direction, (s[0] == 'R') ? Direction.Right : Direction.Left);
-                    position = Board<Int64>.MoveForward(position, direction, Int32.Parse(s[1..]));
+                    direction = Board2D<Int64>.Turn(direction, (s[0] == 'R') ? Direction.Right : Direction.Left);
+                    position = Board2D<Int64>.MoveForward(position, direction, Int32.Parse(s[1..]));
                 }
-                return Board<Int64>.GetDistance(position).ToString();
+                return Board2D<Int64>.GetDistance(position).ToString();
             }
 
             if (part == Aoc.Framework.Part.Part2)
@@ -49,15 +49,15 @@ namespace Aoc
                 history[position.X.ToString() + "_" + position.Y.ToString()]++;
                 foreach (string s in _input)
                 {
-                    direction = Board<Int64>.Turn(direction, (s[0] == 'R') ? Direction.Right : Direction.Left);
+                    direction = Board2D<Int64>.Turn(direction, (s[0] == 'R') ? Direction.Right : Direction.Left);
                     int amount = Int32.Parse(s[1..]);
                     for (int i = 0; i < amount; ++i)
                     {
-                        position = Board<Int64>.MoveForward(position, direction);
+                        position = Board2D<Int64>.MoveForward(position, direction);
                         history[position.X.ToString() + "_" + position.Y.ToString()]++;
                         if (history[position.X.ToString() + "_" + position.Y.ToString()] == 2)
                         {
-                            return Board<Int64>.GetDistance(position).ToString();
+                            return Board2D<Int64>.GetDistance(position).ToString();
                         }
                     }
                 }

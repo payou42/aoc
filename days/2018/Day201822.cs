@@ -90,7 +90,7 @@ namespace Aoc
         {
             if (part == Aoc.Framework.Part.Part1)
             {
-                Board<Cell> map = new Board<Cell>();
+                Board2D<Cell> map = new Board2D<Cell>();
                 long risk = 0;
                 for (int y = 0; y <= _target.Y; ++y)
                 {
@@ -105,7 +105,7 @@ namespace Aoc
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                Board<Cell> map = new Board<Cell>();
+                Board2D<Cell> map = new Board2D<Cell>();
                 Board3D<int> distances = new Board3D<int>();
                 PriorityQueue<(int, int, int)> queue = new PriorityQueue<(int, int, int)>();
                 for (int y = 0; y <= _height; ++y)
@@ -143,7 +143,7 @@ namespace Aoc
             return "";
         }
 
-        private void CheckNeighboor(Board<Cell> map, Board3D<int> distances, PriorityQueue<(int, int, int)> queue, int depth, int x, int y, int z, int xoffset, int yoffset)
+        private void CheckNeighboor(Board2D<Cell> map, Board3D<int> distances, PriorityQueue<(int, int, int)> queue, int depth, int x, int y, int z, int xoffset, int yoffset)
         {
             // Off the grid
             if ((x + xoffset < 0) || (y + yoffset < 0) || (x + xoffset > _width) || (y + yoffset > _height))
@@ -166,7 +166,7 @@ namespace Aoc
             }
         }
 
-        private void CheckToolSwitch(Board<Cell> map, Board3D<int> distances, PriorityQueue<(int, int, int)> queue, int depth, int x, int y, int z, int tool)        
+        private void CheckToolSwitch(Board2D<Cell> map, Board3D<int> distances, PriorityQueue<(int, int, int)> queue, int depth, int x, int y, int z, int tool)        
         {
             // This is the same tool
             if (z == tool)
@@ -189,7 +189,7 @@ namespace Aoc
             }
         }
 
-        private int GetGeologicalIndex(Board<Cell> map, int depth, int x, int y)
+        private int GetGeologicalIndex(Board2D<Cell> map, int depth, int x, int y)
         {
             if (x == 0 && y == 0)
             {

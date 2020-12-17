@@ -31,7 +31,7 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part1)
             {
                 // Initial position
-                Board<int> grid = new Board<int>();
+                Board2D<int> grid = new Board2D<int>();
                 int x = 0;
                 int y = 0;
                 grid[x, y] += 1;
@@ -76,7 +76,7 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part2)
             {
                 // Initial position
-                Board<int> grid = new Board<int>();
+                Board2D<int> grid = new Board2D<int>();
                 int x1 = 0;
                 int y1 = 0;
                 int x2 = 0;

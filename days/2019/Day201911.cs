@@ -15,9 +15,9 @@ namespace Aoc
 
         public string Name { get; private set; }
 
-        private Board<long> _hull;
+        private Board2D<long> _hull;
 
-        private Board<bool> _painted;
+        private Board2D<bool> _painted;
 
         private IntCpu _cpu;
 
@@ -72,9 +72,9 @@ namespace Aoc
         private long Paint(long initial)
         {
             long painted = 0;
-            _hull = new Board<long>();
+            _hull = new Board2D<long>();
             _hull[0, 0] = initial;
-            _painted = new Board<bool>();
+            _painted = new Board2D<bool>();
             _direction = Direction.Up;
             _position = new Point(0, 0);
             _cpu.Reset(Aoc.Framework.Input.GetLongVector(this, ","));
@@ -94,12 +94,12 @@ namespace Aoc
                     _hull[_position.X, _position.Y] = _cpu.Output.Dequeue();
                     long turn = _cpu.Output.Dequeue();
                     if (turn == 0)
-                        _direction = Board<long>.Turn(_direction, Direction.Left);
+                        _direction = Board2D<long>.Turn(_direction, Direction.Left);
 
                     if (turn == 1)
-                        _direction = Board<long>.Turn(_direction, Direction.Right);
+                        _direction = Board2D<long>.Turn(_direction, Direction.Right);
 
-                    _position = Board<long>.MoveForward(_position, _direction);
+                    _position = Board2D<long>.MoveForward(_position, _direction);
                     _cpu.Input.Enqueue(_hull[_position.X, _position.Y]);
                 }
             }

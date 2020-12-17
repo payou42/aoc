@@ -17,7 +17,7 @@ namespace Aoc
 
         private IntCpu _cpu;
 
-        private Board<long> _board;
+        private Board2D<long> _board;
 
         public Day201917()
         {
@@ -28,7 +28,7 @@ namespace Aoc
         public void Init()
         {
             _cpu = new IntCpu();
-            _board = new Board<long>();
+            _board = new Board2D<long>();
         }
 
         public string Run(Aoc.Framework.Part part)

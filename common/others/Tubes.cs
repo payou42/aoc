@@ -100,7 +100,7 @@ namespace Aoc.Common
         private void Move()
         {
             _steps++;
-            _position = Board<Int64>.MoveForward(_position, _direction, 1, true);
+            _position = Board2D<Int64>.MoveForward(_position, _direction, 1, true);
             char c = _network[_position.Y][_position.X];
             if ((c >= 'A') && (c <= 'Z'))
             {

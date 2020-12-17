@@ -13,7 +13,7 @@ namespace Aoc
 
         public string Name { get; private set; }
 
-        private Board<Cell> _board;
+        private Board2D<Cell> _board;
 
         private Direction _direction;
 
@@ -48,7 +48,7 @@ namespace Aoc
 
         private void BuildBoard(string[] lines)
         {
-            _board = new Board<Cell>();
+            _board = new Board2D<Cell>();
             int start = - ((lines.Length - 1) / 2);
             for (int j = 0; j < lines.Length; ++j)
             {
@@ -62,9 +62,9 @@ namespace Aoc
         private void Burst(Aoc.Framework.Part part)
         {
             Direction turnDirection = GetTurnDirection();
-            _direction = Board<Cell>.Turn(_direction, turnDirection);
+            _direction = Board2D<Cell>.Turn(_direction, turnDirection);
             Infect(part);
-            _position = Board<Int64>.MoveForward(_position, _direction);
+            _position = Board2D<Int64>.MoveForward(_position, _direction);
         }
 
         private Direction GetTurnDirection()
