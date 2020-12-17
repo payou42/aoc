@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Aoc.Common.Grid
 {
     /// <summary>
-    /// Square board
+    /// Cubic board
     /// </summary>
     /// <typeparam name="Cell">The content of the cell of the board</typeparam>
     public class Board3D<Cell>
