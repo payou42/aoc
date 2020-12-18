@@ -33,25 +33,25 @@ namespace Aoc
         public (long Result, int OutIndex) EvaluateExpression(string s, int inIndex, Aoc.Framework.Part part)
         {
             int currentIndex = inIndex;
-            List<object> ops = new List<object>();
+            List<object> tokens = new List<object>();
             while (currentIndex < s.Length && s[currentIndex] != ')')
             {
                 if (s[currentIndex] == '(')
                 {
                     long res;
                     (res, currentIndex) = this.EvaluateExpression(s, currentIndex + 1, part);
-                    ops.Add(res);
+                    tokens.Add(res);
                     continue;
                 }
 
                 if (s[currentIndex] == '+' || s[currentIndex] == '*')
                 {
-                    ops.Add(s[currentIndex].ToString());
+                    tokens.Add(s[currentIndex].ToString());
                 }
 
                 else if (char.IsDigit(s[currentIndex]))
                 {
-                    ops.Add(long.Parse(s[currentIndex].ToString()));
+                    tokens.Add(long.Parse(s[currentIndex].ToString()));
                 }
 
                 currentIndex++;
@@ -61,44 +61,44 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part1)
             {
                 // Process operations from left to right
-                while (ops.Count > 1)
+                while (tokens.Count > 1)
                 {
-                    long a = (long)ops[0];
-                    long b = (long)ops[2];
-                    string op = (string)ops[1];
-                    ops.RemoveAt(2);
-                    ops.RemoveAt(1);
-                    ops[0] = op == "*" ? a * b : a + b;
+                    long a = (long)tokens[0];
+                    long b = (long)tokens[2];
+                    string op = (string)tokens[1];
+                    tokens.RemoveAt(2);
+                    tokens.RemoveAt(1);
+                    tokens[0] = op == "*" ? a * b : a + b;
                 }
             }
 
             if (part == Aoc.Framework.Part.Part2)
             {
                 // Process pending additions first, then multiplications
-                int i = ops.IndexOf("+");
+                int i = tokens.IndexOf("+");
                 while (i != -1)
                 {
-                    long a = (long)ops[i - 1];
-                    long b = (long)ops[i + 1];
-                    ops.RemoveAt(i + 1);
-                    ops.RemoveAt(i);
-                    ops[i - 1] = a + b;
-                    i = ops.IndexOf("+");
+                    long a = (long)tokens[i - 1];
+                    long b = (long)tokens[i + 1];
+                    tokens.RemoveAt(i + 1);
+                    tokens.RemoveAt(i);
+                    tokens[i - 1] = a + b;
+                    i = tokens.IndexOf("+");
                 }
 
-                i = ops.IndexOf("*");
+                i = tokens.IndexOf("*");
                 while (i != -1)
                 {
-                    long a = (long)ops[i - 1];
-                    long b = (long)ops[i + 1];
-                    ops.RemoveAt(i + 1);
-                    ops.RemoveAt(i);
-                    ops[i - 1] = a * b;
-                    i = ops.IndexOf("*");
+                    long a = (long)tokens[i - 1];
+                    long b = (long)tokens[i + 1];
+                    tokens.RemoveAt(i + 1);
+                    tokens.RemoveAt(i);
+                    tokens[i - 1] = a * b;
+                    i = tokens.IndexOf("*");
                 }
             }
 
-            return (ops.Count == 0 ? 0L : (long)ops[0] , currentIndex + 1);
+            return (tokens.Count == 0 ? 0L : (long)tokens[0] , currentIndex + 1);
         }
     }   
 }
