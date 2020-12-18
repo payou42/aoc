@@ -140,65 +140,21 @@ namespace Aoc.Common.Grid
         /// <returns>The number of matching neighbours</returns>
         public int CountNeighbours(long[] coordinates, Func<long[], Cell, bool> predicate)
         {
+            long[] min = coordinates.Select(c => c - 1).ToArray();
+            long[] max = coordinates.Select(c => c + 1).ToArray();             
             int count = 0;
             var comparer = new CoordinatesEqualityComparer();
-            Queue<(long[], int index)> toProcess = new Queue<(long[], int index)>();
-            toProcess.Enqueue((coordinates, 0));
-            while (toProcess.Count > 0)
-            {
-                var (c, i) = toProcess.Dequeue();
-                if (i >= coordinates.Length)
-                {
-                    // Check that this is not the center
-                    if (!comparer.Equals(c, coordinates) && predicate(c, this[c]))
-                    {
-                        count++;
-                    }
-                }
-                else
-                {
-                    var c1 = c.ToArray();
-                    c1[i] = coordinates[i] - 1;
-                    toProcess.Enqueue((c1, i + 1));
 
-                    var c2 = c.ToArray();
-                    c2[i] = coordinates[i];
-                    toProcess.Enqueue((c2, i + 1));
-                    
-                    var c3 = c.ToArray();
-                    c3[i] = coordinates[i] + 1;
-                    toProcess.Enqueue((c3, i + 1));
+            this.Traverse(min, max, (pos) =>
+            {
+                // Check that this is not the center
+                if (!comparer.Equals(pos, coordinates) && predicate(pos, this[pos]))
+                {
+                    count++;
                 }
-            }
+            });
 
             return count;
-        }
-
-        /// <summary>
-        /// Get the number of neighbours mathing a given predicate.
-        /// </summary>
-        /// <returns>The number of matching neighbours</returns>
-        public void Traverse(long[] min, long[] max, Action<long[]> action)
-        {
-            Queue<(long[], int index)> toProcess = new Queue<(long[], int index)>();
-            toProcess.Enqueue((new long[min.Length], 0));
-            while (toProcess.Count > 0)
-            {
-                var (c, i) = toProcess.Dequeue();
-                if (i >= min.Length)
-                {
-                    action(c);
-                }
-                else
-                {
-                    for (long k = min[i]; k <= max[i]; ++k)
-                    {
-                        var cc = c.ToArray();
-                        cc[i] = k;
-                        toProcess.Enqueue((cc, i + 1));
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -208,6 +164,121 @@ namespace Aoc.Common.Grid
         public long CountCells(Func<long[], Cell, bool> predicate)
         {
             return _board.Sum(c => predicate(c.Key, c.Value) ? 1L : 0L);
+        }
+
+        /// <summary>
+        /// Parse an hypercube of the grid, given min and max coordinates.
+        /// </summary>
+        public void Traverse(long[] min, long[] max, Action<long[]> action)
+        {
+            switch (min.Length)
+            {
+                case 1: Traverse1(min[0], max[0], action); break;
+                case 2: Traverse2(min[0], min[1], max[0], max[1], action); break;
+                case 3: Traverse3(min[0], min[1], min[2], max[0], max[1], max[2], action); break;
+                case 4: Traverse4(min[0], min[1], min[2], min[3], max[0], max[1], max[2], max[3], action); break;
+                default:
+                {
+                    long[] pos = new long[min.Length];
+                    this.TraverseN(pos, 0, min, max, action);
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Parse an hypercube of the grid, given min and max coordinates.
+        /// </summary>
+        private void Traverse1(long x0, long x1, Action<long[]> action)
+        {
+            long[] pos = new long[1];
+            for (long x = x0; x <= x1; ++x)
+            {
+                pos[0] = x;
+                action(pos);
+            }
+        }
+
+        /// <summary>
+        /// Parse an hypercube of the grid, given min and max coordinates.
+        /// </summary>
+        private void Traverse2(long x0, long y0, long x1, long y1, Action<long[]> action)
+        {
+            long[] pos = new long[2];
+            for (long x = x0; x <= x1; ++x)
+            {
+                pos[0] = x;
+                for (long y = y0; y <= y1; ++y)
+                {
+                    pos[1] = y;
+                    action(pos);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Parse an hypercube of the grid, given min and max coordinates.
+        /// </summary>
+        private void Traverse3(long x0, long y0, long z0, long x1, long y1, long z1, Action<long[]> action)
+        {
+            long[] pos = new long[3];
+            for (long x = x0; x <= x1; ++x)
+            {
+                pos[0] = x;
+                for (long y = y0; y <= y1; ++y)
+                {
+                    pos[1] = y;
+                    for (long z = z0; z <= z1; ++z)
+                    {
+                        pos[2] = z;
+                        action(pos);
+                    }   
+                }
+            }
+        }
+
+        /// <summary>
+        /// Parse an hypercube of the grid, given min and max coordinates.
+        /// </summary>
+        private void Traverse4(long x0, long y0, long z0, long w0, long x1, long y1, long z1, long w1, Action<long[]> action)
+        {
+            long[] pos = new long[4];
+            for (long x = x0; x <= x1; ++x)
+            {
+                pos[0] = x;
+                for (long y = y0; y <= y1; ++y)
+                {
+                    pos[1] = y;
+                    for (long z = z0; z <= z1; ++z)
+                    {
+                        pos[2] = z;
+                        for (long w = w0; w <= w1; ++w)
+                        {
+                            pos[3] = w;
+                            action(pos);
+                        }   
+                    }   
+                }
+            }
+        }
+
+        /// <summary>
+        /// Parse an hypercube of the grid, given min and max coordinates.
+        /// </summary>
+        private void TraverseN(long[] pos, int index, long[] min, long[] max, Action<long[]> action)
+        {
+            if (index >= pos.Length)
+            {
+                action(pos);
+            }
+            else
+            {
+                for (long l = min[index]; l <= max[index]; ++l)
+                {
+                    pos[index] = l;
+                    this.TraverseN(pos, index + 1, min, max, action);
+                }
+            }
         }
 
         /// <summary>

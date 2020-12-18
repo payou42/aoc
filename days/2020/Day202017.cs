@@ -13,9 +13,9 @@ namespace Aoc
 
         public string Name { get; private set; }
 
-        private Board3D<bool> _pocket3D;
+        private Board<bool> _pocket3D;
 
-        private Board4D<bool> _pocket4D;
+        private Board<bool> _pocket4D;
 
         public Day202017()
         {
@@ -27,109 +27,57 @@ namespace Aoc
         {
             var input = Aoc.Framework.Input.GetStringVector(this);
 
-            _pocket3D = new Board3D<bool>();
-            _pocket4D = new Board4D<bool>();
+            _pocket3D = new Board<bool>();
+            _pocket4D = new Board<bool>();
 
             for (int y = 0; y < input.Length; ++y)
             {
                 for (int x = 0; x < input[y].Length; ++x)
                 {
-                    _pocket3D[x, y, 0] = (input[y][x] == '#');
-                    _pocket4D[x, y, 0, 0] = (input[y][x] == '#');
+                    if (input[y][x] == '#')
+                    {
+                        _pocket3D[new long[] {x, y, 0}] = true;
+                        _pocket4D[new long[] {x, y, 0, 0}] = true;
+                    }
                 }
             }
         }
 
         public string Run(Aoc.Framework.Part part)
         {
-            if (part == Aoc.Framework.Part.Part1)
+            long actives = 0;
+            Board<bool> current = (part == Aoc.Framework.Part.Part1) ? _pocket3D : _pocket4D;
+            for (int i = 0; i < 6; ++i)
             {
-                long actives = 0;
-                Board3D<bool> current = _pocket3D;
-                for (int i = 0; i < 6; ++i)
-                {
-                    (current, actives) = this.Round3D(current);
-                }
-
-                return actives.ToString();
+                (current, actives) = this.Round(current);
             }
 
-            if (part == Aoc.Framework.Part.Part2)
-            {
-                long actives = 0;
-                Board4D<bool> current = _pocket4D;
-                for (int i = 0; i < 6; ++i)
-                {
-                    (current, actives) = this.Round4D(current);
-                }
-
-                return actives.ToString();
-            }
-
-            return "";
+            return actives.ToString();
         }
 
-        private (Board3D<bool>, long) Round3D(Board3D<bool> previous)
+        private (Board<bool>, long) Round(Board<bool> previous)
         {
-            var (boundminx, boundminy, boundminz, boundmaxx, boundmaxy, boundmaxz) = previous.GetBounds();
-            Board3D<bool> next = new Board3D<bool>();
+            var (boundmin, boundmax) = previous.GetBounds();
+            var traversemin = boundmin.Select(c => c - 1).ToArray();
+            var traversemax = boundmax.Select(c => c + 1).ToArray();
+            Board<bool> next = new Board<bool>();
             long actives = 0;
 
-            for (int x = boundminx - 1; x <= boundmaxx + 1; ++x)
-            {
-                for (int y = boundminy - 1; y <= boundmaxy + 1; ++y)
+            next.Traverse(traversemin, traversemax, (c) =>
+            {                
+                int nbNeighboors = previous.CountNeighbours(c, (p, v) => v);
+                if (previous[c] && (nbNeighboors == 2 || nbNeighboors == 3))
                 {
-                    for (int z = boundminz - 1; z <= boundmaxz + 1; ++z)
-                    {
-                        int nbNeighboors = previous.CountNeighbours(x, y, z, c => c);
-                        if (previous[x, y, z] && (nbNeighboors == 2 || nbNeighboors == 3))
-                        {
-                            next[x, y, z] = true;
-                            actives++;
-                        }
-
-                        if (!previous[x, y, z] && (nbNeighboors == 3))
-                        {
-                            next[x, y, z] = true;
-                            actives++;
-                        }
-                    }
+                    next[c.ToArray()] = true;
+                    actives++;
                 }
-            }
 
-            return (next, actives);
-        }
-
-        private (Board4D<bool>, long) Round4D(Board4D<bool> previous)
-        {
-            var (boundminx, boundminy, boundminz, boundminw, boundmaxx, boundmaxy, boundmaxz, boundmaxw) = previous.GetBounds();
-            Board4D<bool> next = new Board4D<bool>();
-            long actives = 0;
-
-            for (int x = boundminx - 1; x <= boundmaxx + 1; ++x)
-            {
-                for (int y = boundminy - 1; y <= boundmaxy + 1; ++y)
+                if (!previous[c] && (nbNeighboors == 3))
                 {
-                    for (int z = boundminz - 1; z <= boundmaxz + 1; ++z)
-                    {
-                        for (int w = boundminw - 1; w <= boundmaxw + 1; ++w)
-                        {
-                            int nbNeighboors = previous.CountNeighbours(x, y, z, w, c => c);
-                            if (previous[x, y, z, w] && (nbNeighboors == 2 || nbNeighboors == 3))
-                            {
-                                next[x, y, z, w] = true;
-                                actives++;
-                            }
-
-                            if (!previous[x, y, z, w] && (nbNeighboors == 3))
-                            {
-                                next[x, y, z, w] = true;
-                                actives++;
-                            }
-                        }
-                    }
+                    next[c.ToArray()] = true;
+                    actives++;
                 }
-            }
+            });
 
             return (next, actives);
         }
