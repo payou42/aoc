@@ -49,8 +49,6 @@ namespace Aoc
 
             if (part == Aoc.Framework.Part.Part2)
             {
-                _rules[8] = "42 | 42 8";
-                _rules[11] = "42 31 | 42 11 31";
                 _cache[8] = $"{_cache[42]}({_cache[42]})*";
                 _cache[11] = $"{_cache[42]}({_cache[42]}({_cache[42]}({_cache[42]}{_cache[31]})?{_cache[31]})?{_cache[31]})?{_cache[31]}";
                 _cache.Remove(0);
@@ -78,9 +76,6 @@ namespace Aoc
 
         private string BuildRegex(int rule)
         {
-            // 73: 24 92
-            // 27: 92 12 | 5 109
-            // 92: "b"
             if (_cache.ContainsKey(rule))
             {
                 return _cache[rule];
