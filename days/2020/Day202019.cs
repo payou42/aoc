@@ -62,42 +62,24 @@ namespace Aoc
         {
             string regex = $"^{this.BuildRegex(0)}$";
             Regex r = new Regex(regex);
-            int count = 0;
-            foreach (string s in _input)
-            {
-                if (r.IsMatch(s))
-                {
-                    count++;
-                }
-            }
-
-            return count;
+            return _input.Count(s => r.IsMatch(s));
         }
 
         private string BuildRegex(int rule)
         {
             if (_cache.ContainsKey(rule))
-            {
                 return _cache[rule];
-            }
 
             string s = _rules[rule].Trim();
             if (s.StartsWith("\""))
-            {
                 _cache[rule] = s[1..2];
-            }
             else
             {
                 var ors = s.Trim().Split("|");
                 if (ors.Length == 2)
-                {
                     _cache[rule] = $"({this.BuildChain(ors[0])}|{this.BuildChain(ors[1])})";
-                    
-                }
                 else
-                {
                     _cache[rule] = this.BuildChain(ors[0]);
-                }
             }
 
             return _cache[rule];
@@ -108,9 +90,7 @@ namespace Aoc
             string r = "";
             var chains = input.Trim().Split(" ").Select(int.Parse);
             foreach (int n in chains)
-            {
                 r += this.BuildRegex(n);
-            }
 
             return r;
         }
