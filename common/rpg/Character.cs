@@ -22,7 +22,8 @@ namespace Aoc.Common.Rpg
 
         public Character Clone()
         {
-            return new Character {
+            return new Character
+            {
                 Damage = Damage,
                 Armor = Armor,
                 Health = Health,

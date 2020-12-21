@@ -50,7 +50,8 @@ namespace Aoc.Common.Rpg
             if (!spell.IsCastable(next.Me, next.Boss))
             {
                 return Issue.Invalid;
-            }            
+            }
+
             next.History.Add(spell.Name);
             next.TotalMana += spell.Cost;
             spell.Apply(next.Me, next.Boss);

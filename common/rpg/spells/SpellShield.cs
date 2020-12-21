@@ -27,6 +27,7 @@ namespace Aoc.Common.Rpg.Spells
             {
                 return false;
             }
+
             return base.IsCastable(me, other);
         }
     }
