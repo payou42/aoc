@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
-using Aoc.Common;
+using Aoc.Common.Geometry;
 
 namespace Aoc
 {
@@ -12,7 +12,7 @@ namespace Aoc
 
         public string Name { get; private set; }
 
-        private RulesSet _rules;
+        private Fractal.RulesSet _rules;
 
         public Day201721()
         {
@@ -21,7 +21,7 @@ namespace Aoc
         }
         public void Init()
         {
-            _rules = new RulesSet(Aoc.Framework.Input.GetStringVector(this));
+            _rules = new Fractal.RulesSet(Aoc.Framework.Input.GetStringVector(this));
         }
 
         public string Run(Aoc.Framework.Part part)
