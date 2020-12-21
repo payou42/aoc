@@ -10,7 +10,7 @@ namespace Aoc.Common.Containers
 
         public long RealLength { get; private set; }
 
-        private readonly (long, long, T)[] _array;
+        private readonly (long Previous, long Next, T Content)[] _array;
 
         public SparseArray(long length)
         {
@@ -27,21 +27,21 @@ namespace Aoc.Common.Containers
         {
             get
             {
-                return _array[index].Item3;
+                return _array[index].Content;
             }
 
             set
             {
-                _array[index].Item3 = value;
+                _array[index].Content = value;
             }
         }
 
         public void RemoveAt(long index)
         {
-            long previous = _array[index].Item1;
-            long next =_array[index].Item2;
-            _array[previous].Item2 = next;
-            _array[next].Item1 = previous;
+            long previous = _array[index].Previous;
+            long next =_array[index].Next;
+            _array[previous].Next = next;
+            _array[next].Previous = previous;
             RealLength--;
         }
 
@@ -50,8 +50,9 @@ namespace Aoc.Common.Containers
             long previous = index;
             while (offset > 0)
             {
-                previous = _array[previous].Item1;
+                previous = _array[previous].Previous;
             }
+
             return previous;
         }
 
@@ -60,9 +61,10 @@ namespace Aoc.Common.Containers
             long next = index;
             while (offset > 0)
             {
-                next = _array[next].Item2;
+                next = _array[next].Next;
                 offset--;
             }
+
             return next;
         }
     }
