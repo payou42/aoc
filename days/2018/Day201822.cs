@@ -106,7 +106,7 @@ namespace Aoc
             if (part == Aoc.Framework.Part.Part2)
             {
                 Board2D<Cell> map = new Board2D<Cell>();
-                Board3D<int> distances = new Board3D<int>();
+                Board<int> distances = new Board<int>();
                 PriorityQueue<(int, int, int)> queue = new PriorityQueue<(int, int, int)>();
                 for (int y = 0; y <= _height; ++y)
                 {
@@ -114,14 +114,14 @@ namespace Aoc
                     {
                         map[x, y] = new Cell(GetGeologicalIndex(map, _depth, x, y));
                         for (int t = 0; t <= 2; ++t)
-                        {                      
-                            distances[x, y, t] = int.MaxValue;
+                        {
+                            distances[new long[] {x, y, t}] = int.MaxValue;
                         }
                     }
                 }
 
                 // Initial distance : torch
-                distances[0, 0, (int)Tools.Torch] = 0;
+                distances[new long[] { 0, 0, (int)Tools.Torch }] = 0;
                 queue.Enqueue((0, 0, 2), 0);
 
                 // Process the queue
@@ -137,13 +137,13 @@ namespace Aoc
                     CheckToolSwitch(map, distances, queue, _depth, from.Item1, from.Item2, from.Item3, 2);
                 }
 
-                return distances[_target.X, _target.Y, (int)Tools.Torch].ToString();
+                return distances[new long[] { _target.X, _target.Y, (int)Tools.Torch }].ToString();
             }
 
             return "";
         }
 
-        private void CheckNeighboor(Board2D<Cell> map, Board3D<int> distances, PriorityQueue<(int, int, int)> queue, int depth, int x, int y, int z, int xoffset, int yoffset)
+        private void CheckNeighboor(Board2D<Cell> map, Board<int> distances, PriorityQueue<(int, int, int)> queue, int depth, int x, int y, int z, int xoffset, int yoffset)
         {
             // Off the grid
             if ((x + xoffset < 0) || (y + yoffset < 0) || (x + xoffset > _width) || (y + yoffset > _height))
@@ -154,11 +154,11 @@ namespace Aoc
             // Check that we have the right tool for the neighboors
             if (map[x + xoffset, y + yoffset].Accept(depth, (Tools)z))
             {
-                int d = distances[x, y, z];
-                if (distances[x + xoffset, y + yoffset, z] > 1 + d)
+                int d = distances[new long[] { x, y, z }];
+                if (distances[new long[] { x + xoffset, y + yoffset, z }] > 1 + d)
                 {
                     // Shortest path found
-                    distances[x + xoffset, y + yoffset, z] = 1 + d;
+                    distances[new long[] { x + xoffset, y + yoffset, z }] = 1 + d;
 
                     // Update priority queue
                     queue.EnqueueOrUpdate((x + xoffset, y + yoffset, z), 1 + d);
@@ -166,7 +166,7 @@ namespace Aoc
             }
         }
 
-        private void CheckToolSwitch(Board2D<Cell> map, Board3D<int> distances, PriorityQueue<(int, int, int)> queue, int depth, int x, int y, int z, int tool)        
+        private void CheckToolSwitch(Board2D<Cell> map, Board<int> distances, PriorityQueue<(int, int, int)> queue, int depth, int x, int y, int z, int tool)        
         {
             // This is the same tool
             if (z == tool)
@@ -177,11 +177,11 @@ namespace Aoc
             // Check that we have the right tool for the neighboors
             if (map[x, y].Accept(depth, (Tools)tool))
             {
-                int d = distances[x, y, z];
-                if (distances[x, y, tool] > 7 + d)
+                int d = distances[new long[] { x, y, z }];
+                if (distances[new long[] { x, y, tool }] > 7 + d)
                 {
                     // Shortest path found
-                    distances[x, y, tool] = 7 + d;
+                    distances[new long[] { x, y, tool }] = 7 + d;
 
                     // Update priority queue
                     queue.EnqueueOrUpdate((x, y, tool), 7 + d);
@@ -211,7 +211,7 @@ namespace Aoc
                 return y * 48271;
             }
 
-            return map[x-1, y].ErosionLevel(depth) * map[x, y-1].ErosionLevel(depth);
+            return map[x - 1, y].ErosionLevel(depth) * map[x, y - 1].ErosionLevel(depth);
         }
     }   
 }
