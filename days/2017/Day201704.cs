@@ -36,7 +36,7 @@ namespace Aoc
             {
                 return a == b;
             }
-            return Anagram.Check(a, b);
+            return a.IsAnagram(b);
         }
 
         private bool ValidateRow(int index, Aoc.Framework.Part part)

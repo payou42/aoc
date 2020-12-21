@@ -7,12 +7,7 @@ namespace Aoc.Common.Strings
 {
     public static class Scrambling
     {
-        public static string Reverse(string input)
-        {
-            char[] charArray = input.ToCharArray();
-            Array.Reverse( charArray );
-            return new string( charArray );
-        }
+        
 
         public static string ReplaceLetter(string input, char x, char y)
         {
