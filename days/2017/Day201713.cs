@@ -8,6 +8,41 @@ namespace Aoc
 {
     public class Day201713 : Aoc.Framework.IDay
     {
+        public class Firewall
+        {
+            private readonly List<Scanner> _firewall;
+
+            public Firewall()
+            {
+                _firewall = new List<Scanner>();
+            }
+
+            public void AddScanner(int depth, int range)
+            {
+                _firewall.Add(new Scanner(depth, range));
+            }
+
+            public int Scan(int start)
+            {
+                int severity = 0;
+                bool caught = false;
+                foreach (Scanner scanner in _firewall)
+                {
+                    if (scanner.IsScanned(start))
+                    {
+                        caught = true;
+                        severity += scanner.Severity;
+                    }
+                }
+
+                if (!caught)
+                {
+                    severity = -1;
+                }
+                return severity;
+            }
+        }
+        
         public string Codename { get; private set; }
 
         public string Name { get; private set; }
