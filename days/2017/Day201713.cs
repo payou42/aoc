@@ -8,6 +8,32 @@ namespace Aoc
 {
     public class Day201713 : Aoc.Framework.IDay
     {
+        public class Scanner
+        {
+            public int Range { get; }
+
+            public int Depth { get; }
+
+            public int Severity
+            {
+                get
+                {
+                    return Depth * Range;
+                }
+            }
+
+            public Scanner(int depth, int range)
+            {
+                Depth = depth;
+                Range = range;
+            }
+
+            public bool IsScanned(int start)
+            {
+                return (start + Depth) % (2 * Range - 2) == 0;
+            }
+        }
+        
         public class Firewall
         {
             private readonly List<Scanner> _firewall;
