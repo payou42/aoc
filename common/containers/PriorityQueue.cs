@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Linq;
 
 namespace Aoc.Common.Containers
 {
@@ -9,21 +10,18 @@ namespace Aoc.Common.Containers
     {
         private readonly Dictionary<T, long> _dataByContent;
 
-        private readonly Dictionary<long, List<T>> _dataByPriority;
-
-        private readonly SortedSet<long> _priorities;
+        private readonly SortedDictionary<long, List<T>> _dataByPriority;
 
         private long _count;
 
         public PriorityQueue()
         {
             _dataByContent = new Dictionary<T, long>();
-            _dataByPriority = new Dictionary<long, List<T>>();
-            _priorities = new SortedSet<long>();
+            _dataByPriority = new SortedDictionary<long, List<T>>();
             _count = 0;
         }
 
-        public void AddOrUpdate(T data, long priority)
+        public void EnqueueOrUpdate(T data, long priority)
         {
             if (_dataByContent.ContainsKey(data))
             {
@@ -41,9 +39,9 @@ namespace Aoc.Common.Containers
             // Add the data to the new priority
             if (!_dataByPriority.ContainsKey(priority))
             {
-                _priorities.Add(priority);
                 _dataByPriority[priority] = new List<T>();
-            }            
+            }
+                        
             _dataByPriority[priority].Add(data);
             _dataByContent[data] = priority;
             _count++;
@@ -69,15 +67,14 @@ namespace Aoc.Common.Containers
             if (_dataByPriority[previous].Count == 0)
             {
                 _dataByPriority.Remove(previous);
-                _priorities.Remove(previous);
             }
 
             // Add the data to the new priority
             if (!_dataByPriority.ContainsKey(priority))
             {
-                _priorities.Add(priority);
                 _dataByPriority[priority] = new List<T>();
-            }            
+            }
+
             _dataByPriority[priority].Add(data);
             _dataByContent[data] = priority;
             return true;
@@ -95,7 +92,7 @@ namespace Aoc.Common.Containers
             }
 
             // Get the min item
-            DequeueAtPriority(_priorities.Min, out data);
+            DequeueAtPriority(_dataByPriority.First().Key, out data);
             return true;
         }
 
@@ -109,7 +106,7 @@ namespace Aoc.Common.Containers
             }
 
             // Get the max item
-            DequeueAtPriority(_priorities.Max, out data);
+            DequeueAtPriority(_dataByPriority.Last().Key, out data);
             return true;
         }
 
@@ -127,7 +124,6 @@ namespace Aoc.Common.Containers
             if (matches.Count == 0)
             {
                 _dataByPriority.Remove(priority);
-                _priorities.Remove(priority);
             }
 
             // Decrease count

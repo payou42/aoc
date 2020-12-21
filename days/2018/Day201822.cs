@@ -161,7 +161,7 @@ namespace Aoc
                     distances[x + xoffset, y + yoffset, z] = 1 + d;
 
                     // Update priority queue
-                    queue.AddOrUpdate((x + xoffset, y + yoffset, z), 1 + d);
+                    queue.EnqueueOrUpdate((x + xoffset, y + yoffset, z), 1 + d);
                 }
             }
         }
@@ -184,7 +184,7 @@ namespace Aoc
                     distances[x, y, tool] = 7 + d;
 
                     // Update priority queue
-                    queue.AddOrUpdate((x, y, tool), 7 + d);
+                    queue.EnqueueOrUpdate((x, y, tool), 7 + d);
                 }
             }
         }
