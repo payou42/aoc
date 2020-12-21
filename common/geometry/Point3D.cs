@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Aoc.Common.Physics
+namespace Aoc.Common.Geometry
 {  
     public class Point3D
     {
@@ -13,13 +13,7 @@ namespace Aoc.Common.Physics
 
         public double Z { get; set; }
 
-        public double Energy
-        {
-            get
-            {
-                return Math.Abs(X) + Math.Abs(Y) + Math.Abs(Z);
-            }
-        }
+        public double ManhattanDistance => Math.Abs(X) + Math.Abs(Y) + Math.Abs(Z);
 
         public static Point3D operator+(Point3D a, Point3D b)
         {

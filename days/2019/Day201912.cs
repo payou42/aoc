@@ -1,16 +1,79 @@
 using System;
+using System.Drawing;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
 using Aoc.Common;
 using Aoc.Common.Crypto;
+using Aoc.Common.Geometry;
 using Aoc.Common.Numbers;
-using Aoc.Common.Physics;
 
 namespace Aoc
 {
     public class Day201912 : Aoc.Framework.IDay
     {
+        public class Body
+        {
+            public Point3D Position { get; set; }
+
+            public Point3D Velocity { get; set; }
+
+            public Body()
+            {          
+                Position = new Point3D() { X = 0, Y = 0, Z = 0};  
+                Velocity = new Point3D() { X = 0, Y = 0, Z = 0};  
+            }
+
+            public double Energy
+            {
+                get
+                {
+                    return Position.ManhattanDistance * Velocity.ManhattanDistance;
+                }
+            }
+
+            public void Move()
+            {
+                Position += Velocity;
+            }
+
+            public static void ApplyGravity(Body a, Body b)
+            {
+                if (a.Position.X > b.Position.X)
+                {
+                    a.Velocity.X -= 1;
+                    b.Velocity.X += 1;
+                }
+                else if (a.Position.X < b.Position.X)
+                {
+                    a.Velocity.X += 1;
+                    b.Velocity.X -= 1;
+                }
+
+                if (a.Position.Y > b.Position.Y)
+                {
+                    a.Velocity.Y -= 1;
+                    b.Velocity.Y += 1;
+                }
+                else if (a.Position.Y < b.Position.Y)
+                {
+                    a.Velocity.Y += 1;
+                    b.Velocity.Y -= 1;
+                }
+
+                if (a.Position.Z > b.Position.Z)
+                {
+                    a.Velocity.Z -= 1;
+                    b.Velocity.Z += 1;
+                }
+                else if (a.Position.Z < b.Position.Z)
+                {
+                    a.Velocity.Z += 1;
+                    b.Velocity.Z -= 1;
+                }
+            }
+        }
+        
         public string Codename { get; private set; }
 
         public string Name { get; private set; }
