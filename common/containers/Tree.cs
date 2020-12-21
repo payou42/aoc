@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace Aoc.Common.Containers
 {
-
     public class Tree<T>
     {
         public delegate void Visitor(T nodeData);
@@ -16,6 +15,10 @@ namespace Aoc.Common.Containers
 
             public List<Node> Children { get; private set; }
 
+            public long Weight;
+
+            public long TotalWeight;
+
             public bool IsRoot
             {
                 get
@@ -24,16 +27,18 @@ namespace Aoc.Common.Containers
                 }
             }
 
-            public Node(Node parent, T data)
+            public Node(Node parent, T data, long weight = 0)
             {
                 Parent = parent;
                 Data = data;
                 Children = new List<Node>();
+                Weight = weight;
+                TotalWeight = 0;
             }
 
-            public Node AddChild(T data)
+            public Node AddChild(T data, long weight = 0)
             {
-                Node node = new Node(this, data);
+                Node node = new Node(this, data, weight);
                 Children.Add(node);
                 return node;
             }
@@ -87,12 +92,24 @@ namespace Aoc.Common.Containers
 
         public Tree(T data)
         {
-            Root = new Node(null, data);
+            Root = new Node(null, data, 0);
         }
 
         public Tree(Node root)
         {
             Root = root;
+        }
+
+        public long GetWeight(Node node)
+        {
+            long weight = node.Weight;
+            foreach (var child in node.Children)
+            {
+                weight += GetWeight(child);
+            }
+
+            node.TotalWeight = weight;
+            return weight;
         }
     }
 }

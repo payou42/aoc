@@ -12,7 +12,7 @@ namespace Aoc
 
         public string Name { get; private set; }
 
-        private WeightTree _tree;
+        private Tree<string> _tree;
 
         private int _garbage;
         
@@ -32,7 +32,7 @@ namespace Aoc
         {
             if (part == Aoc.Framework.Part.Part1)
             {
-                return _tree.Root.Data.TotalWeight.ToString();
+                return _tree.GetWeight(_tree.Root).ToString();
             }
 
             if (part == Aoc.Framework.Part.Part2)
@@ -43,12 +43,12 @@ namespace Aoc
             return "";
         }
 
-        private WeightTree BuildTree()
+        private Tree<string> BuildTree()
         {
             string content = Aoc.Framework.Input.GetString(this);
-            WeightTree tree = new WeightTree(new WeightTree.Header { Name = "root", LocalWeight = 0 });
+            Tree<string> tree = new Tree<string>("root");
             
-            Tree<WeightTree.Header>.Node current = tree.Root;
+            Tree<string>.Node current = tree.Root;
             int index = 0;
             bool garbage = false;
             
@@ -68,7 +68,7 @@ namespace Aoc
                     {
                         if (!garbage)
                         {
-                            current = current.AddChild(new WeightTree.Header { Name = "", LocalWeight = current.Data.LocalWeight + 1 });
+                            current = current.AddChild("", current.Weight + 1);
                         }
                         else
                         {
@@ -97,6 +97,7 @@ namespace Aoc
                             // Already in garbage
                             _garbage++;
                         }
+
                         garbage = true;
                         break;
                     }
@@ -118,7 +119,7 @@ namespace Aoc
                 }
                 index++;
             }
-            tree.EvaluateWeight(tree.Root);
+            
             return tree;
         }
     }   

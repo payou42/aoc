@@ -12,7 +12,7 @@ namespace Aoc
 
         public string Name { get; private set; }
 
-        private WeightTree _tree;
+        private Tree<string> _tree;
 
         public Day201707()
         {
@@ -23,15 +23,15 @@ namespace Aoc
         public void Init()
         {
             _tree = BuildTree();
-            _tree.EvaluateWeight(_tree.Root);
+            _tree.GetWeight(_tree.Root);
         }
 
         public string Run(Aoc.Framework.Part part)
         {
             if (part == Aoc.Framework.Part.Part1)
             {
-                // Evaluate weights
-                return _tree.Root.Data.Name;
+                // Get the root
+                return _tree.Root.Data;
             }
 
             if (part == Aoc.Framework.Part.Part2)
@@ -43,10 +43,10 @@ namespace Aoc
             return "";
         }
 
-        private WeightTree BuildTree()
+        private Tree<string> BuildTree()
         {
             // Create data
-            Dictionary<String, Tree<WeightTree.Header>.Node> elements = new Dictionary<String, Tree<WeightTree.Header>.Node>();
+            Dictionary<String, Tree<string>.Node> elements = new Dictionary<String, Tree<string>.Node>();
             String[] lines = Aoc.Framework.Input.GetStringVector(this);
 
             // First build the list of elements
@@ -55,7 +55,7 @@ namespace Aoc
                 String[] items = lines[i].Split(" ");
                 String name = items[0];
                 Int32 weight = Int32.Parse(items[1][1..^1]);
-                elements[name] = new Tree<WeightTree.Header>.Node(null, new WeightTree.Header { Name = name, LocalWeight = weight });
+                elements[name] = new Tree<string>.Node(null, name, weight);
             }
 
             // Then build dependencies
@@ -72,6 +72,7 @@ namespace Aoc
                         {
                             childName = childName[0..^1];
                         }
+
                         var child = elements[childName];
                         parent.Children.Add(child);
                         child.Parent = parent;
@@ -80,10 +81,10 @@ namespace Aoc
             }
 
             // Find the root
-            return new WeightTree(elements.Values.Where(n => n.IsRoot).First());
+            return new Tree<string>(elements.Values.Where(n => n.IsRoot).First());
         }
 
-        private Tuple<bool, string, int> CheckBalanced(Tree<WeightTree.Header>.Node tree)
+        private Tuple<bool, string, int> CheckBalanced(Tree<string>.Node tree)
         {
             // Check number of children
             if (tree.Children.Count == 0)
@@ -92,11 +93,11 @@ namespace Aoc
             }
 
             // Check local balance
-            Int32 w = tree.Children[0].Data.TotalWeight;
+            long w = tree.Children[0].TotalWeight;
             bool balanced = true;
             foreach (var child in tree.Children)
             {
-                if (child.Data.TotalWeight != w)
+                if (child.TotalWeight != w)
                 {
                     balanced = false;
                 }
@@ -120,13 +121,13 @@ namespace Aoc
             Dictionary<int, int> weights = new Dictionary<int, int>();
             foreach (var child in tree.Children)
             {
-                if (weights.ContainsKey(child.Data.TotalWeight))
+                if (weights.ContainsKey((int)(child.TotalWeight)))
                 {
-                    weights[child.Data.TotalWeight] += 1;
+                    weights[(int)child.TotalWeight] += 1;
                 }
                 else 
                 {
-                    weights[child.Data.TotalWeight] = 1;
+                    weights[(int)child.TotalWeight] = 1;
                 }
             }
 
@@ -148,9 +149,9 @@ namespace Aoc
             // Fix the tree !
             foreach (var child in tree.Children)
             {
-                if (child.Data.TotalWeight == wrongWeight)
+                if (child.TotalWeight == wrongWeight)
                 {
-                    return new Tuple<bool, string, int>(false, child.Data.Name, child.Data.LocalWeight - wrongWeight + goodWeight);
+                    return new Tuple<bool, string, int>(false, child.Data, (int)child.Weight - wrongWeight + goodWeight);
                 }
             }
             return new Tuple<bool, string, int>(true, "", 0);
