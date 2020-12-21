@@ -9,7 +9,7 @@ namespace Aoc.Common.Graphes
     /// Square board
     /// </summary>
     /// <typeparam name="Cell">The content of the cell of the board</typeparam>
-    public class UndirectedGraph<N, L>
+    public class Graph<N, L>
     {
         public class Node
         {
@@ -30,14 +30,26 @@ namespace Aoc.Common.Graphes
                 Data = data;
             }
 
-            public bool IsDirect(Node n1, Node n2)
+            public bool IsDirect(Node n1, Node n2, bool directed)
             {
-                return (Endpoints[0] == n1 && Endpoints[1] == n2) || (Endpoints[0] == n2 && Endpoints[1] == n1);
+                if (Endpoints[0] == n1 && Endpoints[1] == n2)
+                    return true;
+                
+                if (!directed && Endpoints[0] == n2 && Endpoints[1] == n1)
+                    return true;
+
+                return false;
             }
 
-            public bool IsConnected(Node n)
+            public bool IsConnected(Node n, bool directed)
             {
-                return (Endpoints[0] == n) || (Endpoints[1] == n);
+                if (Endpoints[1] == n)
+                    return true;
+
+                if (!directed && Endpoints[0] == n)
+                    return true;
+
+                return false;
             }
 
             public Node OtherEndpoint(Node n)
@@ -56,9 +68,12 @@ namespace Aoc.Common.Graphes
 
         protected List<Edge> _edges;
 
+        protected bool _directed;
+
        
-        public UndirectedGraph()
+        public Graph(bool isDirected = false)
         {
+            _directed = isDirected;
             _nodes = new List<Node>();
             _edges = new List<Edge>();
         }
@@ -73,7 +88,7 @@ namespace Aoc.Common.Graphes
         public Edge AddEdge(Node n1, Node n2, L data, long weight)
         {
             // Check for an existing edge first
-            var matches = _edges.Where(e => e.IsDirect(n1, n2));
+            var matches = _edges.Where(e => e.IsDirect(n1, n2, _directed));
             if (matches.Count() > 0)
             {
                 Edge e = matches.First();
@@ -89,13 +104,13 @@ namespace Aoc.Common.Graphes
 
         public IEnumerable<Edge> EdgesFrom(Node origin)
         {
-            return from e in _edges where e.IsConnected(origin) select e;
+            return from e in _edges where e.IsConnected(origin, _directed) select e;
         }
 
-        public Dictionary<Node, (long, Node)> Dijkstra(Node src)
+        public Dictionary<Node, (long Cost, Node From)> Dijkstra(Node src)
         {
             HashSet<Node> unvisited = new HashSet<Node>(_nodes);
-            Dictionary<Node, (long, Node)> costs = new Dictionary<Node, (long, Node)>();
+            Dictionary<Node, (long Cost, Node From)> costs = new Dictionary<Node, (long, Node)>();
 
             foreach (Node n in _nodes)
             {
@@ -110,9 +125,9 @@ namespace Aoc.Common.Graphes
                 foreach (var e in edges)
                 {
                     Node neighbour = e.OtherEndpoint(current);
-                    if (costs[neighbour].Item1 > costs[current].Item1 + e.Weight)
+                    if (costs[neighbour].Cost > costs[current].Cost + e.Weight)
                     {
-                        costs[neighbour] = (Math.Min(costs[neighbour].Item1, costs[current].Item1 + e.Weight), current);
+                        costs[neighbour] = (costs[current].Cost + e.Weight, current);
                     }
                 }
 
