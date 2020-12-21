@@ -1,6 +1,6 @@
 using System;
 
-namespace Aoc.Common.Grid
+namespace Aoc.Common.Geometry
 {
     /// <summary>
     /// Directions in a square board

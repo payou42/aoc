@@ -1,7 +1,7 @@
 using System.Drawing;
 using System.Linq;
 using System.Collections.Generic;
-using Aoc.Common.Grid;
+using Aoc.Common.Geometry;
 
 namespace Aoc
 {

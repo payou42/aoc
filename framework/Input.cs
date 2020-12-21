@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.IO;
 using System.Collections.Generic;
-using Aoc.Common.Grid;
+using Aoc.Common.Geometry;
 
 namespace Aoc.Framework
 {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Linq;
 using System.Collections.Generic;
 using Aoc.Common;
-using Aoc.Common.Grid;
+using Aoc.Common.Geometry;
 
 namespace Aoc
 {

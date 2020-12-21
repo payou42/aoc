@@ -3,7 +3,7 @@ using System.Text;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Aoc.Common.Hexgrid
+namespace Aoc.Common.Geometry
 {
     /// <summary>
     ///  An object representing coordinates in an hex grid

@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Aoc.Common.Grid
+namespace Aoc.Common.Geometry
 {
     /// <summary>
     /// Square board

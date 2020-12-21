@@ -1,7 +1,7 @@
 using System;
 using System.Drawing;
 
-namespace Aoc.Common.Grid
+namespace Aoc.Common.Geometry
 {
     /// <summary>
     /// An horizontal line
