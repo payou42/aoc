@@ -43,7 +43,7 @@ namespace Aoc
 
         private Winner Combat(Queue<long> player1, Queue<long> player2, Aoc.Framework.Part part)
         {
-            HashSet<string> history = new HashSet<string>();
+            HashSet<(long, long)> history = new HashSet<(long, long)>();
             Winner winner = Winner.None;
             while (winner == Winner.None)
             {
@@ -53,12 +53,12 @@ namespace Aoc
             return winner;
         }
 
-        private Winner Round(Queue<long> player1, Queue<long> player2, HashSet<string> history, Aoc.Framework.Part part)
+        private Winner Round(Queue<long> player1, Queue<long> player2, HashSet<(long, long)> history, Aoc.Framework.Part part)
         {
             // Check round history, only for part2
             if (part == Aoc.Framework.Part.Part2)
             {
-                string h = CalculateHistory(player1, player2);
+                var h = CalculateHistory(player1, player2);
                 if (history.Contains(h))
                 {
                     return Winner.Player1;
@@ -116,24 +116,36 @@ namespace Aoc
             return (c * v) + CalculateScore(deck);
         }
 
-        private string CalculateHistory(Queue<long> player1, Queue<long> player2)
+        private (long, long) CalculateHistory(Queue<long> player1, Queue<long> player2)
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("p1,");
-            foreach (long l in player1)
+            var h1 = HashQueue(player1);
+            var h2 = HashQueue(player2);
+            return (h1, h2);
+        }
+
+        private long HashQueue(Queue<long> q)
+        {
+            long hash = 0;
+            int index = 0;
+            long temp = 0;
+            foreach (long l in q)
             {
-                sb.Append(l);
-                sb.Append(",");
+                temp = (temp << 6) + (l & 63);
+                index++;
+                if (index >= 10)
+                {
+                    hash ^= temp;
+                    temp = 0;
+                    index = 0;
+                }
             }
 
-            sb.Append("p2,");
-            foreach (long l in player2)
+            if (index > 0)
             {
-                sb.Append(l);
-                sb.Append(",");
+                hash ^= temp;
             }
 
-            return sb.ToString();
+            return hash;
         }
     }
 }
