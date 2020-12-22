@@ -60,11 +60,11 @@ namespace Aoc
                 {
                     if (items[1] == "position")
                     {
-                        return Scrambling.ReplacePosition(password, int.Parse(items[2]), int.Parse(items[5]));
+                        return password.ReplacePosition(int.Parse(items[2]), int.Parse(items[5]));
                     }
                     if (items[1] == "letter")
                     {
-                        return Scrambling.ReplaceLetter(password, items[2][0], items[5][0]);
+                        return password.ReplaceLetter(items[2][0], items[5][0]);
                     }
                     break;
                 }
@@ -73,27 +73,27 @@ namespace Aoc
                 {
                     if (items[1] == "left")
                     {
-                        return Scrambling.RotateLeft(password, int.Parse(items[2]));
+                        return password.RotateLeft(int.Parse(items[2]));
                     }
                     else if (items[1] == "right")
                     {
-                        return Scrambling.RotateRight(password, int.Parse(items[2]));
+                        return password.RotateRight(int.Parse(items[2]));
                     }
                     else if (items[1] == "based")
                     {
-                        return Scrambling.RotateLetter(password, items[6][0]);
+                        return password.RotateLetter(items[6][0]);
                     }
                     break;
                 }
 
                 case "reverse":
                 {
-                    return Scrambling.ReversePart(password, int.Parse(items[2]), int.Parse(items[4]));
+                    return password.ReversePart(int.Parse(items[2]), int.Parse(items[4]));
                 }
 
                 case "move":
                 {
-                    return Scrambling.MovePart(password, int.Parse(items[2]), int.Parse(items[5]));
+                    return password.MovePart(int.Parse(items[2]), int.Parse(items[5]));
                 }
             }
             return password;
@@ -108,11 +108,11 @@ namespace Aoc
                 {
                     if (items[1] == "position")
                     {
-                        return Scrambling.ReplacePosition(password, int.Parse(items[2]), int.Parse(items[5]));
+                        return password.ReplacePosition(int.Parse(items[2]), int.Parse(items[5]));
                     }
                     if (items[1] == "letter")
                     {
-                        return Scrambling.ReplaceLetter(password, items[2][0], items[5][0]);
+                        return password.ReplaceLetter(items[2][0], items[5][0]);
                     }
                     break;
                 }
@@ -121,19 +121,19 @@ namespace Aoc
                 {
                     if (items[1] == "right")
                     {
-                        return Scrambling.RotateLeft(password, int.Parse(items[2]));
+                        return password.RotateLeft(int.Parse(items[2]));
                     }
                     else if (items[1] == "left")
                     {
-                        return Scrambling.RotateRight(password, int.Parse(items[2]));
+                        return password.RotateRight(int.Parse(items[2]));
                     }
                     else if (items[1] == "based")
                     {
                         char c = items[6][0];
                         for (int i = 0; i < password.Length; ++i)
                         {
-                            var result = Scrambling.RotateRight(password, i);
-                            if (password == Scrambling.RotateLetter(result, c))
+                            var result = password.RotateRight(i);
+                            if (password == result.RotateLetter(c))
                             {
                                 return result;
                             }
@@ -144,12 +144,12 @@ namespace Aoc
 
                 case "reverse":
                 {
-                    return Scrambling.ReversePart(password, int.Parse(items[2]), int.Parse(items[4]));
+                    return password.ReversePart(int.Parse(items[2]), int.Parse(items[4]));
                 }
 
                 case "move":
                 {
-                    return Scrambling.MovePart(password, int.Parse(items[5]), int.Parse(items[2]));
+                    return password.MovePart(int.Parse(items[5]), int.Parse(items[2]));
                 }
             }
             return password;

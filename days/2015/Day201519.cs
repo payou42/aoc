@@ -82,7 +82,7 @@ namespace Aoc
                         // Build the new molecule
                         foreach (string result in reaction.Value)
                         {
-                            molecules.Add(Scrambling.Splice(input, i, reaction.Key.Length, result));
+                            molecules.Add(input.Splice(i, reaction.Key.Length, result));
                         }
                     }
                 }
