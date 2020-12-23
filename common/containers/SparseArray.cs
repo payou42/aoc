@@ -10,13 +10,18 @@ namespace Aoc.Common.Containers
 
         public long RealLength { get; private set; }
 
+        public long First => _first;
+
         private readonly (long Previous, long Next, T Content)[] _array;
+
+        private long _first;
 
         public SparseArray(long length)
         {
             Length = length;
             RealLength = length;
             _array = new (long, long, T)[length];
+            _first = 0;
             for (long i = 0; i < length; ++i)
             {
                 _array[i] = ((i - 1 + length) % length, (i + 1) % length, default(T));
@@ -40,6 +45,12 @@ namespace Aoc.Common.Containers
         {
             long previous = _array[index].Previous;
             long next =_array[index].Next;
+
+            if (index == _first)
+            {
+                _first = next;
+            }
+
             _array[previous].Next = next;
             _array[next].Previous = previous;
             RealLength--;
