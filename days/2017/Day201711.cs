@@ -46,7 +46,7 @@ namespace Aoc
 
         private void RunGrid()
         {
-            HexCoordinate current = new HexCoordinate();
+            VerticalHexCoordinate current = new VerticalHexCoordinate();
             foreach( string direction in Aoc.Framework.Input.GetStringVector(this, ","))
             {
                 current.Move(direction);

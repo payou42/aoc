@@ -8,13 +8,15 @@ namespace Aoc.Common.Geometry
     /// <summary>
     ///  An object representing coordinates in an hex grid
     /// </summary>
-    public class HexCoordinate
+    public class HorizontalHexCoordinate
     {
+        public static string[] Directions = new string[] { "e", "ne", "se", "w", "nw", "sw" };
+
         public Int64 X { get; set; }
         
         public Int64 Y { get; set; }
 
-        public HexCoordinate()
+        public HorizontalHexCoordinate()
         {
             X = 0;
             Y = 0;
@@ -22,43 +24,43 @@ namespace Aoc.Common.Geometry
 
         /// <summary>
         /// Move the coordinates in a given direction
-        /// Direction is given using cardinal points like : n, ne, se, s, sw, nw
+        /// Direction is given using cardinal points like : e, ne, se, w, sw, nw
         /// </summary>
         /// <param name="direction"></param>
         public void Move(string direction)
         {
             switch (direction)
             {
-                case "n":
+                case "e":
                 {
-                    Y += 1;
+                    X += 1;
                     break;
                 }
                 case "ne":
                 {
-                    X += 1;
                     Y += 1;
                     break;
                 }
                 case "se":
                 {
                     X += 1;
+                    Y -= 1;
                     break;
                 }
-                case "s":
+                case "w":
                 {
-                    Y -= 1;
+                    X -= 1;
                     break;
                 }
                 case "sw":
                 {
-                    X -= 1;
                     Y -= 1;
                     break;
                 }
                 case "nw":
                 {
                     X -= 1;
+                    Y += 1;
                     break;
                 }                
             }
