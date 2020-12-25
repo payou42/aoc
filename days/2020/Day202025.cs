@@ -14,8 +14,6 @@ namespace Aoc
 
         private long[] _public;
 
-        private long[] _private;
-
         public Day202025()
         {
             Codename = "2020-25";
@@ -49,7 +47,7 @@ namespace Aoc
             long loopsize = 0;
             while (current != p)
             {
-                current = (current * current ) % m;
+                current = (current * current) % m;
                 loopsize++;
             }
 
@@ -61,7 +59,7 @@ namespace Aoc
             long current = input;
             for (long k = 0; k < key; ++k)
             {
-                current = (current * current ) % m;
+                current = (current * current) % m;
             }
 
             return current;
